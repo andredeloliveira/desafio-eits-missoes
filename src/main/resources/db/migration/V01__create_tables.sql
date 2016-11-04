@@ -29,8 +29,8 @@ CREATE TABLE usuarios (
   nome text NOT NULL,
   email text NOT NULL,
   senha text NOT NULL,
-  id_perfil_acesso bigserial REFERENCES perfis_acesso (id_perfil_acesso)
-  status
+  id_perfil_acesso bigserial REFERENCES perfis_acesso (id_perfil_acesso),
+  status text NOT NULL
 );
 
 CREATE TABLE pilotos (
@@ -41,6 +41,22 @@ CREATE TABLE pilotos (
 CREATE TABLE passageiros (
   id_passageiro bigserial PRIMARY KEY,
   id_usuario bigserial REFERENCES usuarios (id_usuario)
+);
+
+CREATE TABLE aeroportos (
+  id_aeroporto bigserial PRIMARY KEY,
+  nome text,
+  sigla text NOT NULL
+);
+
+CREATE TABLE missoes (
+  id_missao bigserial PRIMARY KEY,
+  data_hora timestamptz NOT NULL,
+  id_origem bigserial REFERENCES aeroportos (id_aeroporto),
+  id_destino bigserial REFERENCES aeroportos (id_aeroporto),
+  id_aeronave bigserial REFERENCES aeronaves (id_aeronave),
+  objetivo text NOT NULL,
+  anexo text NOT NULL
 );
 
 
@@ -61,15 +77,6 @@ CREATE TABLE missoes_finalizadas (
   id_finalizada_por bigserial REFERENCES pilotos (id_piloto) 
 );
 
-CREATE TABLE missoes (
-  id_missao bigserial PRIMARY KEY,
-  data_hora timestamptz NOT NULL,
-  id_origem bigserial REFERENCES aeroportos (id_aeroporto),
-  id_destino bigserial REFERENCES aeroportos (id_aeroporto),
-  id_aeronave bigserial REFERENCES aeronaves (id_aeronave),
-  objetivo text NOT NULL,
-  anexo text NOT NULL
-);
 
 
 

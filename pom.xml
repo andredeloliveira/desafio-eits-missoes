@@ -21,7 +21,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>4.0.2</version>
 				<configuration>
-					<driver>org.postgresql.Driverr</driver>
+					<driver>org.postgresql.Driver</driver>
 				</configuration>
   		</plugin>
   		<plugin>
