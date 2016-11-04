@@ -2,22 +2,21 @@ package br.com.eits.missoes.domain.entity;
 
 public class Aiport {
 
-	private String nome;
-	private String sigla;
+	private String name;
+	private String acronym;
 	
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAcronym() {
+		return acronym;
+	}
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 	
-	public String getSigla() {
-		return sigla;
-	}
-	
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
 }

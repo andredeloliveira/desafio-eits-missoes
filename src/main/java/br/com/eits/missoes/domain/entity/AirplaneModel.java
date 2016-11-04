@@ -2,20 +2,21 @@ package br.com.eits.missoes.domain.entity;
 
 public class AirplaneModel {
 	
-	private String nomeModelo;
-	private AirplaneManufacturer fabricante;
+	private String name;
+	private AirplaneManufacturer manufacturer;
 	
-	public String getNomeModelo() {
-		return nomeModelo;
+	
+	public AirplaneManufacturer getManufacturer() {
+		return manufacturer;
 	}
-	public void setNomeModelo(String nomeModelo) {
-		this.nomeModelo = nomeModelo;
+	public void setManufacturer(AirplaneManufacturer manufacturer) {
+		this.manufacturer = manufacturer;
 	}
-	public AirplaneManufacturer getFabricante() {
-		return fabricante;
+	public String getName() {
+		return name;
 	}
-	public void setFabricante(AirplaneManufacturer fabricante) {
-		this.fabricante = fabricante;
+	public void setName(String name) {
+		this.name = name;
 	}
-
+	
 }

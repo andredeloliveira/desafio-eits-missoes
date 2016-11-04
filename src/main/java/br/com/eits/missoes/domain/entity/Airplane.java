@@ -8,35 +8,37 @@ package br.com.eits.missoes.domain.entity;
  */
 public class Airplane {
 
-	private int horasVoo;
-	private String matricula;
-	private AirplaneModel modelo;
-	private int numeroAssentos;
+	private int totalFlightTime;
+	private String subscriptionNumber;
+	private AirplaneModel model;
+	private int seatsNumber;
 	
-	public int getHorasVoo() {
-		return horasVoo;
+	
+	public int getTotalFlightTime() {
+		return totalFlightTime;
 	}
-	public void setHorasVoo(int horasVoo) {
-		this.horasVoo = horasVoo;
+	public void setTotalFlightTime(int totalFlightTime) {
+		this.totalFlightTime = totalFlightTime;
 	}
-	public String getMatricula() {
-		return matricula;
+	public String getSubscriptionNumber() {
+		return subscriptionNumber;
 	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
+	public void setSubscriptionNumber(String subscriptionNumber) {
+		this.subscriptionNumber = subscriptionNumber;
 	}
-	public AirplaneModel getModelo() {
-		return modelo;
+	public AirplaneModel getModel() {
+		return model;
 	}
-	public void setModelo(AirplaneModel modelo) {
-		this.modelo = modelo;
+	public void setModel(AirplaneModel model) {
+		this.model = model;
 	}
-	public int getNumeroAssentos() {
-		return numeroAssentos;
+	public int getSeatsNumber() {
+		return seatsNumber;
 	}
-	public void setNumAssentos(int numAssentos) {
-		this.numeroAssentos = numAssentos;
+	public void setSeatsNumber(int seatsNumber) {
+		this.seatsNumber = seatsNumber;
 	}
-
+	
+	
 
 }

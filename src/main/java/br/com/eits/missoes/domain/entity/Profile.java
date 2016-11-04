@@ -5,13 +5,13 @@ public enum Profile {
 	PILOTO("Piloto"),
 	PASSAGEIRO("Passageiro");
 	
-	private String perfilAcesso;
+	private String profile;
 	
-	Profile(String perfilAcesso) {
-		this.perfilAcesso = perfilAcesso;
+	Profile(String profile) {
+		this.profile = profile;
 	}
 	
-	public String getPerfil() {
-		return this.perfilAcesso;
+	public String getProfile() {
+		return this.profile;
 	}
 }

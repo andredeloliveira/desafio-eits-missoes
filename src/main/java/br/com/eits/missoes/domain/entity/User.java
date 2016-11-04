@@ -9,23 +9,12 @@ package br.com.eits.missoes.domain.entity;
 public class User {
 
 	private String email;
-	private String nome;
+	private String name;
 	private Profile profile;
-	private String senha;
+	private String password;
 	private String status;
 
-	public User(){
-
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -42,20 +31,32 @@ public class User {
 		this.profile = profile;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
