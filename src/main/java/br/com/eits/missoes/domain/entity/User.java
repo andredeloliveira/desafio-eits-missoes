@@ -6,15 +6,15 @@ package br.com.eits.missoes.domain.entity;
  * @version 1.0
  * @created 04-Nov-2016 10:22:49 AM
  */
-public class Usuario {
+public class User {
 
 	private String email;
 	private String nome;
-	private PerfilAcesso perfilAcesso;
+	private Profile profile;
 	private String senha;
 	private String status;
 
-	public Usuario(){
+	public User(){
 
 	}
 
@@ -34,12 +34,12 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public PerfilAcesso getPerfilAcesso() {
-		return perfilAcesso;
+	public Profile getPerfilAcesso() {
+		return profile;
 	}
 
-	public void setPerfilAcesso(PerfilAcesso perfilAcesso) {
-		this.perfilAcesso = perfilAcesso;
+	public void setPerfilAcesso(Profile profile) {
+		this.profile = profile;
 	}
 
 	public String getSenha() {

@@ -6,11 +6,11 @@ package br.com.eits.missoes.domain.entity;
  * @version 1.0
  * @created 04-Nov-2016 10:14:25 AM
  */
-public class Aeronave {
+public class Airplane {
 
 	private int horasVoo;
 	private String matricula;
-	private ModeloAeronave modelo;
+	private AirplaneModel modelo;
 	private int numeroAssentos;
 	
 	public int getHorasVoo() {
@@ -25,10 +25,10 @@ public class Aeronave {
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
-	public ModeloAeronave getModelo() {
+	public AirplaneModel getModelo() {
 		return modelo;
 	}
-	public void setModelo(ModeloAeronave modelo) {
+	public void setModelo(AirplaneModel modelo) {
 		this.modelo = modelo;
 	}
 	public int getNumeroAssentos() {

@@ -1,13 +1,13 @@
 package br.com.eits.missoes.domain.entity;
 
-public enum PerfilAcesso {
+public enum Profile {
 	ADMINISTRADOR("Administrador"),
 	PILOTO("Piloto"),
 	PASSAGEIRO("Passageiro");
 	
 	private String perfilAcesso;
 	
-	PerfilAcesso(String perfilAcesso) {
+	Profile(String perfilAcesso) {
 		this.perfilAcesso = perfilAcesso;
 	}
 	

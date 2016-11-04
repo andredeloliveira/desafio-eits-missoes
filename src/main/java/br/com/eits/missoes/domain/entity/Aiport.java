@@ -1,6 +1,6 @@
 package br.com.eits.missoes.domain.entity;
 
-public class Aeroporto {
+public class Aiport {
 
 	private String nome;
 	private String sigla;

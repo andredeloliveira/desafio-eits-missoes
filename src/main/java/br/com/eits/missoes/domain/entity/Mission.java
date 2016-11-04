@@ -7,32 +7,28 @@ import java.util.Calendar;
  * @version 1.0
  * @created 04-Nov-2016 10:34:02 AM
  */
-public class Missao {
+public class Mission {
 
-	private Aeronave aeronave;
+	private Airplane airplane;
 	private Byte[] anexo;
 	private Calendar dataHora;
-	private Aeroporto destino;
-	private Aeroporto origem;
+	private Aiport destino;
+	private Aiport origem;
 	private String objetivo;
-	private Usuario passageiros;
-	private Usuario pilotos;
-	private Usuario planejadoPor;
+	private User passageiros;
+	private User pilotos;
+	private User planejadoPor;
 
-	public Missao(){
-
-	}
-
-	public void finalize() throws Throwable {
+	public Mission(){
 
 	}
 
-	public Aeronave getAeronave() {
-		return aeronave;
+	public Airplane getAeronave() {
+		return airplane;
 	}
 
-	public void setAeronave(Aeronave aeronave) {
-		this.aeronave = aeronave;
+	public void setAeronave(Airplane airplane) {
+		this.airplane = airplane;
 	}
 
 	public Byte[] getAnexo() {
@@ -51,43 +47,43 @@ public class Missao {
 		this.dataHora = dataHora;
 	}
 
-	public Aeroporto getDestino() {
+	public Aiport getDestino() {
 		return destino;
 	}
 
-	public void setDestino(Aeroporto destino) {
+	public void setDestino(Aiport destino) {
 		this.destino = destino;
 	}
 
-	public Aeroporto getOrigem() {
+	public Aiport getOrigem() {
 		return origem;
 	}
 
-	public void setOrigem(Aeroporto origem) {
+	public void setOrigem(Aiport origem) {
 		this.origem = origem;
 	}
 
-	public Usuario getPassageiros() {
+	public User getPassageiros() {
 		return passageiros;
 	}
 
-	public void setPassageiros(Usuario passageiros) {
+	public void setPassageiros(User passageiros) {
 		this.passageiros = passageiros;
 	}
 
-	public Usuario getPilotos() {
+	public User getPilotos() {
 		return pilotos;
 	}
 
-	public void setPilotos(Usuario pilotos) {
+	public void setPilotos(User pilotos) {
 		this.pilotos = pilotos;
 	}
 
-	public Usuario getPlanejadoPor() {
+	public User getPlanejadoPor() {
 		return planejadoPor;
 	}
 
-	public void setPlanejadoPor(Usuario planejadoPor) {
+	public void setPlanejadoPor(User planejadoPor) {
 		this.planejadoPor = planejadoPor;
 	}
 

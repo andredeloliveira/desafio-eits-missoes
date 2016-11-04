@@ -1,6 +1,6 @@
 package br.com.eits.missoes.domain.entity;
 
-public class FabricanteAeronave {
+public class AirplaneManufacturer {
 
 	private String nomeFabricante;
 

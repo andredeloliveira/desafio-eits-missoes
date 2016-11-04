@@ -1,9 +1,9 @@
 package br.com.eits.missoes.domain.entity;
 
-public class ModeloAeronave {
+public class AirplaneModel {
 	
 	private String nomeModelo;
-	private FabricanteAeronave fabricante;
+	private AirplaneManufacturer fabricante;
 	
 	public String getNomeModelo() {
 		return nomeModelo;
@@ -11,10 +11,10 @@ public class ModeloAeronave {
 	public void setNomeModelo(String nomeModelo) {
 		this.nomeModelo = nomeModelo;
 	}
-	public FabricanteAeronave getFabricante() {
+	public AirplaneManufacturer getFabricante() {
 		return fabricante;
 	}
-	public void setFabricante(FabricanteAeronave fabricante) {
+	public void setFabricante(AirplaneManufacturer fabricante) {
 		this.fabricante = fabricante;
 	}
 
