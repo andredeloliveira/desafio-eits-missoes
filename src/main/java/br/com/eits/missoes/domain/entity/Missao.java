@@ -14,6 +14,7 @@ public class Missao {
 	private Calendar dataHora;
 	private Aeroporto destino;
 	private Aeroporto origem;
+	private String objetivo;
 	private Usuario passageiros;
 	private Usuario pilotos;
 	private Usuario planejadoPor;
@@ -88,6 +89,14 @@ public class Missao {
 
 	public void setPlanejadoPor(Usuario planejadoPor) {
 		this.planejadoPor = planejadoPor;
+	}
+
+	public String getObjetivo() {
+		return objetivo;
+	}
+
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
 	}
 
 }

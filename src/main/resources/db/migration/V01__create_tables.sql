@@ -18,3 +18,59 @@ CREATE TABLE aeronaves (
   numero_assentos integer NOT NULL,
   id_modelo_aeronave bigserial REFERENCES modelos_aeronave (id_modelo_aeronave)
 );
+
+CREATE TABLE perfis_acesso (
+  id_perfil_acesso bigserial PRIMARY KEY,
+  perfilAcesso text NOT NULL
+);
+
+CREATE TABLE usuarios (
+  id_usuario bigserial PRIMARY KEY,
+  nome text NOT NULL,
+  email text NOT NULL,
+  senha text NOT NULL,
+  id_perfil_acesso bigserial REFERENCES perfis_acesso (id_perfil_acesso)
+  status
+);
+
+CREATE TABLE pilotos (
+  id_piloto bigserial PRIMARY KEY,
+  id_usuario bigserial REFERENCES usuarios (id_usuario)
+);
+
+CREATE TABLE passageiros (
+  id_passageiro bigserial PRIMARY KEY,
+  id_usuario bigserial REFERENCES usuarios (id_usuario)
+);
+
+
+CREATE TABLE missao_passageiros (
+  id_missao_passageiro bigserial PRIMARY KEY,
+  id_passageiro bigserial REFERENCES usuarios (id_usuario),
+  id_missao bigserial REFERENCES missoes (id_missao)
+);
+
+CREATE TABLE missao_pilotos (
+  id_missao_piloto bigserial PRIMARY KEY,
+  id_piloto bigserial REFERENCES usuarios (id_usuario),
+  id_missao bigserial REFERENCES missoes (id_missao)
+);
+
+CREATE TABLE missoes_finalizadas (
+  id_missao_finalizada bigserial PRIMARY KEY,
+  id_finalizada_por bigserial REFERENCES pilotos (id_piloto) 
+);
+
+CREATE TABLE missoes (
+  id_missao bigserial PRIMARY KEY,
+  data_hora timestamptz NOT NULL,
+  id_origem bigserial REFERENCES aeroportso (id_aeroporto),
+  id_destino bigserial REFERENCES aeroportos (id_aeroporto),
+  id_aeronave bigserial REFERENCES aeronaves (id_aeronave),
+  objetivo text NOT NULL,
+  anexo text NOT NULL
+);
+
+
+
+
