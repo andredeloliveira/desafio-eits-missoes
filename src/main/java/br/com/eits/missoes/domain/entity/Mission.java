@@ -2,21 +2,60 @@ package br.com.eits.missoes.domain.entity;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
 /**
  * @author andre
  * @version 1.0
  * @created 04-Nov-2016 10:34:02 AM
  */
+
+@Entity
 public class Mission {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idMission;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_airplane")
 	private Airplane airplane;
+	
+	@Column(name = "attached_file")
 	private Byte[] attachedFile;
-	private Calendar date_time;
+	
+	@Column(name = "date_time")
+	private Calendar dateTime;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_airplane")
 	private Aiport to;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_airplane")
 	private Aiport from;
+	
+	@Column(name = "reason")
 	private String reason;
+	
+	@ManyToMany
+	@JoinTable(name = "mission_passenger")
 	private User [] passengers;
+	
+	@ManyToMany
+	@JoinTable(name = "mission_pilot")
 	private User [] pilots;
+	
+	@ManyToOne
+	@JoinColumn(name = "planned_by")
 	private User plannedBy;
 	
 	

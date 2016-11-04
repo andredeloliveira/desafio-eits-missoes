@@ -1,11 +1,14 @@
 package br.com.eits.missoes.domain.entity;
 
+import javax.persistence.Entity;
 
 /**
  * @author andre
  * @version 1.0
  * @created 04-Nov-2016 10:22:49 AM
  */
+
+@Entity
 public class User {
 
 	private String email;
