@@ -21,7 +21,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>4.0.2</version>
 				<configuration>
-					<driver>com.mysql.jdbc.Driver</driver>
+					<driver>org.postgresql.Driverr</driver>
 				</configuration>
   		</plugin>
   		<plugin>
@@ -89,5 +89,10 @@
 		<version>4.3.0.RELEASE</version>
 		<scope>compile</scope>
 	 </dependency>
+	 <dependency>
+	   <groupId>org.postgresql</groupId>
+	   <artifactId>postgresql</artifactId>
+	   <version>9.4.1208</version>
+	</dependency>
   </dependencies>
 </project>

@@ -64,7 +64,7 @@ CREATE TABLE missoes_finalizadas (
 CREATE TABLE missoes (
   id_missao bigserial PRIMARY KEY,
   data_hora timestamptz NOT NULL,
-  id_origem bigserial REFERENCES aeroportso (id_aeroporto),
+  id_origem bigserial REFERENCES aeroportos (id_aeroporto),
   id_destino bigserial REFERENCES aeroportos (id_aeroporto),
   id_aeronave bigserial REFERENCES aeronaves (id_aeronave),
   objetivo text NOT NULL,
