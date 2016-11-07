@@ -1,5 +1,7 @@
 package br.com.eits.missoes.domain.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +41,10 @@ public class Airplane {
 	@Column(name = "seats_number")
 	private int seatsNumber;
 	
+	
+	public Airplane() {
+		this.subscriptionNumber = UUID.randomUUID().toString();
+	}
 	
 	public int getTotalFlightTime() {
 		return totalFlightTime;
