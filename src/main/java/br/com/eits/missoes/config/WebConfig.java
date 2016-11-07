@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurationSupport implements ApplicationContextAware {
 
+	@SuppressWarnings("unused")
 	private ApplicationContext applicationContext;
 	
 	@Override

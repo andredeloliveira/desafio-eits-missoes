@@ -94,5 +94,11 @@
 	   <artifactId>postgresql</artifactId>
 	   <version>9.4.1208</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
+	<dependency>
+	    <groupId>c3p0</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>0.9.1</version>
+	</dependency>
   </dependencies>
 </project>

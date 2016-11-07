@@ -60,6 +60,17 @@ CREATE TABLE mission (
   attached_file text NOT NULL
 );
 
+CREATE TABLE mission_from (
+  id_mission_from bigserial PRIMARY KEY,
+  id_mission bigserial REFERENCES mission (id_mission),
+  id_airport bigserial REFERENCES airport (id_airport)
+);
+
+CREATE TABLE mission_to (
+  id_mission_to bigserial PRIMARY KEY,
+  id_mission bigserial REFERENCES mission (id_mission),
+  id_airport bigserial REFERENCES airport (id_airport)
+);
 
 CREATE TABLE mission_passenger (
   id_mission_passenger bigserial PRIMARY KEY,

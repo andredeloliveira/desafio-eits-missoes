@@ -1,6 +1,7 @@
 package br.com.eits.missoes.domain.entity;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * @author andre
@@ -36,28 +38,27 @@ public class Mission {
 	private Calendar dateTime;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_airplane")
-	private Aiport to;
+	@JoinColumn(name = "id_mission_to")
+	private MissionTo to;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_airplane")
-	private Aiport from;
+	@JoinColumn(name = "id_mission_from")
+	private MissionFrom from;
 	
 	@Column(name = "reason")
 	private String reason;
 	
-	@ManyToMany
-	@JoinTable(name = "mission_passenger")
-	private User [] passengers;
+	@OneToMany
+	@JoinColumn(name = "id_mission_passenger")
+	private List<MissionPassenger> passengers;
 	
-	@ManyToMany
-	@JoinTable(name = "mission_pilot")
-	private User [] pilots;
+	@OneToMany
+	@JoinTable(name = "id_mission_pilot")
+	private List<MissionPilot> pilots;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "planned_by")
 	private User plannedBy;
-	
 	
 	
 	public Airplane getAirplane() {
@@ -72,28 +73,28 @@ public class Mission {
 	public void setAttachedFile(Byte[] attachedFile) {
 		this.attachedFile = attachedFile;
 	}
-	public Calendar getDate_time() {
-		return date_time;
+	public Calendar getDateTime() {
+		return dateTime;
 	}
-	public void setDate_time(Calendar date_time) {
-		this.date_time = date_time;
+	public void setDate_time(Calendar dateTime) {
+		this.dateTime = dateTime;
 	}
-	public Aiport getTo() {
+	public MissionTo getTo() {
 		return to;
 	}
-	public void setTo(Aiport to) {
+	public void setTo(MissionTo to) {
 		this.to = to;
 	}
-	public Aiport getFrom() {
+	public MissionFrom getFrom() {
 		return from;
 	}
-	public void setFrom(Aiport from) {
+	public void setFrom(MissionFrom from) {
 		this.from = from;
 	}
-	public User [] getPassengers() {
+	public List<MissionPassenger> getPassengers() {
 		return passengers;
 	}
-	public void setPassengers(User [] passengers) {
+	public void setPassengers(List<MissionPassenger> passengers) {
 		this.passengers = passengers;
 	}
 	public String getReason() {
@@ -102,10 +103,10 @@ public class Mission {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	public User [] getPilots() {
+	public List<MissionPilot> getPilots() {
 		return pilots;
 	}
-	public void setPilots(User [] pilots) {
+	public void setPilots(List<MissionPilot> pilots) {
 		this.pilots = pilots;
 	}
 	public User getPlannedBy() {

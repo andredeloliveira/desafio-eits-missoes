@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Aiport {
+public class Airport {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
