@@ -8,18 +8,13 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
+
 public enum Profile {
 	ADMINISTRADOR("Administrador"),
 	PILOTO("Piloto"),
 	PASSAGEIRO("Passageiro");
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idProfile;
-	
-	@Column(name = "profile")
-	@NotBlank(message = "Profile é obrigatório")
+
 	private String profile;
 	
 	Profile(String profile) {

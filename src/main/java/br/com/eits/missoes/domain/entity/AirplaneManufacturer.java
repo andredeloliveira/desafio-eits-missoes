@@ -13,12 +13,21 @@ public class AirplaneManufacturer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_manufacturer;
+	@Column(name = "ir_airplane_manufacturer")
+	private Long id;
 	
 	@Column(name = "manufacturer")
 	@NotBlank(message = "O Fabricante é obrigatório")
 	private String manufacturer;
 
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getManufacturer() {
 		return this.manufacturer;
 	}

@@ -25,7 +25,8 @@ public class Mission {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idMission;
+	@Column(name = "id_mission")
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_airplane")
@@ -53,13 +54,21 @@ public class Mission {
 	private List<MissionPassenger> passengers;
 	
 	@OneToMany
-	@JoinTable(name = "id_mission_pilot")
+	@JoinColumn(name = "id_mission_pilot")
 	private List<MissionPilot> pilots;
 	
 	@OneToOne
 	@JoinColumn(name = "planned_by")
 	private User plannedBy;
 	
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Airplane getAirplane() {
 		return airplane;

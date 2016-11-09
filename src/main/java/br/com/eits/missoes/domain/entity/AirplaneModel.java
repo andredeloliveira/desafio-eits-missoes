@@ -15,7 +15,8 @@ public class AirplaneModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idAirplaneModel;
+	@Column(name = "id_airplane_model")
+	private Long id;
 	
 	@Column(name = "name")
 	@NotBlank(message = "O nome do modelo da aeronave é obrigatório")
@@ -25,6 +26,14 @@ public class AirplaneModel {
 	@JoinColumn(name = "id_manufacturer")
 	private AirplaneManufacturer manufacturer;
 	
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public AirplaneManufacturer getManufacturer() {
 		return manufacturer;

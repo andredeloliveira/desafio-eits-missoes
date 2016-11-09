@@ -19,28 +19,25 @@ CREATE TABLE airplane (
   id_airplane_model bigserial REFERENCES airplane_model (id_airplane_model)
 );
 
-CREATE TABLE profile (
-  id_profile bigserial PRIMARY KEY,
-  profile text NOT NULL
-);
 
-CREATE TABLE "user" (
+
+CREATE TABLE "users" (
   id_user bigserial PRIMARY KEY,
   name text NOT NULL,
   email text NOT NULL,
   password text NOT NULL,
-  id_profile bigserial REFERENCES profile (id_profile),
+  profile text NOT NULL,
   status text NOT NULL
 );
 
 CREATE TABLE pilot (
   id_pilot bigserial PRIMARY KEY,
-  id_user bigserial REFERENCES "user" (id_user)
+  id_user bigserial REFERENCES "users" (id_user)
 );
 
 CREATE TABLE passenger (
   id_passenger bigserial PRIMARY KEY,
-  id_user bigserial REFERENCES "user" (id_user)
+  id_user bigserial REFERENCES "users" (id_user)
 );
 
 CREATE TABLE airport (
@@ -55,7 +52,7 @@ CREATE TABLE mission (
   id_from bigserial REFERENCES airport (id_airport),
   id_to bigserial REFERENCES airport (id_airport),
   id_airplane bigserial REFERENCES airplane (id_airplane),
-  planned_by bigserial REFERENCES "user" (id_user),
+  planned_by bigserial REFERENCES "users" (id_user),
   reason text NOT NULL,
   attached_file text NOT NULL
 );
@@ -74,13 +71,13 @@ CREATE TABLE mission_to (
 
 CREATE TABLE mission_passenger (
   id_mission_passenger bigserial PRIMARY KEY,
-  id_passenger bigserial REFERENCES "user" (id_user),
+  id_passenger bigserial REFERENCES "users" (id_user),
   id_mission bigserial REFERENCES mission (id_mission)
 );
 
 CREATE TABLE mission_pilot (
   id_mission_pilot bigserial PRIMARY KEY,
-  id_pilot bigserial REFERENCES "user" (id_user),
+  id_pilot bigserial REFERENCES "users" (id_user),
   id_mission bigserial REFERENCES mission (id_mission)
 );
 

@@ -16,12 +16,13 @@ import org.hibernate.validator.constraints.NotBlank;
  * @created 04-Nov-2016 10:22:49 AM
  */
 
-@Entity
+@Entity(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idUser;
+	@Column(name = "id_user")
+	private Long id;
 	
 	@Column(name = "email")
 	@NotBlank(message = "Email é obrigaório")
@@ -32,8 +33,6 @@ public class User {
 	@NotBlank(message = "Nome é obrigatório")
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_profile")
 	private Profile profile;
 	
 	@Column(name = "password")
@@ -44,6 +43,13 @@ public class User {
 	@Column(name = "status")
 	private String status;
 
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getEmail() {
 		return email;

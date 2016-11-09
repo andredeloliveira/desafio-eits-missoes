@@ -15,23 +15,24 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import br.com.eits.missoes.domain.repository.IUserRepository;
+import br.com.eits.missoes.domain.service.UserService;
 
 @Configuration
-@ComponentScan(basePackageClasses = IUserRepository.class)
+@ComponentScan(basePackageClasses = {IUserRepository.class, UserService.class})
 @EnableJpaRepositories(basePackageClasses = IUserRepository.class)
 @EnableTransactionManagement
-public class JPAConfig {
+public class JPAConfigTest {
 
 	@Bean(name="dataSource")
 	public DataSource dataSource() {
 	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
 	    dataSource.setDriverClassName("org.postgresql.Driver");
-	    dataSource.setUrl("jdbc:postgresql://localhost:5431/missoes");
+	    dataSource.setUrl("jdbc:postgresql://localhost:5431/missoes-test");
 	    dataSource.setUsername("postgres");
 	    dataSource.setPassword("root");
+	    System.out.println(dataSource.toString());
 	    return dataSource;
 	}
-	
 	
 	
 	@Bean

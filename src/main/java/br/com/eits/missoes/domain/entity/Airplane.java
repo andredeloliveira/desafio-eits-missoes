@@ -23,7 +23,8 @@ public class Airplane {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAirplane;
+	@Column(name = "id_airplane")
+	private Long id;
 	
 	@Column(name = "total_flight_time")
 	@NotBlank(message = "O tempo total de vôo é obrigatório")
@@ -41,6 +42,14 @@ public class Airplane {
 	@Column(name = "seats_number")
 	private int seatsNumber;
 	
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Airplane() {
 		this.subscriptionNumber = UUID.randomUUID().toString();

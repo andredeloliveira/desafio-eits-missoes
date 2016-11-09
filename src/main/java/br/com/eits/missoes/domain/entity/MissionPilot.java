@@ -1,5 +1,6 @@
 package br.com.eits.missoes.domain.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,8 @@ public class MissionPilot {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idMissionPilot;
+	@Column(name = "id_mission_pilot")
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission")
@@ -22,6 +24,13 @@ public class MissionPilot {
 	@JoinColumn(name = "id_pilot")
 	private User pilot;
 	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Mission getMission() {
 		return mission;

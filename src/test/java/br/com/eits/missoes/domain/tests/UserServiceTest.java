@@ -9,29 +9,35 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
-import br.com.eits.missoes.domain.repository.IUser;
+import br.com.eits.missoes.domain.repository.IUserRepository;
 import br.com.eits.missoes.domain.service.UserService;
-import junit.framework.Assert;
+import org.junit.Assert;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/context.xml"})
-public class UserServiceTest {
 
-	@Autowired
+
+public class UserServiceTest extends AbstractIntegrationTest{
+
+	@Autowired(required = false)
 	private UserService userService;
 	
+	@Autowired(required = false)
+	private IUserRepository userRepository;
+	
 	@Test
-	public void testInsert() {
+	public void testInsertMustPass() {
 		//create a new user object
 		User user = new User();
 		user.setName("Eu sou o máximo");
 		user.setEmail("eu@sou.com");
 		user.setPassword("1235sou");
+		user.setStatus("Ativo");
 		user.setPerfilAcesso(Profile.ADMINISTRADOR);
-		userService.insertUser(user);
-		System.out.println(user);
+		System.out.println(userService);
+		User newUser = userService.insertUser(user);
+		Assert.assertNotNull(newUser.getStatus());
 		
 	}
+	
 }
 
 

@@ -13,7 +13,8 @@ public class Airport {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idAirport;
+	@Column(name = "id_airport")
+	private Long id;
 
 	@Column(name = "name")
 	@NotBlank(message = "O nome do Aeroporto é obrigatório")
@@ -22,6 +23,14 @@ public class Airport {
 	@Column(name = "acronym")
 	@NotBlank(message = "A sigla do Aeroporto é obrigatória")	
 	private String acronym;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
