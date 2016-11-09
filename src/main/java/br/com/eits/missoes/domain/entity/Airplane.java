@@ -1,5 +1,6 @@
 package br.com.eits.missoes.domain.entity;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -28,7 +29,7 @@ public class Airplane {
 	
 	@Column(name = "total_flight_time")
 	@NotBlank(message = "O tempo total de vôo é obrigatório")
-	private Integer totalFlightTime;
+	private double totalFlightTime;
 	
 	@Column(name = "subscription_number")
 	@NotBlank(message = "A matrícula é obrigatória")
@@ -55,10 +56,10 @@ public class Airplane {
 		this.subscriptionNumber = UUID.randomUUID().toString();
 	}
 	
-	public int getTotalFlightTime() {
+	public Float getTotalFlightTime() {
 		return totalFlightTime;
 	}
-	public void setTotalFlightTime(int totalFlightTime) {
+	public void setTotalFlightTime(double totalFlightTime) {
 		this.totalFlightTime = totalFlightTime;
 	}
 	public String getSubscriptionNumber() {

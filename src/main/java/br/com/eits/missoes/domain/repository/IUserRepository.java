@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 
-public interface IUserRepository extends JpaRepository<User, Integer> {
+public interface IUserRepository extends JpaRepository<User, Long> {
 
 	User findUserById(Long userId);
 	
