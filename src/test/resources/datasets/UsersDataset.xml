@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<users 
+	  id_user="1"
+	  name="Jonas Silveira"
+	  email="jj@ss.com"
+	  profile="0"
+	  password="487490nfkljd"
+	  status="ATIVO" 
+		
+	/>
+	<users 
+	  id_user="2"
+	  name="Pedro Barroso"
+	  email="jj@ds.com"
+	  profile="0"
+	  password="48dfd90nfkljd"
+		status="ATIVO"
+	/>
+	<users 
+	  id_user="3"
+	  name="Milena Souza"
+	  email="mi@ss.com"
+	  profile="1"
+	  password="487490nfddkljd"
+		status="ATIVO"
+	/>
+</dataset>

@@ -1,8 +1,9 @@
 package br.com.eits.missoes.domain.tests;
 
-import org.hibernate.dialect.unique.DB2UniqueDelegate;
+
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -12,7 +13,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.eits.missoes.config.JPAConfig;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+
 import br.com.eits.missoes.config.JPAConfigTest;
 import br.com.eits.missoes.config.WebConfig;
 import br.com.eits.missoes.domain.repository.IUserRepository;
@@ -23,8 +25,10 @@ import br.com.eits.missoes.domain.repository.IUserRepository;
 	DependencyInjectionTestExecutionListener.class,
 	DirtiesContextTestExecutionListener.class,
 	TransactionalTestExecutionListener.class,
+	DbUnitTestExecutionListener.class
 })
 @WebAppConfiguration
+//@Rollback(false)
 @Transactional
 public abstract class AbstractIntegrationTest {
 	

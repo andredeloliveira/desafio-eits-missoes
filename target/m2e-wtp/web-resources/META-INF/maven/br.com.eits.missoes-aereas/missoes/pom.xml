@@ -148,11 +148,10 @@
 		<scope>test</scope>
 	</dependency>
 	<dependency>
-		<groupId>com.github.springtestdbunit</groupId>
-		<artifactId>spring-test-dbunit</artifactId>
-		<version>1.2.1</version>
-		<scope>test</scope>
-	</dependency>
+			<groupId>com.github.springtestdbunit</groupId>
+			<artifactId>spring-test-dbunit</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 	<dependency>
    <groupId>javax.el</groupId>
    <artifactId>javax.el-api</artifactId>
