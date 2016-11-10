@@ -1,11 +1,9 @@
 package br.com.eits.missoes.domain.tests.mission;
 
 import java.time.Instant;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -66,18 +64,32 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 		
 		//TODO: add on dataset;
 		User user = userService.findUserById(new Long(1));
-		List<MissionPassenger> missionPassengers;
-		List<MissionPilot> missionPilots;
+		List<MissionPassenger> missionPassengers = 
+				missionPassengerService.findAllMissionPassenger();
+		List<MissionPilot> missionPilots =
+				missionPilotService.findAllMissionPilot();
 		MissionTo missionTo = missionToService.findMissionToById(new Long(1));
 		MissionFrom missionFrom = missionFromService.findMissionFromById(new Long(2));
 		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
 		User plannedBy = userService.findUserById(new Long(1));
-		
+
 		
 		/****/
 		mission.setDateTime(now);
 		mission.setReason("Viagem a negócios");
 		mission.setPlannedBy(user);
+		mission.setTo(missionTo);
+		mission.setFrom(missionFrom);
+		mission.setPilots(missionPilots);
+		mission.setPassengers(missionPassengers);
+		mission.setAirplane(airplane);
+		mission.setPlannedBy(plannedBy);
+		
+		Mission insertedMission = missionService.insertMission(mission);
+		
+		Assert.assertNotNull(mission);
+		Assert.assertEquals("Viagem a negócios", insertedMission.getReason());
+		
 	}
 	
 }
