@@ -20,6 +20,11 @@ public class MissionPassengerService {
 	IMissionPassengerRepository missionPassengerRepository;
 	
 	@Transactional
+	public List<MissionPassenger> findAllMissionPassenger() {
+		return missionPassengerRepository.findAll();
+	}
+	
+	@Transactional
 	public MissionPassenger insertMissionPassenger(MissionPassenger missionPassenger) {
 		return missionPassengerRepository.saveAndFlush(missionPassenger);
 	}

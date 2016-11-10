@@ -26,22 +26,22 @@ public class MissionToService {
 	}
 	
 	@Transactional
-	MissionTo findMissionById(Long missionToId) {
+	public MissionTo findMissionToById(Long missionToId) {
 		return missionToRepository.findMissionToById(missionToId);
 	}
 	
 	@Transactional
-	List<MissionTo> findAllMissionTo() {
+	public List<MissionTo> findAllMissionTo() {
 		return missionToRepository.findAll();
 	}
 	
 	@Transactional
-	List<MissionTo> findMissionToByAirport(Airport airport) {
+	public List<MissionTo> findMissionToByAirport(Airport airport) {
 		return missionToRepository.findMissionToByAirport(airport);
 	}
 	
 	@Transactional
-	List<MissionTo> findMissionToByMission(Mission mission) {
+	public List<MissionTo> findMissionToByMission(Mission mission) {
 		return missionToRepository.findMIssionByMission(mission);
 	}
 	

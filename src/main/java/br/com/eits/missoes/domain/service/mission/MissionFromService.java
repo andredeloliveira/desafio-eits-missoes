@@ -20,6 +20,11 @@ public class MissionFromService {
 	private IMissionFromRepository missionFromRepository;
 	
 	@Transactional
+	public List<MissionFrom> findAllMissionFrom() {
+		return missionFromRepository.findAll();
+	}
+	
+	@Transactional
 	public MissionFrom insertMissionFrom(MissionFrom missionFrom) {
 		return missionFromRepository.saveAndFlush(missionFrom);
 	}

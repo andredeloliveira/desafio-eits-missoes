@@ -20,6 +20,11 @@ public class MissionPilotService  {
 	private IMissionPilotRepository missionPilotRepository;
 	
 	@Transactional
+	public List<MissionPilot> findAllMissionPilot() {
+		return missionPilotRepository.findAll();
+	}
+	
+	@Transactional
 	public MissionPilot insertMissionPilot(MissionPilot missionPilot) {
 		return missionPilotRepository.saveAndFlush(missionPilot);
 	}

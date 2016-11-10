@@ -1,5 +1,6 @@
 package br.com.eits.missoes.domain.entity;
 
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Mission {
 	private Byte[] attachedFile;
 	
 	@Column(name = "date_time")
-	private Calendar dateTime;
+	private Instant dateTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
@@ -81,11 +82,11 @@ public class Mission {
 	public void setAttachedFile(Byte[] attachedFile) {
 		this.attachedFile = attachedFile;
 	}
-	public Calendar getDateTime() {
+	public Instant getDateTime() {
 		return dateTime;
 	}
-	public void setDate_time(Calendar dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(Instant instant) {
+		this.dateTime = instant;
 	}
 	public MissionTo getTo() {
 		return to;
