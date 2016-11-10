@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.tests;
+package br.com.eits.missoes.domain.tests.user;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
 import br.com.eits.missoes.domain.service.user.UserService;
+import br.com.eits.missoes.domain.tests.AbstractIntegrationTest;
 
 import org.junit.Assert;
 import com.github.springtestdbunit.annotation.DatabaseOperation;

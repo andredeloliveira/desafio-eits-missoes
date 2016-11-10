@@ -54,7 +54,7 @@ CREATE TABLE mission (
   id_airplane bigserial REFERENCES airplane (id_airplane),
   planned_by bigserial REFERENCES "users" (id_user),
   reason text NOT NULL,
-  attached_file text NOT NULL
+  attached_file text
 );
 
 CREATE TABLE mission_from (

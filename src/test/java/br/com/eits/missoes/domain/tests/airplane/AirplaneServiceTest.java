@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.tests;
+package br.com.eits.missoes.domain.tests.airplane;
 
 
 import java.util.List;
@@ -14,6 +14,7 @@ import br.com.eits.missoes.domain.entity.Airplane;
 import br.com.eits.missoes.domain.entity.AirplaneModel;
 import br.com.eits.missoes.domain.service.airplane.AirplaneModelService;
 import br.com.eits.missoes.domain.service.airplane.AirplaneService;
+import br.com.eits.missoes.domain.tests.AbstractIntegrationTest;
 
 
 public class AirplaneServiceTest extends AbstractIntegrationTest{
