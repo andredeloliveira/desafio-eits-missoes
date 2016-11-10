@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -19,7 +20,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @created 04-Nov-2016 10:14:25 AM
  */
 
-@Entity
+@Entity(name = "airplane")
 public class Airplane {
 
 	@Id
@@ -28,8 +29,8 @@ public class Airplane {
 	private Long id;
 	
 	@Column(name = "total_flight_time")
-	@NotBlank(message = "O tempo total de vôo é obrigatório")
-	private double totalFlightTime;
+	@NotNull(message = "O tempo total de vôo é obrigatório")
+	private Double totalFlightTime;
 	
 	@Column(name = "subscription_number")
 	@NotBlank(message = "A matrícula é obrigatória")
@@ -37,9 +38,9 @@ public class Airplane {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_airplane_model")
-	private AirplaneModel model;
+	private AirplaneModel airplaneModel;
 	
-	@NotBlank(message = "O número de assentos da aeronave é obrigatório")
+	@NotNull(message = "O número de assentos da aeronave é obrigatório")
 	@Column(name = "seats_number")
 	private int seatsNumber;
 	
@@ -56,10 +57,10 @@ public class Airplane {
 		this.subscriptionNumber = UUID.randomUUID().toString();
 	}
 	
-	public Float getTotalFlightTime() {
+	public Double getTotalFlightTime() {
 		return totalFlightTime;
 	}
-	public void setTotalFlightTime(double totalFlightTime) {
+	public void setTotalFlightTime(Double totalFlightTime) {
 		this.totalFlightTime = totalFlightTime;
 	}
 	public String getSubscriptionNumber() {
@@ -69,10 +70,10 @@ public class Airplane {
 		this.subscriptionNumber = subscriptionNumber;
 	}
 	public AirplaneModel getModel() {
-		return model;
+		return airplaneModel;
 	}
-	public void setModel(AirplaneModel model) {
-		this.model = model;
+	public void setModel(AirplaneModel airplaneModel) {
+		this.airplaneModel = airplaneModel;
 	}
 	public int getSeatsNumber() {
 		return seatsNumber;

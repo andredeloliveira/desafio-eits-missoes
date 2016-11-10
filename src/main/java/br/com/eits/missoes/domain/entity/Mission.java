@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
  * @created 04-Nov-2016 10:34:02 AM
  */
 
-@Entity
+@Entity(name = "mission")
 public class Mission {
 
 	@Id

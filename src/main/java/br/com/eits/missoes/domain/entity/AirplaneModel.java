@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
+@Entity(name = "airplane_model")
 public class AirplaneModel {
 	
 	@Id
@@ -23,9 +23,15 @@ public class AirplaneModel {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_manufacturer")
-	private AirplaneManufacturer manufacturer;
+	@JoinColumn(name = "id_airplane_manufacturer")
+	private AirplaneManufacturer airplaneManufacturer;
 	
+	public AirplaneModel() {}
+	
+	public AirplaneModel(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	
 	public Long getId() {
 		return id;
@@ -36,10 +42,10 @@ public class AirplaneModel {
 	}
 	
 	public AirplaneManufacturer getManufacturer() {
-		return manufacturer;
+		return airplaneManufacturer;
 	}
-	public void setManufacturer(AirplaneManufacturer manufacturer) {
-		this.manufacturer = manufacturer;
+	public void setManufacturer(AirplaneManufacturer airplaneManufacturer) {
+		this.airplaneManufacturer = airplaneManufacturer;
 	}
 	public String getName() {
 		return name;

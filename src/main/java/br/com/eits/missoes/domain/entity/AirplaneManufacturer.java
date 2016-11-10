@@ -8,17 +8,17 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
+@Entity(name = "airplane_manufacturer")
 public class AirplaneManufacturer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ir_airplane_manufacturer")
+	@Column(name = "id_airplane_manufacturer")
 	private Long id;
 	
-	@Column(name = "manufacturer")
+	@Column(name = "name")
 	@NotBlank(message = "O Fabricante é obrigatório")
-	private String manufacturer;
+	private String name;
 
 	
 	public Long getId() {
@@ -28,13 +28,11 @@ public class AirplaneManufacturer {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getManufacturer() {
-		return this.manufacturer;
+	public String getName() {
+		return name;
 	}
-
-	public void setNomeFabricante(String manufacturer) {
-		this.manufacturer = manufacturer;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
 	
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.com.eits.missoes.domain.entity.Airplane;
 import br.com.eits.missoes.domain.entity.AirplaneModel;
 import br.com.eits.missoes.domain.repository.IAirplaneModelRepository;
 
@@ -19,5 +21,10 @@ public class AirplaneModelService {
 	@Transactional
 	public List<AirplaneModel> findAllAirplaneModel() {
 		return airplaneModelRepository.findAll();
+	}
+	
+	@Transactional
+	public AirplaneModel findAirplaneModelById(Long airplaneId) {
+		return airplaneModelRepository.findAirplaneModelById(airplaneId);
 	}
 }

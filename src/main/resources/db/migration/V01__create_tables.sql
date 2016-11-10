@@ -14,7 +14,7 @@ CREATE TABLE airplane_model (
 CREATE TABLE airplane (
   id_airplane bigserial PRIMARY KEY,
   subscription_number text NOT NULL,
-  total_flight_time time,
+  total_flight_time float,
   seats_number integer NOT NULL,
   id_airplane_model bigserial REFERENCES airplane_model (id_airplane_model)
 );

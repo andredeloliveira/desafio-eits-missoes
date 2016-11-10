@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
+@Entity(name = "airport")
 public class Airport {
 	
 	@Id
