@@ -5,8 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.eits.missoes.domain.entity.User;
-import br.com.eits.missoes.domain.repository.IUserRepository;
-import br.com.eits.missoes.domain.service.UserService;
+import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.domain.service.user.UserService;
 
 @Configuration
 @ComponentScan(basePackageClasses = UserService.class)

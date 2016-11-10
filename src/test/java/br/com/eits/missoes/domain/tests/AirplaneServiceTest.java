@@ -12,8 +12,8 @@ import com.github.springtestdbunit.annotation.DatabaseTearDown;
 
 import br.com.eits.missoes.domain.entity.Airplane;
 import br.com.eits.missoes.domain.entity.AirplaneModel;
-import br.com.eits.missoes.domain.service.AirplaneModelService;
-import br.com.eits.missoes.domain.service.AirplaneService;
+import br.com.eits.missoes.domain.service.airplane.AirplaneModelService;
+import br.com.eits.missoes.domain.service.airplane.AirplaneService;
 
 
 public class AirplaneServiceTest extends AbstractIntegrationTest{

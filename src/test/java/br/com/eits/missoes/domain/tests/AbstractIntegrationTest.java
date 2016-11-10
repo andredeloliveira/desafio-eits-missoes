@@ -17,7 +17,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import br.com.eits.missoes.config.JPAConfigTest;
 import br.com.eits.missoes.config.WebConfig;
-import br.com.eits.missoes.domain.repository.IUserRepository;
+import br.com.eits.missoes.domain.repository.user.IUserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class, JPAConfigTest.class})

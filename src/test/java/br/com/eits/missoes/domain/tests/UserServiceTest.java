@@ -7,8 +7,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
-import br.com.eits.missoes.domain.repository.IUserRepository;
-import br.com.eits.missoes.domain.service.UserService;
+import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.domain.service.user.UserService;
+
 import org.junit.Assert;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -67,6 +68,7 @@ public class UserServiceTest extends AbstractIntegrationTest{
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {USERS_DATASET}, connection = "dataSource")
 	public void testFindUser() {
 		User user = userService.findUser("Jonas Silveira", null);
+		System.out.println(Profile.ADMINISTRADOR);
 		Assert.assertNotNull(user);
 		Assert.assertEquals(user.getName(), "Jonas Silveira");
 	}

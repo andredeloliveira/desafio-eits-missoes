@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.service;
+package br.com.eits.missoes.domain.service.airplane;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import br.com.eits.missoes.domain.entity.AirplaneManufacturer;
-import br.com.eits.missoes.domain.repository.IAirplaneManufacturerRepository;
+import br.com.eits.missoes.domain.repository.airplane.IAirplaneManufacturerRepository;
 
 @Service
 @Configurable

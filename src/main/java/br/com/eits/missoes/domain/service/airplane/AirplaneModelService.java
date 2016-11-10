@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.service;
+package br.com.eits.missoes.domain.service.airplane;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.eits.missoes.domain.entity.Airplane;
 import br.com.eits.missoes.domain.entity.AirplaneModel;
-import br.com.eits.missoes.domain.repository.IAirplaneModelRepository;
+import br.com.eits.missoes.domain.repository.airplane.IAirplaneModelRepository;
 
 @Service
 @Configurable

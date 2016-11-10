@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.service;
+package br.com.eits.missoes.domain.service.user;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
-import br.com.eits.missoes.domain.repository.IUserRepository;
+import br.com.eits.missoes.domain.repository.user.IUserRepository;
 
 @Service
 @Configurable

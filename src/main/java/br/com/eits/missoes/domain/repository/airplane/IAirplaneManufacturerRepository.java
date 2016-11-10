@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.repository;
+package br.com.eits.missoes.domain.repository.airplane;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -13,7 +13,7 @@
 	  id_user="2"
 	  name="Pedro Barroso"
 	  email="jj@ds.com"
-	  profile="0"
+	  profile="1"
 	  password="48dfd90nfkljd"
 		status="ATIVO"
 	/>
@@ -21,7 +21,7 @@
 	  id_user="3"
 	  name="Milena Souza"
 	  email="mi@ss.com"
-	  profile="1"
+	  profile="2"
 	  password="487490nfddkljd"
 		status="ATIVO"
 	/>

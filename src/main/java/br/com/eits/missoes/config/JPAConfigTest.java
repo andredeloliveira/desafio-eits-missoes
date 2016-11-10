@@ -13,8 +13,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import br.com.eits.missoes.domain.repository.IUserRepository;
-import br.com.eits.missoes.domain.service.UserService;
+
+import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.domain.service.user.UserService;
 
 @Configuration
 @ComponentScan(basePackageClasses = {IUserRepository.class, UserService.class})

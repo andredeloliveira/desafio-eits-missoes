@@ -1,4 +1,4 @@
-package br.com.eits.missoes.domain.repository;
+package br.com.eits.missoes.domain.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
