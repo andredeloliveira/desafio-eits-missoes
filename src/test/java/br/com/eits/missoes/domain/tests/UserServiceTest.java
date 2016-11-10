@@ -47,6 +47,16 @@ public class UserServiceTest extends AbstractIntegrationTest{
 	@Test
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {USERS_DATASET}, connection = "dataSource")
 	@DatabaseTearDown(CLEAN_DATASET)
+	public void testRemoveUser() {
+		User user = userService.findUserById(new Long(1));
+		userService.removeUser(user);
+		List<User> users = userService.findAllUsers();
+		Assert.assertEquals(2, users.size());
+	}
+	
+	@Test
+	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {USERS_DATASET}, connection = "dataSource")
+	@DatabaseTearDown(CLEAN_DATASET)
 	public void testFindAllUsers() {
 		List<User> users = userService.findAllUsers();
 		Assert.assertNotNull(users);

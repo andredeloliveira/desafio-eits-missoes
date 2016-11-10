@@ -1,0 +1,28 @@
+<dataset>
+
+<airplane 
+    id_airplane="1"
+    seats_number="200"
+    total_flight_time="500.44"
+    subscription_number="fkjdlk9393"
+    id_airplane_model="122"
+
+/>
+<airplane 
+    id_airplane="2"
+    seats_number="343"
+    total_flight_time="343.33"
+    subscription_number="3423kjlkdj"
+    id_airplane_model="122"
+
+/>
+<airplane 
+    id_airplane="3"
+    seats_number="344"
+    total_flight_time="344.0"
+    subscription_number="fjdklajf908d"
+    id_airplane_model="122"
+
+/>
+
+</dataset>

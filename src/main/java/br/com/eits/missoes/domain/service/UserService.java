@@ -16,28 +16,42 @@ import br.com.eits.missoes.domain.repository.IUserRepository;
 public class UserService {
 	
 	@Autowired(required = false)
-	private IUserRepository users;
+	private IUserRepository userRepository;
+	
+	/*Insert based methods*/
 	
 	@Transactional
 	public User insertUser(User user) {
-		return users.saveAndFlush(user);
+		return userRepository.saveAndFlush(user);
 	}
 	
 	@Transactional
+	public void removeUser(User user) {
+		userRepository.delete(user);
+	}
+	
+	/**/
+	
+	/*Find based methods*/
+	@Transactional
 	public List<User> findAllUsers() {
-		return users.findAll();
+		return userRepository.findAll();
 	}
 	
 	@Transactional
 	public User findUser(String name, Profile profile) {
 		if (name != null) {
-			return users.findUserByName(name);
+			return userRepository.findUserByName(name);
 		} else if (profile != null) {
-			return users.findUserByProfile(profile);
+			return userRepository.findUserByProfile(profile);
 		}
 		return null;
 	}
 
+	@Transactional
+	public User findUserById(Long userId) {
+		return userRepository.findUserById(userId);
+	}
 	
 	
 }
