@@ -22,7 +22,7 @@ public class MissionPassenger {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_passenger")
-	private User passenger;
+	private User user;
 	
 	public Long getId() {
 		return id;
@@ -41,11 +41,11 @@ public class MissionPassenger {
 	}
 	
 	public User getPassenger() {
-		return passenger;
+		return user;
 	}
 	
 	public void setPassenger(User passenger) {
-		this.passenger = passenger;
+		this.user = passenger;
 	}
 	
 }

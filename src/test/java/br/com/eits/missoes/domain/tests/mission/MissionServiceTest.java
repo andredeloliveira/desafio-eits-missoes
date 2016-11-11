@@ -27,6 +27,8 @@ import br.com.eits.missoes.domain.service.mission.MissionToService;
 import br.com.eits.missoes.domain.service.user.UserService;
 import br.com.eits.missoes.domain.tests.AbstractIntegrationTest;
 
+
+
 public class MissionServiceTest extends AbstractIntegrationTest{
 	
 	public static final String CLEAN_DATASET = "classpath:datasets/AbstractDataset.xml";
@@ -63,15 +65,29 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 		Instant now = Instant.now();
 		
 		//TODO: add on dataset;
+		
+		/*
+		 * check all services if they are all available
+		 * */
+		
 		User user = userService.findUserById(new Long(1));
 		List<MissionPassenger> missionPassengers = 
 				missionPassengerService.findAllMissionPassenger();
+		System.out.println("pass" + missionPassengers);
 		List<MissionPilot> missionPilots =
 				missionPilotService.findAllMissionPilot();
 		MissionTo missionTo = missionToService.findMissionToById(new Long(1));
 		MissionFrom missionFrom = missionFromService.findMissionFromById(new Long(2));
 		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
 		User plannedBy = userService.findUserById(new Long(1));
+		
+		
+		
+		System.out.println("pilot" + missionPilots);
+		System.out.println("airpl" + airplane);
+		System.out.println("from" + missionFrom);
+		System.out.println("to" + missionTo);
+		System.out.println("plan" + plannedBy);
 
 		
 		/****/

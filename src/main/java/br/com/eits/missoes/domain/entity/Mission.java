@@ -40,11 +40,11 @@ public class Mission {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
-	private MissionTo to;
+	private MissionTo missionTo;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_from")
-	private MissionFrom from;
+	private MissionFrom missionFrom;
 	
 	@Column(name = "reason")
 	private String reason;
@@ -89,16 +89,16 @@ public class Mission {
 		this.dateTime = instant;
 	}
 	public MissionTo getTo() {
-		return to;
+		return missionTo;
 	}
 	public void setTo(MissionTo to) {
-		this.to = to;
+		this.missionTo = to;
 	}
 	public MissionFrom getFrom() {
-		return from;
+		return missionFrom;
 	}
 	public void setFrom(MissionFrom from) {
-		this.from = from;
+		this.missionFrom = from;
 	}
 	public List<MissionPassenger> getPassengers() {
 		return passengers;

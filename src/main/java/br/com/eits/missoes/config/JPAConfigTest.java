@@ -14,12 +14,55 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import br.com.eits.missoes.domain.repository.airplane.IAirplaneManufacturerRepository;
+import br.com.eits.missoes.domain.repository.airplane.IAirplaneModelRepository;
+import br.com.eits.missoes.domain.repository.airplane.IAirplaneRepository;
+import br.com.eits.missoes.domain.repository.mission.IMissionFromRepository;
+import br.com.eits.missoes.domain.repository.mission.IMissionPassengerRepository;
+import br.com.eits.missoes.domain.repository.mission.IMissionPilotRepository;
+import br.com.eits.missoes.domain.repository.mission.IMissionRepository;
+import br.com.eits.missoes.domain.repository.mission.IMissionToRepository;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.domain.service.airplane.AirplaneService;
+import br.com.eits.missoes.domain.service.mission.MissionFromService;
+import br.com.eits.missoes.domain.service.mission.MissionPassengerService;
+import br.com.eits.missoes.domain.service.mission.MissionPilotService;
+import br.com.eits.missoes.domain.service.mission.MissionService;
+import br.com.eits.missoes.domain.service.mission.MissionToService;
 import br.com.eits.missoes.domain.service.user.UserService;
 
 @Configuration
-@ComponentScan(basePackageClasses = {IUserRepository.class, UserService.class})
-@EnableJpaRepositories(basePackageClasses = IUserRepository.class)
+@ComponentScan(basePackageClasses = {
+		IUserRepository.class, 
+		UserService.class,
+		IMissionPassengerRepository.class,
+		MissionPassengerService.class,
+		IMissionPilotRepository.class,
+		MissionPilotService.class,
+		IMissionFromRepository.class,
+		MissionFromService.class,
+		IMissionToRepository.class,
+		MissionToService.class,
+		IMissionRepository.class,
+		MissionService.class,
+		IAirplaneRepository.class,
+		AirplaneService.class,
+		IAirplaneModelRepository.class,
+		AirplaneService.class,
+		IAirplaneManufacturerRepository.class,
+		AirplaneService.class
+})
+@EnableJpaRepositories(basePackageClasses = {
+		IUserRepository.class,
+		IMissionFromRepository.class,
+		IMissionToRepository.class,
+		IMissionPassengerRepository.class,
+		IMissionPilotRepository.class,
+		IMissionRepository.class,
+		IAirplaneRepository.class,
+		IAirplaneManufacturerRepository.class,
+		IAirplaneModelRepository.class
+})
 @EnableTransactionManagement
 public class JPAConfigTest {
 

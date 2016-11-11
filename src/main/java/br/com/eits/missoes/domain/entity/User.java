@@ -24,7 +24,6 @@ public class User {
 	private Long id;
 	
 	@Column(name = "email")
-	@Pattern(regexp = "/.+@.+/", message= "E-mail inválido")
 	@NotBlank(message = "Email é obrigaório")
 	private String email;
 	
