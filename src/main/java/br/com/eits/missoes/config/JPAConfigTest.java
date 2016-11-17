@@ -1,5 +1,7 @@
 package br.com.eits.missoes.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,18 +19,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import br.com.eits.missoes.domain.repository.airplane.IAirplaneManufacturerRepository;
 import br.com.eits.missoes.domain.repository.airplane.IAirplaneModelRepository;
 import br.com.eits.missoes.domain.repository.airplane.IAirplaneRepository;
-import br.com.eits.missoes.domain.repository.mission.IMissionFromRepository;
+import br.com.eits.missoes.domain.repository.airport.IAirportRepository;
 import br.com.eits.missoes.domain.repository.mission.IMissionPassengerRepository;
 import br.com.eits.missoes.domain.repository.mission.IMissionPilotRepository;
 import br.com.eits.missoes.domain.repository.mission.IMissionRepository;
-import br.com.eits.missoes.domain.repository.mission.IMissionToRepository;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
 import br.com.eits.missoes.domain.service.airplane.AirplaneService;
-import br.com.eits.missoes.domain.service.mission.MissionFromService;
+import br.com.eits.missoes.domain.service.airport.AirportService;
 import br.com.eits.missoes.domain.service.mission.MissionPassengerService;
 import br.com.eits.missoes.domain.service.mission.MissionPilotService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
-import br.com.eits.missoes.domain.service.mission.MissionToService;
 import br.com.eits.missoes.domain.service.user.UserService;
 
 @Configuration
@@ -39,10 +39,6 @@ import br.com.eits.missoes.domain.service.user.UserService;
 		MissionPassengerService.class,
 		IMissionPilotRepository.class,
 		MissionPilotService.class,
-		IMissionFromRepository.class,
-		MissionFromService.class,
-		IMissionToRepository.class,
-		MissionToService.class,
 		IMissionRepository.class,
 		MissionService.class,
 		IAirplaneRepository.class,
@@ -50,18 +46,19 @@ import br.com.eits.missoes.domain.service.user.UserService;
 		IAirplaneModelRepository.class,
 		AirplaneService.class,
 		IAirplaneManufacturerRepository.class,
-		AirplaneService.class
+		AirplaneService.class,
+		IAirportRepository.class,
+		AirportService.class
 })
 @EnableJpaRepositories(basePackageClasses = {
 		IUserRepository.class,
-		IMissionFromRepository.class,
-		IMissionToRepository.class,
 		IMissionPassengerRepository.class,
 		IMissionPilotRepository.class,
 		IMissionRepository.class,
 		IAirplaneRepository.class,
 		IAirplaneManufacturerRepository.class,
-		IAirplaneModelRepository.class
+		IAirplaneModelRepository.class,
+		IAirportRepository.class
 })
 @EnableTransactionManagement
 public class JPAConfigTest {
@@ -84,6 +81,7 @@ public class JPAConfigTest {
 	    em.setPackagesToScan(new String[] { "br.com.eits.missoes.domain.entity" });
 	    JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 	    em.setJpaVendorAdapter(vendorAdapter);
+	    em.setJpaProperties(additionalProperties());
 	    return em;
 	}
 	
@@ -93,6 +91,15 @@ public class JPAConfigTest {
 		transactionManager.setDataSource(dataSource());
 		transactionManager.setJpaDialect(new HibernateJpaDialect());
 		return transactionManager;
+	}
+	
+	Properties additionalProperties() {
+    Properties properties = new Properties();
+    properties.setProperty("hibernate.hbm2ddl.auto", "update");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
+    properties.setProperty("hibernate.show_sql", "true");
+    properties.setProperty("hibernate.format_sql", "false");
+    return properties;
 	}
 }
 

@@ -12,18 +12,16 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 
 import br.com.eits.missoes.domain.entity.Airplane;
+import br.com.eits.missoes.domain.entity.Airport;
 import br.com.eits.missoes.domain.entity.Mission;
-import br.com.eits.missoes.domain.entity.MissionFrom;
 import br.com.eits.missoes.domain.entity.MissionPassenger;
 import br.com.eits.missoes.domain.entity.MissionPilot;
-import br.com.eits.missoes.domain.entity.MissionTo;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.service.airplane.AirplaneService;
-import br.com.eits.missoes.domain.service.mission.MissionFromService;
+import br.com.eits.missoes.domain.service.airport.AirportService;
 import br.com.eits.missoes.domain.service.mission.MissionPassengerService;
 import br.com.eits.missoes.domain.service.mission.MissionPilotService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
-import br.com.eits.missoes.domain.service.mission.MissionToService;
 import br.com.eits.missoes.domain.service.user.UserService;
 import br.com.eits.missoes.domain.tests.AbstractIntegrationTest;
 
@@ -40,11 +38,7 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 	@Autowired(required = false)
 	private UserService userService;
 	
-	@Autowired(required = false)
-	private MissionToService missionToService;
 	
-	@Autowired(required = false)
-	private MissionFromService missionFromService;
 	
 	@Autowired(required = false)
 	private MissionPassengerService missionPassengerService;
@@ -54,6 +48,9 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 	
 	@Autowired(required = false)
 	private AirplaneService airplaneService;
+	
+	@Autowired(required = false)
+	private AirportService airportService;
 		
 	
 	@Test
@@ -76,32 +73,32 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 		System.out.println("pass" + missionPassengers);
 		List<MissionPilot> missionPilots =
 				missionPilotService.findAllMissionPilot();
-		MissionTo missionTo = missionToService.findMissionToById(new Long(1));
-		MissionFrom missionFrom = missionFromService.findMissionFromById(new Long(2));
+
 		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
 		User plannedBy = userService.findUserById(new Long(1));
 		
 		
+		Airport missionTo = airportService.findAirportByAcronym("IGU");
+		Airport missionFrom = airportService.findAirportByAcronym("GRU");
 		
-		System.out.println("pilot" + missionPilots);
-		System.out.println("airpl" + airplane);
-		System.out.println("from" + missionFrom);
-		System.out.println("to" + missionTo);
-		System.out.println("plan" + plannedBy);
-
+		
+		System.out.println("pilot " + missionPilots);
+		System.out.println("airpl " + airplane.getId());
+		System.out.println("plan " + plannedBy);
+		System.out.println("time "+ now);
 		
 		/****/
 		mission.setDateTime(now);
 		mission.setReason("Viagem a negócios");
-		mission.setPlannedBy(user);
-		mission.setTo(missionTo);
-		mission.setFrom(missionFrom);
 		mission.setPilots(missionPilots);
 		mission.setPassengers(missionPassengers);
-		mission.setAirplane(airplane);
-		mission.setPlannedBy(plannedBy);
+		mission.setMissionTo(missionTo);
+		mission.setMissionFrom(missionFrom);
+		mission.setAirplane(new Airplane(1L));
 		
 		Mission insertedMission = missionService.insertMission(mission);
+		
+		System.out.println("this mission was just inserted! "+ insertedMission.getId());
 		
 		Assert.assertNotNull(mission);
 		Assert.assertEquals("Viagem a negócios", insertedMission.getReason());

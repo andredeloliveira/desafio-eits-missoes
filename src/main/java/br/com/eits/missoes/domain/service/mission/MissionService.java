@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.eits.missoes.domain.entity.Airport;
 import br.com.eits.missoes.domain.entity.Mission;
-import br.com.eits.missoes.domain.entity.MissionFrom;
-import br.com.eits.missoes.domain.entity.MissionTo;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.repository.mission.IMissionRepository;
 
@@ -31,19 +30,14 @@ public class MissionService {
 	} 
 	
 	@Transactional
-	public List<Mission> findMissionByMissionFrom(MissionFrom missionFrom) {
+	public List<Mission> findMissionByMissionFrom(Airport missionFrom) {
 		return missionRepository.findMissionByMissionFrom(missionFrom);
 	}
 	
+	
 	@Transactional
-	public List<Mission> findMisssionByMissionTo(MissionTo missionTo) {
+	public List<Mission> findMisssionByMissionTo(Airport missionTo) {
 		return missionRepository.findMissionByMissionTo(missionTo);
 	}
-	
-	@Transactional
-	public List<Mission> findMissionByPlannedBy(User plannedBy) {
-		return missionRepository.findMissionByPlannedBy(plannedBy);
-	}
-	
 	
 }

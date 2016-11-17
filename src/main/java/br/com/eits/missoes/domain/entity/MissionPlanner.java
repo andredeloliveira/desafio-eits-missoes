@@ -8,21 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "mission_from")
-public class MissionFrom {
-	
+@Entity(name = "mission")
+public class MissionPlanner {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_mission_from")
+	@Column(name = "id_mission_planner")
 	private Long id;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission")
 	private Mission mission;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_airport")
-	private Airport airport;
+	@JoinColumn(name = "id_user")
+	private User planner;
 	
 	public Long getId() {
 		return id;
@@ -32,19 +33,12 @@ public class MissionFrom {
 		this.id = id;
 	}
 	
-	public Mission getMission() {
-		return this.mission;
+	public User getPlanner() {
+		return planner;
 	}
 	
-	public void setMission(Mission mission) {
-		this.mission = mission;
+	public void setPlanner(User planner) {
+		this.planner = planner;
 	}
 	
-	public Airport getAirport() {
-		return this.airport;
-	}
-	
-	public void setAirport(Airport airport) {
-		this.airport = airport;
-	}
 }

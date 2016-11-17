@@ -40,26 +40,21 @@ public class Mission {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
-	private MissionTo missionTo;
+	private Airport missionTo;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_from")
-	private MissionFrom missionFrom;
+	private Airport missionFrom;
 	
 	@Column(name = "reason")
 	private String reason;
 	
 	@OneToMany
-	@JoinColumn(name = "id_mission_passenger")
 	private List<MissionPassenger> passengers;
 	
 	@OneToMany
-	@JoinColumn(name = "id_mission_pilot")
 	private List<MissionPilot> pilots;
 	
-	@OneToOne
-	@JoinColumn(name = "planned_by")
-	private User plannedBy;
 	
 	
 	public Long getId() {
@@ -70,9 +65,11 @@ public class Mission {
 		this.id = id;
 	}
 	
+	
 	public Airplane getAirplane() {
 		return airplane;
 	}
+	
 	public void setAirplane(Airplane airplane) {
 		this.airplane = airplane;
 	}
@@ -88,16 +85,16 @@ public class Mission {
 	public void setDateTime(Instant instant) {
 		this.dateTime = instant;
 	}
-	public MissionTo getTo() {
+	public Airport getMissionTo() {
 		return missionTo;
 	}
-	public void setTo(MissionTo to) {
+	public void setMissionTo(Airport to) {
 		this.missionTo = to;
 	}
-	public MissionFrom getFrom() {
+	public Airport getMissionFrom() {
 		return missionFrom;
 	}
-	public void setFrom(MissionFrom from) {
+	public void setMissionFrom(Airport from) {
 		this.missionFrom = from;
 	}
 	public List<MissionPassenger> getPassengers() {
@@ -117,12 +114,6 @@ public class Mission {
 	}
 	public void setPilots(List<MissionPilot> pilots) {
 		this.pilots = pilots;
-	}
-	public User getPlannedBy() {
-		return plannedBy;
-	}
-	public void setPlannedBy(User plannedBy) {
-		this.plannedBy = plannedBy;
 	}
 
 	

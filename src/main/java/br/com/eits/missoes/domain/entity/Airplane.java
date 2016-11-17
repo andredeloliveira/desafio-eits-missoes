@@ -43,7 +43,11 @@ public class Airplane {
 	@NotNull(message = "O número de assentos da aeronave é obrigatório")
 	@Column(name = "seats_number")
 	private int seatsNumber;
+
 	
+	public Airplane(Long id) {
+		this.id = id;
+	}
 	
 	public Long getId() {
 		return id;

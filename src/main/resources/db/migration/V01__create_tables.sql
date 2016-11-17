@@ -49,25 +49,13 @@ CREATE TABLE airport (
 CREATE TABLE mission (
   id_mission bigserial PRIMARY KEY,
   date_time timestamptz NOT NULL,
-  id_from bigserial REFERENCES airport (id_airport),
-  id_to bigserial REFERENCES airport (id_airport),
+  id_mission_from bigserial REFERENCES airport (id_airport) ,
+  id_mission_to bigserial REFERENCES airport (id_airport),
   id_airplane bigserial REFERENCES airplane (id_airplane),
-  planned_by bigserial REFERENCES "users" (id_user),
-  reason text NOT NULL,
+  reason text,
   attached_file text
 );
 
-CREATE TABLE mission_from (
-  id_mission_from bigserial PRIMARY KEY,
-  id_mission bigserial REFERENCES mission (id_mission),
-  id_airport bigserial REFERENCES airport (id_airport)
-);
-
-CREATE TABLE mission_to (
-  id_mission_to bigserial PRIMARY KEY,
-  id_mission bigserial REFERENCES mission (id_mission),
-  id_airport bigserial REFERENCES airport (id_airport)
-);
 
 CREATE TABLE mission_passenger (
   id_mission_passenger bigserial PRIMARY KEY,
