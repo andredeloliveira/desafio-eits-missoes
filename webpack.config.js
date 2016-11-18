@@ -19,7 +19,8 @@ module.exports = {
                     cacheDirectory: true,
                     presets: ['es2015', 'react']
                 }
-            }
+            },
+            'imports?jQuery=jquery,$=jquery,this=>window'
         ]
     }
 };
