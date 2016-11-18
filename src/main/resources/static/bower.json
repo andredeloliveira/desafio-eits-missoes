@@ -1,0 +1,27 @@
+{
+  "name": "desafio-missoews",
+  "description": "Ice-cold cool",
+  "main": "webpack.config.js",
+  "authors": [
+    "Andre de Oliveira"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "spring",
+    "webpack"
+  ],
+  "homepage": "https://github.com/andredeloliveira/desafio-eits-missoes",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.20",
+    "rest": "~1.3.1",
+    "requirejs-react-jsx": "~0.14.2"
+  }
+}

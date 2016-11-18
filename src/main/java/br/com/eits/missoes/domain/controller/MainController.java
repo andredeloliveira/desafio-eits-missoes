@@ -14,9 +14,9 @@ import br.com.eits.missoes.domain.entity.User;
 @Controller
 public class MainController {
 
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String login(User user) {
-		return "/login/entrar";
+		return "/index";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)

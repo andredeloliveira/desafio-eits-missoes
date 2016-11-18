@@ -50,6 +50,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     	return engine;
     }
     
+    
+    
     private ITemplateResolver templateResolver() {
     	SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
     	resolver.setApplicationContext(applicationContext);
@@ -61,5 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     
     public void addResourceHandlers(ResourceHandlerRegistry registry){
     	registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+    	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/assets/");
     }
 }
