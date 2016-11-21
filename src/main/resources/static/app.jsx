@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Dashboard } from './Dashboard.jsx';
-import { Missions } from './Missions.jsx';
+import { MainComponent } from './Missions.jsx';
 
 export default class App extends React.Component {
 
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   	return (
   		<MuiThemeProvider>
-  		  <Missions main={main}/>
+  		  <MainComponent main={main}/>
   		</MuiThemeProvider>
   	)
   }

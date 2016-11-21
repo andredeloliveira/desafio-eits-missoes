@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
 
-export class Missions extends React.Component {
+export class MainComponent extends React.Component {
 
   constructor(props) {
     super(props);
