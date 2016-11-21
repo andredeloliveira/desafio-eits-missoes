@@ -1,7 +1,10 @@
 var path = require('path');
 
 module.exports = {
-    entry: './src/main/resources/static/app.jsx',
+    entry: ['./src/main/resources/static/app.jsx', 
+    	'./src/main/resources/static/Header.jsx',
+    	'./src/main/resources/static/Footer.jsx'
+    ],
     devtool: 'sourcemaps',
     cache: true,
     debug: true,
@@ -19,8 +22,7 @@ module.exports = {
                     cacheDirectory: true,
                     presets: ['es2015', 'react']
                 }
-            },
-            'imports?jQuery=jquery,$=jquery,this=>window'
+            }
         ]
     }
 };

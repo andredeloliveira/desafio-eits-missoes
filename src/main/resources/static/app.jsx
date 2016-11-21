@@ -1,44 +1,33 @@
 import { Router, Route, hashHistory } from 'react-router';
-const React = require('react');
-const ReactDOM = require('react-dom');
-import $  from 'jquery';
-import 'materialize-css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { About } from './About.jsx';
+import { Missions } from './Missions.jsx';
 
 export default class App extends React.Component {
 
   constructor(props) {
   	super(props)
+    injectTapEventPlugin();
   }
-  
-  optionsRender() {
-    let collection = ['1','2','3','4','5','6']
-    return collection.map((collectionItem, index) => {
-    	return (
-    		<option key={index} value={collectionItem}>{collectionItem}</option>
-    	)
-    });
-  }
-  
-  
+
   render() {
-	
-	
+    const { main } = this.props;
   	return (
-  		<div>
-			<h1>YAY root app</h1>
-			<select>
-				{this.optionsRender()}
-			</select>
-  		</div>
+  		<MuiThemeProvider>
+  		  <Missions main={main}/>
+  		</MuiThemeProvider>
   	)
   }
 }
 
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path="/" component={App} />
-    <Route path="/about" component={About} />
+    <Route components={App}>
+      <Route path="/" components={{ main: About}} />
+    </Route>
   </Router>,
   document.getElementById('react')
 )
