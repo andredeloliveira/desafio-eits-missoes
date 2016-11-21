@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { About } from './About.jsx';
+import { Dashboard } from './Dashboard.jsx';
 import { Missions } from './Missions.jsx';
 
 export default class App extends React.Component {
@@ -15,6 +15,7 @@ export default class App extends React.Component {
 
   render() {
     const { main } = this.props;
+
   	return (
   		<MuiThemeProvider>
   		  <Missions main={main}/>
@@ -26,7 +27,7 @@ export default class App extends React.Component {
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route components={App}>
-      <Route path="/" components={{ main: About}} />
+      <Route path="/" components={{ main: Dashboard}} />
     </Route>
   </Router>,
   document.getElementById('react')
