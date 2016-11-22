@@ -85,9 +85,9 @@
 	
 	var _Airplanes = __webpack_require__(490);
 	
-	var _Users = __webpack_require__(603);
+	var _Users = __webpack_require__(605);
 	
-	var _Missions = __webpack_require__(604);
+	var _Missions = __webpack_require__(606);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -58593,6 +58593,10 @@
 	
 	var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
 	
+	var _MissionPassengers = __webpack_require__(603);
+	
+	var _MissionPilots = __webpack_require__(604);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58648,23 +58652,9 @@
 	      console.log('input query', inputQuery);
 	    }
 	  }, {
-	    key: 'handleUpdatePilots',
-	    value: function handleUpdatePilots(inputQuery) {
-	      console.log('input query', inputQuery);
-	    }
-	  }, {
-	    key: 'handleUpdatePassengers',
-	    value: function handleUpdatePassengers(inputQuery) {
-	      console.log('input query', inputQuery);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var airportDataSource = ['IGU - Foz do Iguaçu', 'GRU - Guarulhos', 'GIG - Galeão'];
-	      var pilotsDataSource = ['Mariana', 'Natália', 'Luíza', 'Andrea'];
-	
-	      var passengersDataSource = ['Antonio', 'Diego', 'Thomas', 'Hugo'];
-	
 	      return _react2.default.createElement(
 	        'form',
 	        { onSubmit: this.submitData },
@@ -58702,18 +58692,8 @@
 	            onUpdateInput: this.handleUpdateInputTo,
 	            fullWidth: true
 	          }),
-	          _react2.default.createElement(_AutoComplete2.default, {
-	            hintText: 'Pilotos',
-	            dataSource: pilotsDataSource,
-	            onUpdateInput: this.handleUpdatePilots,
-	            fullWidth: true
-	          }),
-	          _react2.default.createElement(_AutoComplete2.default, {
-	            hintText: 'Passageiros',
-	            dataSource: passengersDataSource,
-	            onUpdateInput: this.handleUpdatePassengers,
-	            fullWidth: true
-	          })
+	          _react2.default.createElement(_MissionPilots.MissionPilots, null),
+	          _react2.default.createElement(_MissionPassengers.MissionPassengers, null)
 	        )
 	      );
 	    }
@@ -64441,6 +64421,164 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.MissionPassengers = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _AutoComplete = __webpack_require__(598);
+	
+	var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
+	
+	var _FloatingActionButton = __webpack_require__(545);
+	
+	var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
+	
+	var _add = __webpack_require__(547);
+	
+	var _add2 = _interopRequireDefault(_add);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MissionPassengers = exports.MissionPassengers = function (_React$Component) {
+	  _inherits(MissionPassengers, _React$Component);
+	
+	  function MissionPassengers(props) {
+	    _classCallCheck(this, MissionPassengers);
+	
+	    var _this = _possibleConstructorReturn(this, (MissionPassengers.__proto__ || Object.getPrototypeOf(MissionPassengers)).call(this, props));
+	
+	    _this.handleUpdatePassengers = _this.handleUpdatePassengers.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(MissionPassengers, [{
+	    key: 'handleUpdatePassengers',
+	    value: function handleUpdatePassengers(inputQuery) {
+	      console.log('input query', inputQuery);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var passengersDataSource = ['Antonio', 'Diego', 'Thomas', 'Hugo'];
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_AutoComplete2.default, {
+	          hintText: 'Passageiros',
+	          dataSource: passengersDataSource,
+	          onUpdateInput: this.handleUpdatePassengers
+	        }),
+	        _react2.default.createElement(
+	          _FloatingActionButton2.default,
+	          { mini: true },
+	          _react2.default.createElement(_add2.default, null)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MissionPassengers;
+	}(_react2.default.Component);
+
+/***/ },
+/* 604 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.MissionPilots = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _AutoComplete = __webpack_require__(598);
+	
+	var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
+	
+	var _FloatingActionButton = __webpack_require__(545);
+	
+	var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
+	
+	var _add = __webpack_require__(547);
+	
+	var _add2 = _interopRequireDefault(_add);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MissionPilots = exports.MissionPilots = function (_React$Component) {
+	  _inherits(MissionPilots, _React$Component);
+	
+	  function MissionPilots(props) {
+	    _classCallCheck(this, MissionPilots);
+	
+	    var _this = _possibleConstructorReturn(this, (MissionPilots.__proto__ || Object.getPrototypeOf(MissionPilots)).call(this, props));
+	
+	    _this.handleUpdatePilots = _this.handleUpdatePilots.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(MissionPilots, [{
+	    key: 'handleUpdatePilots',
+	    value: function handleUpdatePilots(inputQuery) {
+	      console.log('input query', inputQuery);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var pilotsDataSource = ['Mariana', 'Natália', 'Luíza', 'Andrea'];
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_AutoComplete2.default, {
+	          hintText: 'Pilotos',
+	          dataSource: pilotsDataSource,
+	          onUpdateInput: this.handleUpdatePilots
+	        }),
+	        _react2.default.createElement(
+	          _FloatingActionButton2.default,
+	          { mini: true },
+	          _react2.default.createElement(_add2.default, null)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MissionPilots;
+	}(_react2.default.Component);
+
+/***/ },
+/* 605 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.Users = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -64483,7 +64621,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 604 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

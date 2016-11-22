@@ -5,7 +5,8 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
-
+import { MissionPassengers } from './MissionPassengers.jsx';
+import { MissionPilots } from './MissionPilots.jsx';
 export class MissionForm extends React.Component {
 
   constructor(props) {
@@ -44,13 +45,6 @@ export class MissionForm extends React.Component {
     console.log('input query', inputQuery)
   }
 
-  handleUpdatePilots(inputQuery) {
-    console.log('input query', inputQuery);
-  }
-
-  handleUpdatePassengers(inputQuery) {
-    console.log('input query', inputQuery)
-  }
 
   render() {
     const airportDataSource = [
@@ -58,20 +52,6 @@ export class MissionForm extends React.Component {
       'GRU - Guarulhos',
       'GIG - Galeão'
     ]
-    const pilotsDataSource = [
-      'Mariana',
-      'Natália',
-      'Luíza',
-      'Andrea'
-    ]
-
-    const passengersDataSource = [
-      'Antonio',
-      'Diego',
-      'Thomas',
-      'Hugo'
-    ]
-
     return (
       <form onSubmit={this.submitData}>
         <div>
@@ -104,18 +84,8 @@ export class MissionForm extends React.Component {
             onUpdateInput={this.handleUpdateInputTo}
             fullWidth={true}
           />
-          <AutoComplete
-            hintText="Pilotos"
-            dataSource={pilotsDataSource}
-            onUpdateInput={this.handleUpdatePilots}
-            fullWidth={true}
-          />
-          <AutoComplete
-            hintText="Passageiros"
-            dataSource={passengersDataSource}
-            onUpdateInput={this.handleUpdatePassengers}
-            fullWidth={true}
-          />
+        <MissionPilots />
+        <MissionPassengers />
         </div>
       </form>
     )
