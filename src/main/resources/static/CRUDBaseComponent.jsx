@@ -1,7 +1,6 @@
 import React from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import { Table, Column, Cell } from 'fixed-data-table';
+import { NewEntryDialog } from './NewEntryDialog.jsx';
 
 //TODO(andredeloliveira): THis component won't be a dumb one. Many actions will happen in here.
 export class CRUDBaseComponent extends React.Component {
@@ -10,7 +9,7 @@ export class CRUDBaseComponent extends React.Component {
     super(props);
   }
 
-  tableRender() {
+  fetchedDataContainerRender() {
     const rows = [
       ['a1', 'b1', 'c1'],
       ['a2', 'b2', 'c2'],
@@ -20,25 +19,27 @@ export class CRUDBaseComponent extends React.Component {
       <span>Table goes here</span>
     )
   }
+  //Opens a new Entry dialog, that is a dependency of this component.
+  openCreateNewEntryDialog() {
+    this.refs.openDialog.handleOpen();
+  }
 
   render() {
-    const fabStyle = {
-      marginRight: '20px',
-      float: 'right',
-      marginBottom: '50px'
-    };
     const { label } = this.props;
+    const dialogContainer = {
+      marginBottom: "40px"
+    }
     return (
       <div>
         <div className="container">
           <h2>{label}</h2>
           <div>
-            { this.tableRender() }
+            { this.fetchedDataContainerRender() }
           </div>
         </div>
-          <FloatingActionButton secondary={false} style={fabStyle}>
-            <ContentAdd />
-          </FloatingActionButton>
+        <div className="dialog-container" style={dialogContainer}>
+          <NewEntryDialog ref="openDialog"/>
+        </div>
       </div>
     )
   }
