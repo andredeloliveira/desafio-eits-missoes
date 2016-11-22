@@ -25,7 +25,8 @@ export class CRUDBaseComponent extends React.Component {
   }
 
   render() {
-    const { label } = this.props;
+    const { label, name } = this.props;
+    console.log('name inside render on CRUDBaseComponent', name)
     const dialogContainer = {
       marginBottom: "40px"
     }
@@ -38,7 +39,7 @@ export class CRUDBaseComponent extends React.Component {
           </div>
         </div>
         <div className="dialog-container" style={dialogContainer}>
-          <NewEntryDialog ref="openDialog"/>
+          <NewEntryDialog ref="openDialog" name={name}/>
         </div>
       </div>
     )

@@ -26,7 +26,7 @@ export class Dashboard extends React.Component {
     ]
     return dashboardItems.map( (item, index) => {
       return (
-        <div className="col s4 m4 lg4" key={index}>
+        <div className="col3" key={index}>
           <DashboardItem name={item.name} image={item.image} label={item.label} url={item.url}/>
         </div>
       )
@@ -35,10 +35,8 @@ export class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="container">
-          { this.dashboardItemsRender() }
-        </div>
+      <div className="onerow">
+        { this.dashboardItemsRender() }
       </div>
     )
   }

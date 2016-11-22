@@ -11,7 +11,6 @@ export class DashboardItem extends React.Component {
   }
   render() {
     const cardStyle = {
-      width: "200px",
       height: "250px",
       marginTop: "100px"
     }

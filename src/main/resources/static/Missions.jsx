@@ -6,7 +6,7 @@ export class Missions extends React.Component {
   render() {
     return (
       <div>
-        <CRUDBaseComponent label="Missões" name="missions"/>
+        <CRUDBaseComponent label="Missões" name="mission"/>
       </div>
     )
   }

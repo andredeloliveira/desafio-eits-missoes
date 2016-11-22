@@ -3,6 +3,9 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { AirplaneForm } from './AirplaneForm.jsx';
+import { UserForm } from './UserForm.jsx';
+import { MissionForm } from './MissionForm.jsx';
 
 export class NewEntryDialog extends React.Component {
 
@@ -29,6 +32,16 @@ export class NewEntryDialog extends React.Component {
     })
   }
 
+  renderProperForm(name) {
+    if (name === 'airplane') {
+      return <AirplaneForm />
+    } else if (name === 'mission') {
+      return <MissionForm />
+    }else if(name === 'user'){
+      return <UserForm />
+    }
+  }
+
   render() {
     const fabStyle = {
       marginRight: '20px',
@@ -47,19 +60,19 @@ export class NewEntryDialog extends React.Component {
         onTouchTap={this.handleClose}
       />,
     ]
+    const { name } = this.props;
     return (
       <div>
         <FloatingActionButton secondary={false} style={fabStyle} onTouchTap={this.handleOpen}>
           <ContentAdd />
         </FloatingActionButton>
         <Dialog
-          title="Dialog With Actions"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          The actions in this window were passed in as an array of React objects.
+          { this.renderProperForm(name) }
         </Dialog>
       </div>
     )

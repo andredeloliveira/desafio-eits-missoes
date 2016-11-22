@@ -6,7 +6,7 @@ export class Users extends React.Component {
   render() {
     return (
       <div>
-        <CRUDBaseComponent label="Usuários" name="users"/>
+        <CRUDBaseComponent label="Usuários" name="user"/>
       </div>
     )
   }

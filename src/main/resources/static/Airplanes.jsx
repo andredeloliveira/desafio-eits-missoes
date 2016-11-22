@@ -5,7 +5,7 @@ export class Airplanes extends React.Component {
   render() {
     return(
       <div>
-        <CRUDBaseComponent label="Aeronaves" name="airplanes"/>
+        <CRUDBaseComponent label="Aeronaves" name="airplane"/>
       </div>
     )
   }
