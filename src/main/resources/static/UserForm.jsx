@@ -59,8 +59,8 @@ export class UserForm extends React.Component {
           />
           <SelectField
             floatingLabelText="Perfil de Acesso"
-            onChange={this.handleSelectAirplaneChange}
-            value={this.state.selectedAirplaneModel}
+            onChange={this.handleSelectUserProfile}
+            value={this.state.selectedUserProfile}
             fullWidth={true}
             >
             { this.userProfilesRender() }
