@@ -9,22 +9,25 @@ export class Dashboard extends React.Component {
         name: 'mission',
         label: 'Missões',
         image: '',
+        url: '/missoes',
       },
       {
         name: 'airplane',
         label: 'Aeronaves',
         image: '',
+        url: '/aeronaves',
       },
       {
         name: 'user',
         label: 'Usuários',
         image: '',
+        url: '/usuarios',
       }
     ]
     return dashboardItems.map( (item, index) => {
       return (
         <div className="col s4 m4 lg4" key={index}>
-          <DashboardItem name={item.name} image={item.image} label={item.label}/>
+          <DashboardItem name={item.name} image={item.image} label={item.label} url={item.url}/>
         </div>
       )
     })

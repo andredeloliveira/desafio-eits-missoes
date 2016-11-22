@@ -6,6 +6,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Dashboard } from './Dashboard.jsx';
 import { MainComponent } from './MainComponent.jsx';
 import { Airplanes } from './Airplanes.jsx';
+import { Users } from './Users.jsx';
+import { Missions } from './Missions.jsx';
 
 export default class App extends React.Component {
 
@@ -30,6 +32,8 @@ ReactDOM.render(
     <Route components={App}>
       <Route path="/" components={{ main: Dashboard}} />
       <Route path="/aeronaves" components={{main: Airplanes}} />
+      <Route path="/missoes" components={{main: Missions}} />
+      <Route path="/usuarios" components={{main: Users}} />
     </Route>
   </Router>,
   document.getElementById('react')

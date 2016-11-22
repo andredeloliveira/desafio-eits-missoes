@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -17,7 +18,7 @@ export class DashboardItem extends React.Component {
     const flatButtonStyle = {
       width: "100%"
     }
-    const { name, image, label } = this.props;
+    const { name, image, label, url } = this.props;
     return (
       <div>
         <Card style={cardStyle}>
@@ -25,7 +26,7 @@ export class DashboardItem extends React.Component {
            <img src={image} />
          </CardMedia>
          <CardActions>
-           <FlatButton label={label} style={flatButtonStyle}/>
+            <Link to={url}><FlatButton label={label} style={flatButtonStyle} /></Link>
          </CardActions>
        </Card>
      </div>

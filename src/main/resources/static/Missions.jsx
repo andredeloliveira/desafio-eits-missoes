@@ -1,11 +1,12 @@
 import React from 'react';
 import { CRUDBaseComponent } from './CRUDBaseComponent.jsx';
-export class Airplanes extends React.Component {
+
+export class Missions extends React.Component {
 
   render() {
-    return(
+    return (
       <div>
-        <CRUDBaseComponent label="Aeronaves" name="airplanes"/>
+        <CRUDBaseComponent label="Missões" name="missions"/>
       </div>
     )
   }
