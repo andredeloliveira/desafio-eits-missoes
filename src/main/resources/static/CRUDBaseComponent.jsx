@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Column, Cell } from 'fixed-data-table';
 import { NewEntryDialog } from './NewEntryDialog.jsx';
+import { DataTable } from './DataTable.jsx';
 
 //TODO(andredeloliveira): THis component won't be a dumb one. Many actions will happen in here.
 export class CRUDBaseComponent extends React.Component {
@@ -10,13 +11,8 @@ export class CRUDBaseComponent extends React.Component {
   }
 
   fetchedDataContainerRender() {
-    const rows = [
-      ['a1', 'b1', 'c1'],
-      ['a2', 'b2', 'c2'],
-      ['a3', 'b3', 'c3'],
-    ]
     return (
-      <span>Table goes here</span>
+      <DataTable />
     )
   }
   //Opens a new Entry dialog, that is a dependency of this component.
@@ -28,7 +24,8 @@ export class CRUDBaseComponent extends React.Component {
     const { label, name } = this.props;
     console.log('name inside render on CRUDBaseComponent', name)
     const dialogContainer = {
-      marginBottom: "40px"
+      marginBottom: "40px",
+      marginTop: "10px"
     }
     return (
       <div>

@@ -40,32 +40,26 @@ export class AirplaneForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.submitData}>
-        <div>
           <TextField
             hintText="Hint Text"
             floatingLabelText="Matricula"
             type="text"
-            fullWidth="true"
+            fullWidth={true}
           />
-        </div>
-        <div>
           <TextField
             hintText="Hint Text"
             floatingLabelText="Número de Assentos"
             type="number"
-            fullWidth="true"
+            fullWidth={true}
             />
-        </div>
-        <div>
           <SelectField
             floatingLabelText="Modelo Aeronave"
             onChange={this.handleSelectAirplaneChange}
             value={this.state.selectedAirplaneModel}
-            fullWidth="true"
+            fullWidth={true}
             >
             { this.airplaneModelsRender() }
           </SelectField>
-        </div>
       </form>
     )
   }
