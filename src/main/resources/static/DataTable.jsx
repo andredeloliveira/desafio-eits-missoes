@@ -1,11 +1,11 @@
 import React from 'react';
 import { MuiDataTable } from 'mui-data-table';
-import { Link } from 'react-router';
+import { RemoveButton } from './RemoveButton.jsx';
 export class DataTable extends React.Component {
 
   render() {
     const data = [
-      { id: 1, name: 'Chikwa Eligson', age: 24, location: <Link to="/">Some Link</Link>, level: 'stage-1', mood: 'happy' },
+      { id: 1, name: 'Chikwa Eligson', age: 24, location: <RemoveButton />, level: 'stage-1', mood: 'happy' },
       { id: 2, name: 'Bamidele Johnson', age: 18, location: 'Anambra', level: 'stage-4', mood: 'anxious' },
       { id: 3, name: 'John Lee', age: 20, location: 'Abuja', level: 'stage-2', mood: 'indifferent' },
       { id: 4, name: 'Binta Pelumi', age: 22, location: 'Jos', level: 'stage-3', mood: 'sad' },
