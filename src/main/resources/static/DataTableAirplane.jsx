@@ -9,6 +9,19 @@ export class DataTableAirplane extends React.Component {
     super(props);
   }
 
+  formattedFetchedData() {
+    return this.props.data.airplanes.map((airplane) => {
+      return {
+        id: airplane.id,
+        totalFlightTime: airplane.totalFlightTime,
+        seatsNumber: airplane.seatsNumber,
+        totalFlightTime: airplane.totalFlightTime,
+        subscriptionNumber: airplane.subscriptionNumber,
+        airplaneModel: airplane.model.name,
+      }
+    });
+  }
+
   //TODO(andredeloliveira): apply an Array.reduce() here so the data can showup
   render() {
     if (!this.props.data.airplanes) {
@@ -16,7 +29,7 @@ export class DataTableAirplane extends React.Component {
     }
     const config = {
       paginated: true,
-      data: this.props.data.airplanes,
+      data: this.formattedFetchedData(),
       search: 'subscriptionNumber',
       columns: [
         {
@@ -24,7 +37,7 @@ export class DataTableAirplane extends React.Component {
           title: 'Matrícula'
         },
         {
-          property: 'model.name',
+          property: 'airplaneModel',
           title: 'Modelo'
         },
         {
