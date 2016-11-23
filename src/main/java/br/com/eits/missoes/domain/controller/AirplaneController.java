@@ -1,26 +1,35 @@
 package br.com.eits.missoes.domain.controller;
 
-import org.springframework.stereotype.Controller;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eits.missoes.domain.entity.Airplane;
+import br.com.eits.missoes.domain.service.airplane.AirplaneService;
 
-@Controller
+@RestController
 public class AirplaneController {
   
+	@Autowired(required = false)
+	private AirplaneService airplaneService;
 	
-	public Airplane insertAirplane() {
-		return null;
+	@RequestMapping(value="/airplanes", method = RequestMethod.GET)
+	public List<Airplane> findAllAirplanes() {
+		return airplaneService.findAllAirplane();
 	}
 	
-	public Airplane updateAirplane() {
-		return null;
-	}
-	
-	public Airplane[] listAirplane() {
-		return null;
-	}
-	
-	public void removeAirplane() {
-		
+	@RequestMapping(value="/airplanes", method = RequestMethod.POST)
+	public Airplane insertAirplane(@Valid Airplane airplane, BindingResult result) {
+		if (result.hasErrors()) {
+			return null;
+		} else {
+			return airplaneService.insertAirplane(airplane);
+		}
 	}
 }

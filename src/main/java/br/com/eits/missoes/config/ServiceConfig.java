@@ -6,10 +6,14 @@ import org.springframework.context.annotation.Configuration;
 
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.domain.service.airplane.AirplaneService;
 import br.com.eits.missoes.domain.service.user.UserService;
 
 @Configuration
-@ComponentScan(basePackageClasses = UserService.class)
+@ComponentScan(basePackageClasses = {
+  UserService.class,
+  AirplaneService.class
+})
 public class ServiceConfig {
 
 	

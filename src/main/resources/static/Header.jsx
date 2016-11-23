@@ -38,7 +38,8 @@ export class Header extends React.Component {
   render() {
     const sideBarStyle = {
       display: "table",
-      margin: "0 auto"
+      margin: "0 auto",
+      width: "100%"
     }
     return (
       <div>
@@ -46,7 +47,10 @@ export class Header extends React.Component {
                 onLeftIconButtonTouchTap={this.showDrawer.bind(this, this.state.open)}
         />
         <Drawer open={this.state.open}>
-          <MenuItem onTouchTap={this.showDrawer.bind(this, this.state.open)} rightIcon={<NavigationClose />} style={sideBarStyle}></MenuItem>
+          <MenuItem
+            onTouchTap={this.showDrawer.bind(this, this.state.open)}
+            rightIcon={<NavigationClose />}
+            style={sideBarStyle} />
           <UserInfo style={sideBarStyle}/>
         </Drawer>
       </div>
