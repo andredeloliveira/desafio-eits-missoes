@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export function findAllAirplanes(dispatch) {
-  axios.get('/airplanes')
+  axios.get('/missoes/airplanes')
     .then( (airplanesResponse) => {
-      dispatch(allAirplanes(airplanesResponse))
+      dispatch(allAirplanes(airplanesResponse.data))
     })
     .catch( (error) => {
       dispatch(airplanesError(error))
