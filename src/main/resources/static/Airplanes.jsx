@@ -5,6 +5,7 @@ import { findAllAirplanes } from './actions/airplaneActions';
 
 
 @connect((Store) => {
+  console.log('store value', Store)
   return {
     airplanes: Store.airplaneReducer
   }

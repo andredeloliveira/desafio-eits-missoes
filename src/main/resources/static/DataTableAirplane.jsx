@@ -23,7 +23,6 @@ export class DataTableAirplane extends React.Component {
     });
   }
 
-  //TODO(andredeloliveira): apply an Array.reduce() here so the data can showup
   render() {
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
