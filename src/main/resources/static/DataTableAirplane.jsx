@@ -1,7 +1,7 @@
 import React from 'react';
 import { MuiDataTable } from 'mui-data-table';
-import { RemoveButton } from './RemoveButton.jsx';
 import { MissoesLoading } from './MissoesLoading.jsx';
+import { CRUDMenu } from './CRUDMenu.jsx';
 
 export class DataTableAirplane extends React.Component {
 
@@ -18,6 +18,7 @@ export class DataTableAirplane extends React.Component {
         totalFlightTime: airplane.totalFlightTime,
         subscriptionNumber: airplane.subscriptionNumber,
         airplaneModel: airplane.model.name,
+        options: <CRUDMenu data={airplane} customButtons={null}/>
       }
     });
   }
@@ -44,6 +45,10 @@ export class DataTableAirplane extends React.Component {
           property: 'totalFlightTime',
           title: 'Horas de Vôo'
         },
+        {
+          property: 'options',
+          title: 'Opções'
+        }
       ]
     }
     return (

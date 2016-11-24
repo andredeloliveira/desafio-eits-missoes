@@ -92,9 +92,9 @@
 	
 	var _Airplanes = __webpack_require__(527);
 	
-	var _Users = __webpack_require__(698);
+	var _Users = __webpack_require__(702);
 	
-	var _Missions = __webpack_require__(699);
+	var _Missions = __webpack_require__(703);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -50540,7 +50540,7 @@
 	
 	var _CRUDBaseComponent = __webpack_require__(528);
 	
-	var _airplaneActions = __webpack_require__(672);
+	var _airplaneActions = __webpack_require__(676);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -67228,9 +67228,9 @@
 	
 	var _muiDataTable = __webpack_require__(643);
 	
-	var _RemoveButton = __webpack_require__(667);
+	var _MissoesLoading = __webpack_require__(667);
 	
-	var _MissoesLoading = __webpack_require__(669);
+	var _CRUDMenu = __webpack_require__(670);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -67261,7 +67261,7 @@
 	          id: airplane.id,
 	          totalFlightTime: airplane.totalFlightTime,
 	          seatsNumber: airplane.seatsNumber
-	        }, _defineProperty(_ref, 'totalFlightTime', airplane.totalFlightTime), _defineProperty(_ref, 'subscriptionNumber', airplane.subscriptionNumber), _defineProperty(_ref, 'airplaneModel', airplane.model.name), _ref;
+	        }, _defineProperty(_ref, 'totalFlightTime', airplane.totalFlightTime), _defineProperty(_ref, 'subscriptionNumber', airplane.subscriptionNumber), _defineProperty(_ref, 'airplaneModel', airplane.model.name), _defineProperty(_ref, 'options', _react2.default.createElement(_CRUDMenu.CRUDMenu, { data: airplane, customButtons: null })), _ref;
 	      });
 	    }
 	
@@ -67286,6 +67286,9 @@
 	        }, {
 	          property: 'totalFlightTime',
 	          title: 'Horas de Vôo'
+	        }, {
+	          property: 'options',
+	          title: 'Opções'
 	        }]
 	      };
 	      return _react2.default.createElement(
@@ -70571,104 +70574,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.RemoveButton = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _IconButton = __webpack_require__(451);
-	
-	var _IconButton2 = _interopRequireDefault(_IconButton);
-	
-	var _removeCircle = __webpack_require__(668);
-	
-	var _removeCircle2 = _interopRequireDefault(_removeCircle);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var RemoveButton = exports.RemoveButton = function (_React$Component) {
-	  _inherits(RemoveButton, _React$Component);
-	
-	  function RemoveButton(props) {
-	    _classCallCheck(this, RemoveButton);
-	
-	    return _possibleConstructorReturn(this, (RemoveButton.__proto__ || Object.getPrototypeOf(RemoveButton)).call(this, props));
-	  }
-	
-	  _createClass(RemoveButton, [{
-	    key: 'remove',
-	    value: function remove() {
-	      console.log('something has been removed');
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _IconButton2.default,
-	        { onTouchTap: this.remove },
-	        _react2.default.createElement(_removeCircle2.default, null)
-	      );
-	    }
-	  }]);
-	
-	  return RemoveButton;
-	}(_react2.default.Component);
-
-/***/ },
-/* 668 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(438);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(448);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ContentRemoveCircle = function ContentRemoveCircle(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z' })
-	  );
-	};
-	ContentRemoveCircle = (0, _pure2.default)(ContentRemoveCircle);
-	ContentRemoveCircle.displayName = 'ContentRemoveCircle';
-	ContentRemoveCircle.muiName = 'SvgIcon';
-	
-	exports.default = ContentRemoveCircle;
-
-/***/ },
-/* 669 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	exports.MissoesLoading = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -70677,7 +70582,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _CircularProgress = __webpack_require__(670);
+	var _CircularProgress = __webpack_require__(668);
 	
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 	
@@ -70713,7 +70618,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 670 */
+/* 668 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70723,7 +70628,7 @@
 	});
 	exports.default = undefined;
 	
-	var _CircularProgress = __webpack_require__(671);
+	var _CircularProgress = __webpack_require__(669);
 	
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 	
@@ -70732,7 +70637,7 @@
 	exports.default = _CircularProgress2.default;
 
 /***/ },
-/* 671 */
+/* 669 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -71005,7 +70910,368 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
+/* 670 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.CRUDMenu = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _IconButton = __webpack_require__(451);
+	
+	var _IconButton2 = _interopRequireDefault(_IconButton);
+	
+	var _IconMenu = __webpack_require__(493);
+	
+	var _IconMenu2 = _interopRequireDefault(_IconMenu);
+	
+	var _MenuItem = __webpack_require__(517);
+	
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
+	
+	var _moreVert = __webpack_require__(671);
+	
+	var _moreVert2 = _interopRequireDefault(_moreVert);
+	
+	var _CRUDButtons = __webpack_require__(672);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CRUDMenu = exports.CRUDMenu = function (_React$Component) {
+	  _inherits(CRUDMenu, _React$Component);
+	
+	  function CRUDMenu(props) {
+	    _classCallCheck(this, CRUDMenu);
+	
+	    return _possibleConstructorReturn(this, (CRUDMenu.__proto__ || Object.getPrototypeOf(CRUDMenu)).call(this, props));
+	  }
+	
+	  _createClass(CRUDMenu, [{
+	    key: 'renderCustomButtons',
+	    value: function renderCustomButtons() {
+	      var customButtons = this.props.customButtons;
+	
+	      if (customButtons) {
+	        return customButtons.map(function (customButton, index) {
+	          return customButton;
+	        });
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _IconMenu2.default,
+	        {
+	          iconButtonElement: _react2.default.createElement(
+	            _IconButton2.default,
+	            null,
+	            _react2.default.createElement(_moreVert2.default, null)
+	          )
+	        },
+	        _react2.default.createElement(_CRUDButtons.UpdateButton, null),
+	        _react2.default.createElement(_CRUDButtons.RemoveButton, null),
+	        _react2.default.createElement(_CRUDButtons.DetailsButton, null),
+	        this.renderCustomButtons()
+	      );
+	    }
+	  }]);
+	
+	  return CRUDMenu;
+	}(_react2.default.Component);
+
+/***/ },
+/* 671 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(438);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(448);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NavigationMoreVert = function NavigationMoreVert(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' })
+	  );
+	};
+	NavigationMoreVert = (0, _pure2.default)(NavigationMoreVert);
+	NavigationMoreVert.displayName = 'NavigationMoreVert';
+	NavigationMoreVert.muiName = 'SvgIcon';
+	
+	exports.default = NavigationMoreVert;
+
+/***/ },
 /* 672 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.DetailsButton = exports.RemoveButton = exports.UpdateButton = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _IconButton = __webpack_require__(451);
+	
+	var _IconButton2 = _interopRequireDefault(_IconButton);
+	
+	var _create = __webpack_require__(673);
+	
+	var _create2 = _interopRequireDefault(_create);
+	
+	var _removeCircle = __webpack_require__(674);
+	
+	var _removeCircle2 = _interopRequireDefault(_removeCircle);
+	
+	var _visibility = __webpack_require__(675);
+	
+	var _visibility2 = _interopRequireDefault(_visibility);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UpdateButton = exports.UpdateButton = function (_React$Component) {
+	  _inherits(UpdateButton, _React$Component);
+	
+	  function UpdateButton(props) {
+	    _classCallCheck(this, UpdateButton);
+	
+	    return _possibleConstructorReturn(this, (UpdateButton.__proto__ || Object.getPrototypeOf(UpdateButton)).call(this, props));
+	  }
+	
+	  _createClass(UpdateButton, [{
+	    key: 'update',
+	    value: function update() {
+	      console.log('something was updated');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _IconButton2.default,
+	        { onTouchTap: this.update },
+	        _react2.default.createElement(_create2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return UpdateButton;
+	}(_react2.default.Component);
+	
+	var RemoveButton = exports.RemoveButton = function (_React$Component2) {
+	  _inherits(RemoveButton, _React$Component2);
+	
+	  function RemoveButton(props) {
+	    _classCallCheck(this, RemoveButton);
+	
+	    return _possibleConstructorReturn(this, (RemoveButton.__proto__ || Object.getPrototypeOf(RemoveButton)).call(this, props));
+	  }
+	
+	  _createClass(RemoveButton, [{
+	    key: 'remove',
+	    value: function remove() {
+	      console.log('something has been removed');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _IconButton2.default,
+	        { onTouchTap: this.remove },
+	        _react2.default.createElement(_removeCircle2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return RemoveButton;
+	}(_react2.default.Component);
+	
+	var DetailsButton = exports.DetailsButton = function (_React$Component3) {
+	  _inherits(DetailsButton, _React$Component3);
+	
+	  function DetailsButton(props) {
+	    _classCallCheck(this, DetailsButton);
+	
+	    return _possibleConstructorReturn(this, (DetailsButton.__proto__ || Object.getPrototypeOf(DetailsButton)).call(this, props));
+	  }
+	
+	  _createClass(DetailsButton, [{
+	    key: 'showDetails',
+	    value: function showDetails() {
+	      console.log('showingup details');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _IconButton2.default,
+	        { onTouchTap: this.showDetails },
+	        _react2.default.createElement(_visibility2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return DetailsButton;
+	}(_react2.default.Component);
+
+/***/ },
+/* 673 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(438);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(448);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContentCreate = function ContentCreate(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' })
+	  );
+	};
+	ContentCreate = (0, _pure2.default)(ContentCreate);
+	ContentCreate.displayName = 'ContentCreate';
+	ContentCreate.muiName = 'SvgIcon';
+	
+	exports.default = ContentCreate;
+
+/***/ },
+/* 674 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(438);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(448);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContentRemoveCircle = function ContentRemoveCircle(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z' })
+	  );
+	};
+	ContentRemoveCircle = (0, _pure2.default)(ContentRemoveCircle);
+	ContentRemoveCircle.displayName = 'ContentRemoveCircle';
+	ContentRemoveCircle.muiName = 'SvgIcon';
+	
+	exports.default = ContentRemoveCircle;
+
+/***/ },
+/* 675 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(438);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(448);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ActionVisibility = function ActionVisibility(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' })
+	  );
+	};
+	ActionVisibility = (0, _pure2.default)(ActionVisibility);
+	ActionVisibility.displayName = 'ActionVisibility';
+	ActionVisibility.muiName = 'SvgIcon';
+	
+	exports.default = ActionVisibility;
+
+/***/ },
+/* 676 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71017,7 +71283,7 @@
 	exports.allAirplanes = allAirplanes;
 	exports.airplanesError = airplanesError;
 	
-	var _axios = __webpack_require__(673);
+	var _axios = __webpack_require__(677);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -71049,20 +71315,20 @@
 	}
 
 /***/ },
-/* 673 */
+/* 677 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(674);
+	module.exports = __webpack_require__(678);
 
 /***/ },
-/* 674 */
+/* 678 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
-	var bind = __webpack_require__(676);
-	var Axios = __webpack_require__(677);
+	var utils = __webpack_require__(679);
+	var bind = __webpack_require__(680);
+	var Axios = __webpack_require__(681);
 	
 	/**
 	 * Create an instance of Axios
@@ -71095,15 +71361,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(695);
-	axios.CancelToken = __webpack_require__(696);
-	axios.isCancel = __webpack_require__(692);
+	axios.Cancel = __webpack_require__(699);
+	axios.CancelToken = __webpack_require__(700);
+	axios.isCancel = __webpack_require__(696);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(697);
+	axios.spread = __webpack_require__(701);
 	
 	module.exports = axios;
 	
@@ -71112,12 +71378,12 @@
 
 
 /***/ },
-/* 675 */
+/* 679 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(676);
+	var bind = __webpack_require__(680);
 	
 	/*global toString:true*/
 	
@@ -71417,7 +71683,7 @@
 
 
 /***/ },
-/* 676 */
+/* 680 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -71434,17 +71700,17 @@
 
 
 /***/ },
-/* 677 */
+/* 681 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(678);
-	var utils = __webpack_require__(675);
-	var InterceptorManager = __webpack_require__(689);
-	var dispatchRequest = __webpack_require__(690);
-	var isAbsoluteURL = __webpack_require__(693);
-	var combineURLs = __webpack_require__(694);
+	var defaults = __webpack_require__(682);
+	var utils = __webpack_require__(679);
+	var InterceptorManager = __webpack_require__(693);
+	var dispatchRequest = __webpack_require__(694);
+	var isAbsoluteURL = __webpack_require__(697);
+	var combineURLs = __webpack_require__(698);
 	
 	/**
 	 * Create a new instance of Axios
@@ -71525,13 +71791,13 @@
 
 
 /***/ },
-/* 678 */
+/* 682 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(675);
-	var normalizeHeaderName = __webpack_require__(679);
+	var utils = __webpack_require__(679);
+	var normalizeHeaderName = __webpack_require__(683);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -71548,10 +71814,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(680);
+	    adapter = __webpack_require__(684);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(680);
+	    adapter = __webpack_require__(684);
 	  }
 	  return adapter;
 	}
@@ -71618,12 +71884,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 679 */
+/* 683 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -71636,18 +71902,18 @@
 
 
 /***/ },
-/* 680 */
+/* 684 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(675);
-	var settle = __webpack_require__(681);
-	var buildURL = __webpack_require__(684);
-	var parseHeaders = __webpack_require__(685);
-	var isURLSameOrigin = __webpack_require__(686);
-	var createError = __webpack_require__(682);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(687);
+	var utils = __webpack_require__(679);
+	var settle = __webpack_require__(685);
+	var buildURL = __webpack_require__(688);
+	var parseHeaders = __webpack_require__(689);
+	var isURLSameOrigin = __webpack_require__(690);
+	var createError = __webpack_require__(686);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(691);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -71743,7 +72009,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(688);
+	      var cookies = __webpack_require__(692);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -71820,12 +72086,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 681 */
+/* 685 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var createError = __webpack_require__(682);
+	var createError = __webpack_require__(686);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -71851,12 +72117,12 @@
 
 
 /***/ },
-/* 682 */
+/* 686 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(683);
+	var enhanceError = __webpack_require__(687);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -71874,7 +72140,7 @@
 
 
 /***/ },
-/* 683 */
+/* 687 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -71899,12 +72165,12 @@
 
 
 /***/ },
-/* 684 */
+/* 688 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -71973,12 +72239,12 @@
 
 
 /***/ },
-/* 685 */
+/* 689 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	/**
 	 * Parse headers into an object
@@ -72016,12 +72282,12 @@
 
 
 /***/ },
-/* 686 */
+/* 690 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -72090,7 +72356,7 @@
 
 
 /***/ },
-/* 687 */
+/* 691 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72132,12 +72398,12 @@
 
 
 /***/ },
-/* 688 */
+/* 692 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -72191,12 +72457,12 @@
 
 
 /***/ },
-/* 689 */
+/* 693 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -72249,15 +72515,15 @@
 
 
 /***/ },
-/* 690 */
+/* 694 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
-	var transformData = __webpack_require__(691);
-	var isCancel = __webpack_require__(692);
-	var defaults = __webpack_require__(678);
+	var utils = __webpack_require__(679);
+	var transformData = __webpack_require__(695);
+	var isCancel = __webpack_require__(696);
+	var defaults = __webpack_require__(682);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -72334,12 +72600,12 @@
 
 
 /***/ },
-/* 691 */
+/* 695 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(675);
+	var utils = __webpack_require__(679);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -72360,7 +72626,7 @@
 
 
 /***/ },
-/* 692 */
+/* 696 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72371,7 +72637,7 @@
 
 
 /***/ },
-/* 693 */
+/* 697 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72391,7 +72657,7 @@
 
 
 /***/ },
-/* 694 */
+/* 698 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72409,7 +72675,7 @@
 
 
 /***/ },
-/* 695 */
+/* 699 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72434,12 +72700,12 @@
 
 
 /***/ },
-/* 696 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(695);
+	var Cancel = __webpack_require__(699);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -72497,7 +72763,7 @@
 
 
 /***/ },
-/* 697 */
+/* 701 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72530,7 +72796,7 @@
 
 
 /***/ },
-/* 698 */
+/* 702 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72580,7 +72846,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 699 */
+/* 703 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

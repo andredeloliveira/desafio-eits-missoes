@@ -19,6 +19,11 @@ public class MissionService {
 	@Autowired(required = false)
 	private IMissionRepository missionRepository;
 	
+	@Transactional
+	public List<Mission> findAllMission() {
+		return missionRepository.findAll();
+	}
+	
 	@Transactional 
 	public Mission insertMission(Mission mission) {
 		return missionRepository.saveAndFlush(mission);
