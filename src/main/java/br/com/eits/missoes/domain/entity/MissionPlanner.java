@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "mission")
+@Entity(name = "mission_planner")
 public class MissionPlanner {
 
 	@Id
@@ -41,4 +41,11 @@ public class MissionPlanner {
 		this.planner = planner;
 	}
 	
+	public Mission getMission() {
+		return this.mission;
+	}
+	
+	public void setMission(Mission mission) {
+		this.mission = mission;
+	}
 }

@@ -8,16 +8,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eits.missoes.domain.entity.Mission;
+import br.com.eits.missoes.domain.entity.MissionPlanner;
+import br.com.eits.missoes.domain.service.mission.MissionPlannerService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
 
 @RestController
 public class MissionController {
 
 	@Autowired(required = false)
-	private MissionService missionService;
+	private MissionPlannerService missionPlannerService;
 	
 	@RequestMapping(value = "/missions", method = RequestMethod.GET)
-	List<Mission> findAllMission() {
-		return missionService.findAllMission();
+	List<MissionPlanner> findAllMission() {
+		return missionPlannerService.findAllMissionPlanner();
 	}
 }

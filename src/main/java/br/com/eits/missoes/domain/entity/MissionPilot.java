@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@Proxy(lazy = false)
+@JsonIgnoreProperties(ignoreUnknown = false)
 @Entity(name = "mission_pilot")
 public class MissionPilot {
 
