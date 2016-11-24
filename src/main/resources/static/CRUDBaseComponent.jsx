@@ -3,6 +3,7 @@ import { Table, Column, Cell } from 'fixed-data-table';
 import { NewEntryDialog } from './NewEntryDialog.jsx';
 import { DataTableAirplane } from './DataTableAirplane.jsx';
 import { DataTableUser } from './DataTableUser.jsx';
+import { DataTableMission } from './DataTableMission.jsx';
 
 //TODO(andredeloliveira): THis component won't be a dumb one. Many actions will happen in here.
 export class CRUDBaseComponent extends React.Component {
@@ -18,6 +19,8 @@ export class CRUDBaseComponent extends React.Component {
       return <DataTableAirplane data={data} />
     } else if (name === 'user') {
       return <DataTableUser data={data} />
+    } else if (name === 'mission') {
+      return <DataTableMission data={data} />;
     }
   }
   //Opens a new Entry dialog, that is a dependency of this component.

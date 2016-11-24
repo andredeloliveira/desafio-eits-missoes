@@ -30,7 +30,7 @@ export class DataTableAirplane extends React.Component {
     const config = {
       paginated: true,
       data: this.formattedFetchedData(),
-      search: 'subscriptionNumber',
+      search: 'subscriptionNumber|totalFlightTime|airplaneModel',
       columns: [
         {
           property: 'subscriptionNumber',
