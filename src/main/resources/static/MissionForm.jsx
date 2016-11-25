@@ -5,8 +5,11 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
+import Files from 'react-files';
+import FlatButton from 'material-ui/FlatButton';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
+
 export class MissionForm extends React.Component {
 
   constructor(props) {
@@ -45,6 +48,13 @@ export class MissionForm extends React.Component {
     console.log('input query', inputQuery)
   }
 
+  onFilesChange(files) {
+    console.log('here are the files', files);
+  }
+
+  onFilesError(error, file) {
+    console.log('error code ', error.code, ':', error.message)
+  }
 
   render() {
     const airportDataSource = [
@@ -84,8 +94,18 @@ export class MissionForm extends React.Component {
             onUpdateInput={this.handleUpdateInputTo}
             fullWidth={true}
           />
-        <MissionPilots />
-        <MissionPassengers />
+          <MissionPilots />
+          <MissionPassengers />
+          <Files
+            className="files-dropzone"
+            onChange={this.onFilesChange}
+            onError={this.onFilesError}
+            maxFileSize={10000000}
+            minFileSize={0}
+            clickable
+          >
+            <FlatButton label="Anexar.." />
+          </Files>
         </div>
       </form>
     )

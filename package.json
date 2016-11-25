@@ -22,6 +22,7 @@
     "react-addons-pure-render-mixin": "^15.4.1",
     "react-addons-transition-group": "^15.4.1",
     "react-dom": "^15.4.0",
+    "react-files": "^2.2.0",
     "react-logger": "^1.1.0",
     "react-mounter": "^1.2.0",
     "react-paginate": "^2.2.3",
