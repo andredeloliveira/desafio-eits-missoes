@@ -58,7 +58,7 @@ public class Airplane {
 	}
 	
 	public Airplane() {
-		this.subscriptionNumber = UUID.randomUUID().toString();
+		this.totalFlightTime = 0.0;
 	}
 	
 	public Double getTotalFlightTime() {
@@ -73,10 +73,12 @@ public class Airplane {
 	public void setSubscriptionNumber(String subscriptionNumber) {
 		this.subscriptionNumber = subscriptionNumber;
 	}
-	public AirplaneModel getModel() {
-		return airplaneModel;
+	
+	public AirplaneModel getAirplaneModel() {
+		return this.airplaneModel;
 	}
-	public void setModel(AirplaneModel airplaneModel) {
+	
+	public void setAirplaneModel(AirplaneModel airplaneModel) {
 		this.airplaneModel = airplaneModel;
 	}
 	public int getSeatsNumber() {

@@ -26,3 +26,31 @@ export function airplanesError(error) {
     error: error
   }
 }
+
+export function insertUpdateAirplane(airplane, dispatch) { 
+  console.log('airplane data', airplane)
+  axios.post('/missoes/airplanes/insert', airplane)
+    .then( (newAirplane) => {
+      dispatch(inserteUpdateAirplaneDone(newAirplane.data))
+    })
+    .catch( (error) => {
+      dispatch(insertUpdateAirplaneError(error))
+    })
+    return {
+      type: 'REQUEST_INSERT_UPDATE_AIRPLANE_PENDING'
+    }
+}
+
+export function inserteUpdateAirplaneDone(newAirplane) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_AIRPLANE_FULFILLED',
+    payload: newAirplane
+  }
+}
+
+export function insertUpdateAirplaneError(error) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR',
+    error: error
+  }
+}

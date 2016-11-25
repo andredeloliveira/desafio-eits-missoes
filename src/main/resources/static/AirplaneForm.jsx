@@ -1,65 +1,109 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import { MissoesLoading } from './MissoesLoading.jsx';
+import { findAllAirplaneModels } from './actions/airplaneModelsActions';
+import { insertUpdateAirplane } from './actions/airplaneActions';
 
+@connect((Store) => {
+  return {
+    airplaneModels: Store.airplaneModelsReducer,
+  }
+})
 export class AirplaneForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedAirplaneModel: null
+      airplaneModel: null,
+      seatsNumber: null,
+      subscriptionNumber: null,
     }
-    this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
+    this.handleSelectAirplaneModelChange = this.handleSelectAirplaneModelChange.bind(this);
+    this.submitData = this.submitData.bind(this);
   }
 
-  handleSelectAirplaneChange(event, index, airplaneModel) {
+  //Dispatching everything before the component is mounted so, it will avoid trouble
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(findAllAirplaneModels(dispatch));
+  }
+
+  handleSelectAirplaneModelChange(event, index, airplaneModel) {
     this.setState({
-      selectedAirplaneModel: airplaneModel
+      airplaneModel: airplaneModel
     })
   }
 
   airplaneModelsRender() {
-    //substitute this for a real thing
-    const airplaneModels = [
-      'A380',
-      '777',
-      '537',
-    ]
+    const { airplaneModels, fetching } = this.props.airplaneModels;
     //we chan change the key value to be the id...
-    return airplaneModels.map( (airplaneModel, index) => {
-      return <MenuItem key={index} value={airplaneModel} primaryText={airplaneModel} />
+    if (! airplaneModels) {
+      console.log('loading')
+      return <MissoesLoading />
+    }
+    return airplaneModels.map( (airplaneModel) => {
+      const completeAirplaneModelName = airplaneModel.manufacturer.name + ' - ' + airplaneModel.name
+      return <MenuItem key={airplaneModel.id} value={airplaneModel} primaryText={completeAirplaneModelName} />
     });
   }
 
+
   submitData(event) {
-    event.prevenDefault();
-    console.log('data was sent to the server')
+    const { dispatch } = this.props;
+    event.preventDefault();
+    const airplane = {
+      seatsNumber: event.target.seatsNumber.value,
+      subscriptionNumber: event.target.subscriptionNumber.value,
+      airplaneModel: this.state.airplaneModel
+    }
+    console.log('new airplane',airplane)
+    dispatch(insertUpdateAirplane(airplane, dispatch))
+
   }
 
   render() {
+    const imageInput = {
+      cursor: 'pointer',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      width: '100%',
+      opacity: 0,
+    }
     return (
       <form onSubmit={this.submitData}>
           <TextField
-            hintText="Hint Text"
+            hintText="Ex: AAABBB-7777"
             floatingLabelText="Matricula"
             type="text"
             fullWidth={true}
+            name="subscriptionNumber"
           />
           <TextField
-            hintText="Hint Text"
+            hintText="Ex: 200"
             floatingLabelText="Número de Assentos"
             type="number"
             fullWidth={true}
+            name="seatsNumber"
             />
           <SelectField
             floatingLabelText="Modelo Aeronave"
-            onChange={this.handleSelectAirplaneChange}
-            value={this.state.selectedAirplaneModel}
+            onChange={this.handleSelectAirplaneModelChange}
+            value={this.state.airplaneModel}
             fullWidth={true}
+            name="airplaneModel"
             >
-            { this.airplaneModelsRender() }
+          { this.airplaneModelsRender() }
           </SelectField>
+          <FlatButton label="Salvar" labelPosition="before">
+            <input type="submit" style={imageInput} />
+          </FlatButton>
       </form>
     )
   }

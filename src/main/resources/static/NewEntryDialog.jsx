@@ -34,7 +34,7 @@ export class NewEntryDialog extends React.Component {
 
   renderProperForm(name) {
     if (name === 'airplane') {
-      return <AirplaneForm />
+      return <AirplaneForm handleCloseDialog={this.handleCloseDialog}/>
     } else if (name === 'mission') {
       return <MissionForm />
     }else if(name === 'user'){
@@ -51,12 +51,6 @@ export class NewEntryDialog extends React.Component {
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
         onTouchTap={this.handleClose}
       />,
     ]

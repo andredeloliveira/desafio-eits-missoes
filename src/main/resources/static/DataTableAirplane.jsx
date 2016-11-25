@@ -17,7 +17,7 @@ export class DataTableAirplane extends React.Component {
         seatsNumber: airplane.seatsNumber,
         totalFlightTime: airplane.totalFlightTime,
         subscriptionNumber: airplane.subscriptionNumber,
-        airplaneModel: airplane.model.name,
+        airplaneModel: airplane.airplaneModel.name,
         options: <CRUDMenu data={airplane} customButtons={null}/>
       }
     });
