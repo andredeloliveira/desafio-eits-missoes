@@ -9,8 +9,10 @@ import { findAllAirplaneModels } from './actions/airplaneModelsActions';
 import { insertUpdateAirplane } from './actions/airplaneActions';
 
 @connect((Store) => {
+  console.log('store ->', Store)
   return {
     airplaneModels: Store.airplaneModelsReducer,
+    airplanes: Store.airplaneReducer
   }
 })
 export class AirplaneForm extends React.Component {
@@ -26,7 +28,7 @@ export class AirplaneForm extends React.Component {
     this.submitData = this.submitData.bind(this);
   }
 
-  //Dispatching everything before the component is mounted so, it will avoid trouble
+  //Dispatching everything before the component is mounted so it will avoid trouble loading the async call
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(findAllAirplaneModels(dispatch));
@@ -60,9 +62,8 @@ export class AirplaneForm extends React.Component {
       subscriptionNumber: event.target.subscriptionNumber.value,
       airplaneModel: this.state.airplaneModel
     }
-    console.log('new airplane',airplane)
     dispatch(insertUpdateAirplane(airplane, dispatch))
-
+    this.props.handleCloseDialog();
   }
 
   render() {
@@ -76,35 +77,38 @@ export class AirplaneForm extends React.Component {
       width: '100%',
       opacity: 0,
     }
+    const { newAirplane } = this.props.airplanes;
     return (
-      <form onSubmit={this.submitData}>
-          <TextField
-            hintText="Ex: AAABBB-7777"
-            floatingLabelText="Matricula"
-            type="text"
-            fullWidth={true}
-            name="subscriptionNumber"
-          />
-          <TextField
-            hintText="Ex: 200"
-            floatingLabelText="Número de Assentos"
-            type="number"
-            fullWidth={true}
-            name="seatsNumber"
+      <div>
+        <form onSubmit={this.submitData}>
+            <TextField
+              hintText="Ex: AAABBB-7777"
+              floatingLabelText="Matricula"
+              type="text"
+              fullWidth={true}
+              name="subscriptionNumber"
             />
-          <SelectField
-            floatingLabelText="Modelo Aeronave"
-            onChange={this.handleSelectAirplaneModelChange}
-            value={this.state.airplaneModel}
-            fullWidth={true}
-            name="airplaneModel"
-            >
-          { this.airplaneModelsRender() }
-          </SelectField>
-          <FlatButton label="Salvar" labelPosition="before">
-            <input type="submit" style={imageInput} />
-          </FlatButton>
-      </form>
+            <TextField
+              hintText="Ex: 200"
+              floatingLabelText="Número de Assentos"
+              type="number"
+              fullWidth={true}
+              name="seatsNumber"
+              />
+            <SelectField
+              floatingLabelText="Modelo Aeronave"
+              onChange={this.handleSelectAirplaneModelChange}
+              value={this.state.airplaneModel}
+              fullWidth={true}
+              name="airplaneModel"
+              >
+            { this.airplaneModelsRender() }
+            </SelectField>
+            <FlatButton label="Salvar" labelPosition="before">
+              <input type="submit" style={imageInput} />
+            </FlatButton>
+        </form>
+      </div>
     )
   }
 

@@ -34,7 +34,7 @@ export class NewEntryDialog extends React.Component {
 
   renderProperForm(name) {
     if (name === 'airplane') {
-      return <AirplaneForm handleCloseDialog={this.handleCloseDialog}/>
+      return <AirplaneForm handleCloseDialog={this.handleClose}/>
     } else if (name === 'mission') {
       return <MissionForm />
     }else if(name === 'user'){

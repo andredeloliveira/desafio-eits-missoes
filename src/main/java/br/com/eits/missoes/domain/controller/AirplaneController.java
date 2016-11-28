@@ -28,6 +28,9 @@ public class AirplaneController {
 	
 	@RequestMapping(value="/airplanes/insert", method = RequestMethod.POST)
 	public Airplane insertAirplane(@Valid @RequestBody Airplane airplane, BindingResult result) {
+		if (result.hasErrors()) {
+			return null;
+		}
 		return airplaneService.insertAirplane(airplane);
 	}
 }
