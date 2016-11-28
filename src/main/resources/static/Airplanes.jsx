@@ -14,6 +14,27 @@ export class Airplanes extends React.Component {
 
   constructor(props) {
     super(props);
+    this.renderFeedback = this.renderFeedback.bind(this);
+  }
+
+  renderFeedback() {
+    const { airplanes } = this.props;
+    if (airplanes.removed) {
+      return (
+        <Formfeedback
+        message={"Aeronave removida com sucesso"}
+        duration={3000}
+        />
+      )
+    } else if (airplanes.newAirplane) {
+      return (
+        <Formfeedback
+          message={"Aeronave " + airplanes.newAirplane.subscriptionNumber + " inserida"}
+          duration={3000}
+        />
+      )
+    }
+    return null;
   }
 
   componentWillMount() {
@@ -27,12 +48,7 @@ export class Airplanes extends React.Component {
     return(
       <div>
         <CRUDBaseComponent label="Aeronaves" name="airplane" data={airplanes}/>
-        {newAirplane ?
-          <Formfeedback
-            message={"Aeronave " + newAirplane.subscriptionNumber + " inserida"}
-            duration={3000}
-          />
-        : null}
+        {this.renderFeedback()}
       </div>
     )
   }

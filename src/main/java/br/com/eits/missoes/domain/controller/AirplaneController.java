@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,5 +33,10 @@ public class AirplaneController {
 			return null;
 		}
 		return airplaneService.insertAirplane(airplane);
+	}
+	
+	@RequestMapping(value="/airplanes/remove/{id}", method = RequestMethod.DELETE)
+	public void removeAirplane(@PathVariable("id") Long id) {
+		airplaneService.removeAirplaneById(id);
 	}
 }

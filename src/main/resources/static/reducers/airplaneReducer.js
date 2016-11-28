@@ -3,8 +3,11 @@ const initialState = {
   fetched: false,
   inserting: false,
   inserted: false,
+  removing: false,
+  removed: false,
   airplanes: null,
   newAirplane: null,
+  removedAirplane: null,
   error: null,
 }
 
@@ -44,6 +47,26 @@ export default function airplaneReducer(state = initialState, action) {
     case 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR':
       return {
         ...state,
+        error: action.payload
+      }
+    case 'REQUEST_REMOVE_AIRPLANE':
+      return {
+        ...state,
+        removing: true,
+        removed: false
+      }
+    case 'REQUEST_REMOVE_AIRPLANE_FULFILLED':
+      return {
+        ...state,
+        removed: true,
+        removing: false,
+        removedAirplane: action.payload
+      }
+    case 'REQUEST_REMOVE_AIRPLANE_ERROR':
+      return {
+        ...state,
+        removed: false,
+        removing: false,
         error: action.payload
       }
     default:

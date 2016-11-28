@@ -27,8 +27,7 @@ export function airplanesError(error) {
   }
 }
 
-export function insertUpdateAirplane(airplane, dispatch) { 
-  console.log('airplane data', airplane)
+export function insertUpdateAirplane(airplane, dispatch) {
   axios.post('/missoes/airplanes/insert', airplane)
     .then( (newAirplane) => {
       dispatch(inserteUpdateAirplaneDone(newAirplane.data))
@@ -52,5 +51,33 @@ export function insertUpdateAirplaneError(error) {
   return {
     type: 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR',
     error: error
+  }
+}
+
+export function removeAirplane(airplane, dispatch) {
+  const _id = airplane.id
+  axios.delete('/missoes/airplanes/remove/' + _id, airplane.id)
+    .then(() => {
+      dispatch(removeAirplaneDone(airplane))
+    })
+    .catch((error) => {
+      dispatch(removeAirplaneError(error))
+    })
+  return {
+    type: 'REQUEST_REMOVE_AIRPLANE'
+  }
+}
+
+export function removeAirplaneDone(removedAirplane) {
+  return {
+    type: 'REQUEST_REMOVE_AIRPLANE_FULFILLED',
+    payload: removedAirplane
+  }
+}
+
+export function removeAirplaneError(error) {
+  return {
+    type: 'REQUEST_REMOVE_AIRPLANE_ERROR',
+    payload: error
   }
 }

@@ -1,24 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { MuiDataTable } from 'mui-data-table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
+import { removeAirplane } from './actions/airplaneActions';
 
+@connect((Store) => {
+  return {
+    airplanes: Store.airplaneReducer
+  }
+})
 export class DataTableAirplane extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.formattedFetchedData = this.formattedFetchedData.bind(this);
   }
 
   formattedFetchedData() {
-    return this.props.data.airplanes.map((airplane) => {
+    const { dispatch } = this.props;
+    const { airplanes } = this.props.data;
+    const { removedAirplane }  = this.props.airplanes;
+    if (removedAirplane) {
+      airplanes.splice(removedAirplane, 1);
+    }
+    return airplanes.map((airplane) => {
       return {
         id: airplane.id,
         totalFlightTime: airplane.totalFlightTime,
         seatsNumber: airplane.seatsNumber,
-        totalFlightTime: airplane.totalFlightTime,
+        totalFlightTime: airplane.totalFlightTime || '0',
         subscriptionNumber: airplane.subscriptionNumber,
         airplaneModel: airplane.airplaneModel.name,
-        options: <CRUDMenu data={airplane} customButtons={null}/>
+        options: <CRUDMenu
+                  data={airplane}
+                  customButtons={null}
+                  remove={removeAirplane}
+                  dispatch={dispatch}/>
       }
     });
   }
@@ -27,9 +46,10 @@ export class DataTableAirplane extends React.Component {
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
     }
-    const config = {
+    let data = this.formattedFetchedData()
+    let config = {
       paginated: true,
-      data: this.formattedFetchedData(),
+      data: data,
       search: 'subscriptionNumber|totalFlightTime|airplaneModel',
       columns: [
         {

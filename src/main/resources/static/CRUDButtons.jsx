@@ -27,10 +27,17 @@ export class RemoveButton extends React.Component {
 
   constructor(props) {
     super(props);
+    this.remove = this.remove.bind(this);
   }
 
   remove() {
-    console.log('something has been removed')
+    const { action, data, dispatch } = this.props;
+    //execute the action passed with the data (if needed)
+    if (data) {
+      action(data, dispatch);
+    } else {
+      action();
+    }
   }
 
   render() {

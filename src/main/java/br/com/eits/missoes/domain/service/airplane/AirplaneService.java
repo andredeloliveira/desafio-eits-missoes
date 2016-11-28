@@ -25,6 +25,11 @@ public class AirplaneService {
 	}
 	
 	@Transactional
+	public void removeAirplaneById(Long id) {
+		airplaneRepository.delete(id);
+	}
+	
+	@Transactional
 	public void removeAirplane(Airplane airplane) {
 		airplaneRepository.delete(airplane);
 	}

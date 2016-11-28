@@ -9,7 +9,6 @@ import { findAllAirplaneModels } from './actions/airplaneModelsActions';
 import { insertUpdateAirplane } from './actions/airplaneActions';
 
 @connect((Store) => {
-  console.log('store ->', Store)
   return {
     airplaneModels: Store.airplaneModelsReducer,
     airplanes: Store.airplaneReducer

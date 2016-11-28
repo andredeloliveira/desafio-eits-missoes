@@ -25,6 +25,7 @@ export class CRUDMenu extends React.Component {
   }
 
   render() {
+    const { remove, data, dispatch } = this.props;
     return (
       <IconMenu
         iconButtonElement={
@@ -32,7 +33,7 @@ export class CRUDMenu extends React.Component {
         }
       >
         <UpdateButton />
-        <RemoveButton />
+        <RemoveButton action={remove} data={data} dispatch={dispatch}/>
         <DetailsButton />
         {this.renderCustomButtons()}
       </IconMenu>
