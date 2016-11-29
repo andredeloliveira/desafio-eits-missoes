@@ -17,5 +17,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByEmailIgnoreCaseAndStatusTrue(String email);
 	
+	Optional<User> findByEmailIgnoreCaseAndPassword(String email, String password);
 	
 }

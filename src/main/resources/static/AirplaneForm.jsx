@@ -66,7 +66,7 @@ export class AirplaneForm extends React.Component {
   }
 
   render() {
-    const imageInput = {
+    const submitInput = {
       cursor: 'pointer',
       position: 'absolute',
       top: 0,
@@ -104,7 +104,7 @@ export class AirplaneForm extends React.Component {
             { this.airplaneModelsRender() }
             </SelectField>
             <FlatButton label="Salvar" labelPosition="before">
-              <input type="submit" style={imageInput} />
+              <input type="submit" style={submitInput} />
             </FlatButton>
         </form>
       </div>

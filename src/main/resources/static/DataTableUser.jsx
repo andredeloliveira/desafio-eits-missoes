@@ -12,6 +12,11 @@ export class DataTableUser extends React.Component {
 
   formattedFetchedData() {
     return this.props.data.users.map( (user) => {
+      if (user.status) {
+        user.status = 'ATIVO'
+      } else {
+        user.status = 'INATIVO'
+      }
       return {
         name: user.name,
         email: user.email,

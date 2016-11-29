@@ -10,10 +10,14 @@ public enum Profile {
 	private String profile;
 	
 	Profile(String profile) {
-		this.profile = profile;
+		this.profile = "_ROLE" + profile;
 	}
 	
 	public String getProfile() {
 		return this.profile;
+	}
+	
+	public void setProfile(String profile) {
+		this.profile = "_ROLE" + profile;
 	}
 }

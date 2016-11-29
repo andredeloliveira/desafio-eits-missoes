@@ -1,10 +1,11 @@
 package br.com.eits.missoes.domain.security;
 
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class GeneratePassword {
 	public static void main(String [] args) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println( encoder.encode( "admin" ) );
+		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+		System.out.println( encoder.encodePassword("admin", "saltOregon" ) );
 	}
 }

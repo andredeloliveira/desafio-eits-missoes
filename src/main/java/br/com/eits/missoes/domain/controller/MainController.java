@@ -19,8 +19,5 @@ public class MainController {
 		return "/index";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String insert(User user, BindingResult result, Model model, RedirectAttributes attr) {
-		return "redirect:/login/entrar";
-	}
+	
 }

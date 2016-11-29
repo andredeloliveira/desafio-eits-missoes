@@ -1,6 +1,8 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import { LoginForm } from './LoginForm.jsx';
 
 
 //TODO(andredeloliveira): Make this component responsible for all the user login
@@ -12,21 +14,22 @@ export class UserInfo extends React.Component {
   }
 
   render() {
-    const { centerStyle } = this.props;
+    const { centerStyle, loggedIn, userInfo } = this.props;
+    let userName = 'Usuário';
+    if (loggedIn) {
+      userName = userInfo.name;
+    }
     return (
       <Card>
        <CardHeader
          title="Bem-vindo!"
-         subtitle="Usuário"
+         subtitle={userName}
        />
       <CardMedia>
          <img src="https://api.adorable.io/avatars/200/abott@adorable.io.png" />
        </CardMedia>
-       <CardText>
-          Escolha uma opção
-       </CardText>
        <CardActions>
-         <MenuItem style={centerStyle}>Entrar</MenuItem>
+         {loggedIn ? <FlatButton label="Sair" /> : <LoginForm />}
        </CardActions>
      </Card>
     )

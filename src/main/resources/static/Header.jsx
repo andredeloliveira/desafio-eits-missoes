@@ -9,7 +9,14 @@ import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import { UserInfo } from './UserInfo.jsx';
+import { connect } from 'react-redux';
 
+
+@connect((Store) => {
+  return {
+    login: Store.loginReducer,
+  }
+})
 export class Header extends React.Component {
 
   constructor(props) {
@@ -18,13 +25,7 @@ export class Header extends React.Component {
       logged: true,
       open: false
     }
-    console.log(this.state)
-  }
-
-  handleToggle(logged, event) {
-    this.setState({
-      logged: logged
-    })
+    this.showDrawer = this.showDrawer.bind(this);
   }
 
   showDrawer(open, event) {
@@ -41,6 +42,9 @@ export class Header extends React.Component {
       margin: "0 auto",
       width: "100%"
     }
+
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const loggedIn = sessionStorage.getItem('loggedIn');
     return (
       <div>
         <AppBar title="gAviator"
@@ -51,7 +55,7 @@ export class Header extends React.Component {
             onTouchTap={this.showDrawer.bind(this, this.state.open)}
             rightIcon={<NavigationClose />}
             style={sideBarStyle} />
-          <UserInfo style={sideBarStyle}/>
+          <UserInfo style={sideBarStyle} loggedIn={loggedIn} userInfo={currentUser}/>
         </Drawer>
       </div>
     )
