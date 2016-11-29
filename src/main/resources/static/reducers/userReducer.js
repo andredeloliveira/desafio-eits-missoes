@@ -2,7 +2,8 @@ const initialState = {
   fetching: false,
   fetched: false,
   users: null,
-  error: null
+  error: null,
+  newUser: null,
 }
 
 export default function userReducer(state = {}, action) {
@@ -24,6 +25,24 @@ export default function userReducer(state = {}, action) {
         ...state,
         fetching: false,
         error: action.payload
+      }
+    case 'REQUEST_INSERT_UPDATE_USER_PENDING':
+      return {
+        ...state,
+        inserting: true,
+        inserted: false
+      }
+    case 'REQUEST_INSERT_UPDATE_USER_FULFILLED':
+      return {
+        ...state,
+        inserting: false,
+        inserted: true,
+        newUser: action.payload,
+      }
+    case 'REQUEST_INSERT_UPDATE_USER_ERROR':
+      return {
+        ...state,
+        error: action.payload,
       }
     default:
       return state;

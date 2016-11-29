@@ -27,3 +27,30 @@ export function usersError(error) {
     error: error
   }
 }
+
+export function insertUpdateUser(user, dispatch) {
+  axios.post('/missoes/users/insert', user)
+  .then((newUser) => {
+    dispatch(insertUpdateUserDone(newUser.data))
+  })
+  .catch((error) => {
+    dispatch(insertUpdateUserError(error))
+  })
+  return {
+    type: 'REQUEST_INSERT_UPDATE_USER_PENDING',
+  }
+}
+
+export function insertUpdateUserDone(newUser) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_USER_FULFILLED',
+    payload: newUser,
+  }
+}
+
+export function insertUpdateUserError(error) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_USER_ERROR',
+    error: error
+  }
+}

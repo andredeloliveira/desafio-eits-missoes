@@ -2,7 +2,14 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import { connect } from 'react-redux';
+import { insertUpdateUser } from './actions/userActions';
 
+@connect((Store) => {
+  return {
+    users: Store.userReducer
+  }
+})
 export class UserForm extends React.Component {
 
   constructor(props) {
@@ -15,7 +22,12 @@ export class UserForm extends React.Component {
 
   submitData(event) {
     event.prevenDefault();
-    console.log('data was sent')
+    const newUser = {
+      email: event.target.email.value,
+      name: event.target.name.value,
+      password: event.target.password.value,
+      profile: event.target.profile.value,
+    }
   }
 
   userProfilesRender() {
@@ -43,24 +55,28 @@ export class UserForm extends React.Component {
             hintText="Nome"
             floatingLabelText="Nome"
             type="text"
+            name="name"
             fullWidth={true}
           />
           <TextField
             hintText="E-mail"
             floatingLabelText="E-mail"
             type="email"
+            name="email"
             fullWidth={true}
           />
           <TextField
             hintText="Senha"
             floatingLabelText="Senha"
             type="password"
+            name="password"
             fullWidth={true}
           />
           <SelectField
             floatingLabelText="Perfil de Acesso"
             onChange={this.handleSelectUserProfile}
             value={this.state.selectedUserProfile}
+            name="profile"
             fullWidth={true}
             >
             { this.userProfilesRender() }

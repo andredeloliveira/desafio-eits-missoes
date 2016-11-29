@@ -31,7 +31,7 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
-	@RequestMapping(value = "/users", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
 	User insertUser(@Valid User user, BindingResult result) {
 		if(result.hasErrors()) {
 			return null;
