@@ -40,7 +40,7 @@ public class User {
 	
 	//TODO(andre): Define a initial value for status (Activated -> Then we can activate it aferwards)
 	@Column(name = "status")
-	private String status;
+	private Boolean status;
 
 	public Long getId() {
 		return id;
@@ -66,11 +66,11 @@ public class User {
 		this.profile = profile;
 	}
 
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 

@@ -1,5 +1,7 @@
 package br.com.eits.missoes.domain.repository.user;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.eits.missoes.domain.entity.Profile;
@@ -12,6 +14,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 	User findUserByName(String name);
 	
 	User findUserByProfile(Profile profile);
+	
+	Optional<User> findByEmailIgnoreCaseAndStatusTrue(String email);
 	
 	
 }
