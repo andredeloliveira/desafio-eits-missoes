@@ -8,12 +8,15 @@ import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
 import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
 
+//TODO(andredeloliveira): consider refactoring this massive component and splitting into smaller components
 
 @connect((Store) => {
   return {
@@ -30,6 +33,7 @@ export class MissionForm extends React.Component {
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
     this.airplanesRender = this.airplanesRender.bind(this);
+    this.mappedPassengers = this.mappedPassengers.bind(this);
   }
 
   componentWillMount() {
@@ -63,12 +67,36 @@ export class MissionForm extends React.Component {
       return <MissoesLoading />
     }
   }
+
+  mappedPassengers() {
+    const { passengers } = this.props.users;
+    if (passengers) {
+      return passengers.map((passenger, index) => {
+        return {
+          text: passenger.name,
+          value: index,
+          passenger: passenger
+        }
+      })
+    } else {
+      return [];
+    }
+  }
+
   handleUpdateInputFrom(inputQuery) {
     console.log('input query', inputQuery)
   }
 
   handleUpdateInputTo(inputQuery) {
     console.log('input query', inputQuery)
+  }
+
+  handleUpdatePassengers(inputQuery) {
+    console.log(inputQuery)
+  }
+
+  handleUpdatePilots(inputQuery) {
+    console.log(inputQuery);
   }
 
   onFilesChange(files) {
@@ -84,6 +112,12 @@ export class MissionForm extends React.Component {
       'IGU - Foz do Iguaçu',
       'GRU - Guarulhos',
       'GIG - Galeão'
+    ]
+    const pilotsDataSource = [
+      'Mariana',
+      'Natália',
+      'Luíza',
+      'Andrea'
     ]
     return (
       <form onSubmit={this.submitData}>
@@ -108,17 +142,37 @@ export class MissionForm extends React.Component {
           <AutoComplete
             hintText="Origem"
             dataSource={airportDataSource}
-            onUpdateInput={this.handleUpdateInputFrom}
+            onNewRequest={this.handleUpdateInputFrom}
             fullWidth={true}
           />
           <AutoComplete
             hintText="Destino"
             dataSource={airportDataSource}
-            onUpdateInput={this.handleUpdateInputTo}
+            onNewRequest={this.handleUpdateInputTo}
             fullWidth={true}
           />
-          <MissionPilots />
-          <MissionPassengers />
+          <div>
+            <AutoComplete
+              hintText="Passageiros"
+              dataSource={this.mappedPassengers()}
+              onNewRequest={this.handleUpdatePassengers}
+              fullWidth={true}
+              />
+            <FloatingActionButton mini={true} >
+              <ContentAdd />
+            </FloatingActionButton>
+          </div>
+          <div>
+            <AutoComplete
+              hintText="Pilotos"
+              dataSource={pilotsDataSource}
+              onNewRequest={this.handleUpdatePilots}
+              fullWidth={true}
+              />
+            <FloatingActionButton mini={true} >
+              <ContentAdd />
+            </FloatingActionButton>
+          </div>
           <Files
             className="files-dropzone"
             onChange={this.onFilesChange}
