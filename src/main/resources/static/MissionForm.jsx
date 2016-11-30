@@ -15,13 +15,15 @@ import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
+import { findAllAirports } from './actions/airportActions';
+
 
 //TODO(andredeloliveira): consider refactoring this massive component and splitting into smaller components
-
 @connect((Store) => {
   return {
     airplanes: Store.airplaneReducer,
     users: Store.userReducer,
+    airports: Store.airportReducer,
   }
 })
 export class MissionForm extends React.Component {
@@ -46,6 +48,7 @@ export class MissionForm extends React.Component {
     dispatch(findAllAirplanes(dispatch))
     dispatch(findAllPilots(dispatch))
     dispatch(findAllPassengers(dispatch))
+    dispatch(findAllAirports(dispatch))
   }
 
   handleSelectAirplaneChange(event, index, airplane) {

@@ -17,10 +17,12 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import br.com.eits.missoes.domain.repository.airplane.IAirplaneRepository;
+import br.com.eits.missoes.domain.repository.airport.IAirportRepository;
 import br.com.eits.missoes.domain.repository.mission.IMissionPlannerRepository;
 import br.com.eits.missoes.domain.repository.mission.IMissionRepository;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
 import br.com.eits.missoes.domain.service.airplane.AirplaneService;
+import br.com.eits.missoes.domain.service.airport.AirportService;
 import br.com.eits.missoes.domain.service.mission.MissionPlannerService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
 import br.com.eits.missoes.domain.service.user.UserService;
@@ -34,14 +36,17 @@ import br.com.eits.missoes.domain.service.user.UserService;
   IMissionPlannerRepository.class,
   MissionPlannerService.class,
   IMissionRepository.class,
-  MissionService.class
+  MissionService.class,
+  IAirportRepository.class,
+  AirportService.class
 })
 
 @EnableJpaRepositories(basePackageClasses = {
   IUserRepository.class,
   IAirplaneRepository.class,
   IMissionPlannerRepository.class,
-  IMissionRepository.class
+  IMissionRepository.class,
+  IAirportRepository.class
 })
 
 @EnableTransactionManagement
