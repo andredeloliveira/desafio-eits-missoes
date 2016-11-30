@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
 import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
+import { MissoesLoading } from './MissoesLoading.jsx';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
@@ -16,7 +17,7 @@ import { findAllPilots, findAllPassengers } from './actions/userActions';
 
 @connect((Store) => {
   return {
-    airplanes: Store.airplanesReducer,
+    airplanes: Store.airplaneReducer,
     users: Store.userReducer,
   }
 })
@@ -28,6 +29,7 @@ export class MissionForm extends React.Component {
       selectedAirplane: null
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
+    this.airplanesRender = this.airplanesRender.bind(this);
   }
 
   componentWillMount() {
@@ -47,15 +49,19 @@ export class MissionForm extends React.Component {
     console.log('data was sent')
   }
 
+  //TODO(andredeloliveira): Ask how exactly it has to show
   airplanesRender() {
-    const airplanes = [
-      'A380 - AJAJAJAJ',
-      'A880 - KKJJJKK',
-      '777 - JJIIUUYY'
-    ]
-    return airplanes.map( (airplane, index) => {
-      return <MenuItem key={index} value={airplane} primaryText={airplane} />
-    })
+    const { airplanes } = this.props.airplanes;
+    if (airplanes) {
+      return airplanes.map( (airplane, index) => {
+        const airplaneText = airplane.airplaneModel.manufacturer.name +
+        ' ' + airplane.airplaneModel.name +
+        ' - ' + airplane.subscriptionNumber;
+        return <MenuItem key={index} value={airplane} primaryText={airplaneText} />
+      })
+    } else {
+      return <MissoesLoading />
+    }
   }
   handleUpdateInputFrom(inputQuery) {
     console.log('input query', inputQuery)
@@ -74,7 +80,6 @@ export class MissionForm extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const airportDataSource = [
       'IGU - Foz do Iguaçu',
       'GRU - Guarulhos',
@@ -92,14 +97,14 @@ export class MissionForm extends React.Component {
             fullWidth={true}
             multiLine={true}
           />
-          <SelectField
-            floatingLabelText="Aeronave"
-            onChange={this.handleSelectAirplaneChange}
-            value={this.state.selectedAirplane}
-            fullWidth={true}
+            <SelectField
+              floatingLabelText="Aeronave"
+              onChange={this.handleSelectAirplaneChange}
+              value={this.state.selectedAirplane}
+              fullWidth={true}
             >
-            { this.airplanesRender() }
-          </SelectField>
+              {this.airplanesRender() }
+            </SelectField>
           <AutoComplete
             hintText="Origem"
             dataSource={airportDataSource}
