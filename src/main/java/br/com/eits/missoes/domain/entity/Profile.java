@@ -1,23 +1,17 @@
 package br.com.eits.missoes.domain.entity;
 
+import java.io.Serializable;
 
-public enum Profile {
-	ADMINISTRADOR("Administrador"),
-	PILOTO("Piloto"),
-	PASSAGEIRO("Passageiro");
-	
+import org.springframework.security.core.GrantedAuthority;
 
-	private String profile;
-	
-	Profile(String profile) {
-		this.profile = "_ROLE" + profile;
-	}
-	
-	public String getProfile() {
-		return this.profile;
-	}
-	
-	public void setProfile(String profile) {
-		this.profile = "_ROLE" + profile;
+public enum Profile implements Serializable, GrantedAuthority {
+	ADMINISTRADOR,
+	PILOTO,
+	PASSAGEIRO;
+
+	@Override
+	public String getAuthority() {
+		return "ROLE_" + name();
 	}
 }
+

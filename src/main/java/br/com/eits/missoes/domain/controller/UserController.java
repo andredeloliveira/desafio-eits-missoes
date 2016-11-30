@@ -32,7 +32,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
-	User insertUser(@Valid User user, BindingResult result) {
+	User insertUser(@Valid @RequestBody User user, BindingResult result) {
 		if(result.hasErrors()) {
 			return null;
 		} else {

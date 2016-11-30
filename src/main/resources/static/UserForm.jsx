@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
 import { insertUpdateUser } from './actions/userActions';
 
@@ -18,23 +19,27 @@ export class UserForm extends React.Component {
       selectedUserProfile: null
     }
     this.handleSelectUserProfile = this.handleSelectUserProfile.bind(this);
+    this.submitData = this.submitData.bind(this);
   }
 
   submitData(event) {
-    event.prevenDefault();
+    const { dispatch } = this.props;
+    event.preventDefault();
     const newUser = {
       email: event.target.email.value,
       name: event.target.name.value,
       password: event.target.password.value,
-      profile: event.target.profile.value,
+      perfilAcesso: this.state.selectedUserProfile,
     }
+    dispatch(insertUpdateUser(newUser, dispatch))
+    this.props.handleCloseDialog()
   }
 
   userProfilesRender() {
     const userProfiles = [
-      'Administrador',
-      'Piloto',
-      'Passageiro'
+      'ADMINISTRADOR',
+      'PILOTO',
+      'PASSAGEIRO'
     ]
     return userProfiles.map( (userProfile, index) => {
       return <MenuItem key={index} value={userProfile} primaryText={userProfile} />
@@ -48,6 +53,16 @@ export class UserForm extends React.Component {
   }
 
   render() {
+    const submitInput = {
+      cursor: 'pointer',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      width: '100%',
+      opacity: 0,
+    }
     return (
       <form onSubmit={this.submitData}>
         <div>
@@ -81,6 +96,9 @@ export class UserForm extends React.Component {
             >
             { this.userProfilesRender() }
           </SelectField>
+          <FlatButton label="Salvar" labelPosition="before">
+            <input type="submit" style={submitInput} />
+          </FlatButton>
         </div>
       </form>
     )
