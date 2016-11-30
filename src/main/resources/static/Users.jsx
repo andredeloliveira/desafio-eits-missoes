@@ -23,7 +23,14 @@ export class Users extends React.Component {
 
   renderFeedback() {
     const { users } = this.props;
-    if (users.newUser) {
+    if (users.removed) {
+      return (
+        <Formfeedback
+          message={"Usuário removido com sucesso"}
+          duration={3000}
+        />
+      )
+    } else if (users.newUser) {
       return (
         <Formfeedback
           message={"User " + users.newUser.name + " inserido"}

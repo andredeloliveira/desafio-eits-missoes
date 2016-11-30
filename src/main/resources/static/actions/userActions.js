@@ -54,3 +54,31 @@ export function insertUpdateUserError(error) {
     error: error
   }
 }
+
+export function removeUser(user, dispatch) {
+  const _id = user.id;
+  axios.delete('/missoes/users/remove/' + _id, user.id)
+    .then((user) => {
+      dispatch(removeUserDone(user))
+    })
+    .catch((error) => {
+      dispatch(removeUserError(error))
+    })
+  return {
+    type: 'REQUEST_REMOVE_USER_PENDING',
+  }
+}
+
+export function removeUserDone(user) {
+  return {
+    type: 'REQUEST_REMOVE_USER_FULFILLED',
+    payload: user
+  }
+}
+
+export function removeUserError(error) {
+  return {
+    type: 'REQUEST_REMOVE_USER_ERROR',
+    error: error,
+  }
+}

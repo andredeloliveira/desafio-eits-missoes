@@ -26,6 +26,7 @@ export class CRUDMenu extends React.Component {
 
   render() {
     const { remove, data, dispatch } = this.props;
+    console.log(dispatch)
     return (
       <IconMenu
         iconButtonElement={

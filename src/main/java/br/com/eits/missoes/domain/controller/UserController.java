@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +40,12 @@ public class UserController {
 			return userService.insertUser(user);
 		}
 	}
+
+	@RequestMapping(value= "/users/remove/{id}", method = RequestMethod.DELETE)
+	public void removeUser(@PathVariable("id")Long id) {
+		userService.removeUser(id);
+	}
 	
-	//TODO I feel weird having the password being passed in the requestbody.. refactor if sufficient time
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	User login(@RequestBody User user, BindingResult result){
 		if (result.hasErrors()) {

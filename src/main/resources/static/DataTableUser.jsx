@@ -1,16 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { MuiDataTable } from 'mui-data-table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { DeactivateUserButton } from './DeactivateUserButton.jsx';
+import { removeUser } from './actions/userActions';
 
+
+@connect((Store) => {
+  return {
+    users: Store.userReducer,
+  }
+})
 export class DataTableUser extends React.Component {
 
   constructor(props) {
     super(props)
+    this.formattedFetchedData = this.formattedFetchedData.bind(this);
   }
 
   formattedFetchedData() {
+    const { dispatch } = this.props;
     return this.props.data.users.map( (user) => {
       if (user.status) {
         user.status = 'ATIVO'
@@ -22,7 +32,12 @@ export class DataTableUser extends React.Component {
         email: user.email,
         perfilAcesso: user.perfilAcesso,
         status: user.status,
-        options: <CRUDMenu data={user} customButtons={[<DeactivateUserButton key={'deactivateUserButton'}/>]}/>
+        options: <CRUDMenu
+                    data={user}
+                    customButtons={[<DeactivateUserButton key={'deactivateUserButton'}/>]}
+                    remove={removeUser}
+                    dispatch={dispatch}
+                  />
       }
     })
   }

@@ -44,6 +44,26 @@ export default function userReducer(state = {}, action) {
         ...state,
         error: action.payload,
       }
+    case 'REQUEST_REMOVE_USER_PENDING':
+      return {
+        ...state,
+        removing: true,
+        removed: false,
+      }
+
+    case 'REQUEST_REMOVE_USER_FULFILLED':
+      return {
+        ...state,
+        removed: true,
+        removing: false,
+      }
+    case 'REQUEST_REMOVE_USER_ERROR':
+      return {
+        ...state,
+        removed: false,
+        removing: false,
+        error: action.payload,
+      }
     default:
       return state;
   }
