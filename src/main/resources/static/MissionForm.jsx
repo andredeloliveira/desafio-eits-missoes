@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
@@ -9,7 +10,16 @@ import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
+import { findAllAirplanes } from './actions/airplaneActions';
+import { findAllPilots, findAllPassengers } from './actions/userActions';
 
+
+@connect((Store) => {
+  return {
+    airplanes: Store.airplanesReducer,
+    users: Store.userReducer,
+  }
+})
 export class MissionForm extends React.Component {
 
   constructor(props) {
@@ -18,6 +28,13 @@ export class MissionForm extends React.Component {
       selectedAirplane: null
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
+  }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(findAllAirplanes(dispatch))
+    dispatch(findAllPilots(dispatch))
+    dispatch(findAllPassengers(dispatch))
   }
 
   handleSelectAirplaneChange(event, index, airplane) {
@@ -57,6 +74,7 @@ export class MissionForm extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const airportDataSource = [
       'IGU - Foz do Iguaçu',
       'GRU - Guarulhos',

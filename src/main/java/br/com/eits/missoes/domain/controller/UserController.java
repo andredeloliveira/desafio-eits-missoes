@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.security.AppUserDetailService;
 import br.com.eits.missoes.domain.service.user.UserService;
@@ -54,6 +55,14 @@ public class UserController {
 		return userService.login(user);
 	}
 	
+	@RequestMapping(value = "/users/profile/pilots", method = RequestMethod.GET)
+	List<User> findPilots() {
+		return userService.findAllPilots();
+	}
 	
+	@RequestMapping(value = "/users/profile/passengers", method = RequestMethod.GET)
+	List<User> findPassengers(){
+		return userService.findAllPassengers();
+	}
 	
 }

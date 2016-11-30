@@ -64,6 +64,45 @@ export default function userReducer(state = {}, action) {
         removing: false,
         error: action.payload,
       }
+    case 'REQUEST_ALL_PILOTS_PENDING':
+      return {
+        ...state,
+        fetching: true,
+        fetched: false,
+      }
+    case 'REQUEST_ALL_PILOTS_FULFILLED':
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        pilots: action.payload,
+      }
+    case 'REQUEST_ALL_PILOTS_ERROR':
+      return {
+        ...state,
+        fetching: false,
+        fetched: false,
+        error: action.payload,
+      }
+    case 'REQUEST_ALL_PASSENGERS_PENDING':
+      return {
+        ...state,
+        fetching: true,
+      }
+    case 'REQUEST_ALL_PASSENGERS_FULFILLED':
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        passengers: action.payload
+      }
+    case 'REQUEST_ALL_PASSENGERS_ERROR':
+      return {
+        ...state,
+        fetching: false,
+        fetched: false,
+        error: action.payload,
+      }
     default:
       return state;
   }

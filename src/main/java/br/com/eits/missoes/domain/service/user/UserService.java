@@ -45,13 +45,13 @@ public class UserService {
 	}
 	
 	@Transactional
-	public User findUser(String name, Profile profile) {
-		if (name != null) {
-			return userRepository.findUserByName(name);
-		} else if (profile != null) {
-			return userRepository.findUserByProfile(profile);
-		}
-		return null;
+	public List<User> findAllPilots() {
+		return userRepository.findUserByProfile(Profile.PILOTO);
+	}
+	
+	@Transactional
+	public List<User> findAllPassengers() {
+		return userRepository.findUserByProfile(Profile.PASSAGEIRO);
 	}
 
 	@Transactional

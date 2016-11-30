@@ -82,3 +82,57 @@ export function removeUserError(error) {
     error: error,
   }
 }
+
+export function findAllPilots(dispatch) {
+  axios.get('/missoes/users/profile/pilots')
+    .then((pilotsResponse) => {
+      dispatch(allPilots(pilotsResponse.data))
+    })
+    .catch((error) => {
+      dispatch(allPilotsError(error))
+    })
+  return {
+    type: 'REQUEST_ALL_PILOTS_PENDING'
+  }
+}
+
+export function allPilots(users) {
+  return {
+    type: 'REQUEST_ALL_PILOTS_FULFILLED',
+    payload: users,
+  }
+}
+
+export function allPilotsError(error) {
+  return {
+    type: 'REQUEST_ALL_PILOTS_ERROR',
+    error: error,
+  }
+}
+
+export function findAllPassengers(dispatch) {
+  axios.get('/missoes/users/profile/passengers')
+    .then((passengersResponse) => {
+      dispatch(allPassengers(passengersResponse.data))
+    })
+    .catch((error) => {
+      dispatch(allPassengersError(error))
+    })
+  return {
+    type: 'REQUEST_ALL_PASSENGERS_PENDING'
+  }
+}
+
+export function allPassengers(passengers) {
+  return {
+    type: 'REQUEST_ALL_PASSENGERS_FULFILLED',
+    payload: passengers,
+  }
+}
+
+export function allPassengersError(error) {
+  return {
+    type: 'REQUEST_ALL_PASSENGERS_ERROR',
+    error: error,
+  }
+}
