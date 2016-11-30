@@ -64019,11 +64019,16 @@
 	    var _this = _possibleConstructorReturn(this, (MissionForm.__proto__ || Object.getPrototypeOf(MissionForm)).call(this, props));
 	
 	    _this.state = {
-	      selectedAirplane: null
+	      selectedAirplane: null,
+	      selectedPilot: null,
+	      selectedPassenger: null
 	    };
 	    _this.handleSelectAirplaneChange = _this.handleSelectAirplaneChange.bind(_this);
+	    _this.handleUpdatePassengers = _this.handleUpdatePassengers.bind(_this);
+	    _this.handleUpdatePilots = _this.handleUpdatePilots.bind(_this);
 	    _this.airplanesRender = _this.airplanesRender.bind(_this);
 	    _this.mappedPassengers = _this.mappedPassengers.bind(_this);
+	    _this.mappedPilots = _this.mappedPilots.bind(_this);
 	    return _this;
 	  }
 	
@@ -64084,6 +64089,23 @@
 	      }
 	    }
 	  }, {
+	    key: 'mappedPilots',
+	    value: function mappedPilots() {
+	      var pilots = this.props.users.pilots;
+	
+	      if (pilots) {
+	        return pilots.map(function (pilot, index) {
+	          return {
+	            text: pilot.name,
+	            value: index,
+	            pilot: pilot
+	          };
+	        });
+	      } else {
+	        return [];
+	      }
+	    }
+	  }, {
 	    key: 'handleUpdateInputFrom',
 	    value: function handleUpdateInputFrom(inputQuery) {
 	      console.log('input query', inputQuery);
@@ -64095,13 +64117,17 @@
 	    }
 	  }, {
 	    key: 'handleUpdatePassengers',
-	    value: function handleUpdatePassengers(inputQuery) {
-	      console.log(inputQuery);
+	    value: function handleUpdatePassengers(autocompleteResult) {
+	      this.setState({
+	        selectedPassenger: autocompleteResult.passenger
+	      });
 	    }
 	  }, {
 	    key: 'handleUpdatePilots',
-	    value: function handleUpdatePilots(inputQuery) {
-	      console.log(inputQuery);
+	    value: function handleUpdatePilots(autocompleteResult) {
+	      this.setState({
+	        selectedPilot: autocompleteResult.pilot
+	      });
 	    }
 	  }, {
 	    key: 'onFilesChange',
@@ -64117,7 +64143,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var airportDataSource = ['IGU - Foz do Iguaçu', 'GRU - Guarulhos', 'GIG - Galeão'];
-	      var pilotsDataSource = ['Mariana', 'Natália', 'Luíza', 'Andrea'];
+	      console.log(this.state);
 	      return _react2.default.createElement(
 	        'form',
 	        { onSubmit: this.submitData },
@@ -64175,7 +64201,7 @@
 	            null,
 	            _react2.default.createElement(_AutoComplete2.default, {
 	              hintText: 'Pilotos',
-	              dataSource: pilotsDataSource,
+	              dataSource: this.mappedPilots(),
 	              onNewRequest: this.handleUpdatePilots,
 	              fullWidth: true
 	            }),

@@ -29,11 +29,16 @@ export class MissionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedAirplane: null
+      selectedAirplane: null,
+      selectedPilot: null,
+      selectedPassenger: null,
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
+    this.handleUpdatePassengers = this.handleUpdatePassengers.bind(this);
+    this.handleUpdatePilots = this.handleUpdatePilots.bind(this);
     this.airplanesRender = this.airplanesRender.bind(this);
     this.mappedPassengers = this.mappedPassengers.bind(this);
+    this.mappedPilots = this.mappedPilots.bind(this);
   }
 
   componentWillMount() {
@@ -75,7 +80,22 @@ export class MissionForm extends React.Component {
         return {
           text: passenger.name,
           value: index,
-          passenger: passenger
+          passenger: passenger,
+        }
+      })
+    } else {
+      return [];
+    }
+  }
+
+  mappedPilots() {
+    const { pilots } = this.props.users;
+    if (pilots) {
+      return pilots.map((pilot, index) => {
+        return {
+          text: pilot.name,
+          value: index,
+          pilot: pilot,
         }
       })
     } else {
@@ -91,12 +111,16 @@ export class MissionForm extends React.Component {
     console.log('input query', inputQuery)
   }
 
-  handleUpdatePassengers(inputQuery) {
-    console.log(inputQuery)
+  handleUpdatePassengers(autocompleteResult) {
+    this.setState({
+      selectedPassenger: autocompleteResult.passenger,
+    })
   }
 
-  handleUpdatePilots(inputQuery) {
-    console.log(inputQuery);
+  handleUpdatePilots(autocompleteResult) {
+    this.setState({
+      selectedPilot: autocompleteResult.pilot,
+    })
   }
 
   onFilesChange(files) {
@@ -113,12 +137,7 @@ export class MissionForm extends React.Component {
       'GRU - Guarulhos',
       'GIG - Galeão'
     ]
-    const pilotsDataSource = [
-      'Mariana',
-      'Natália',
-      'Luíza',
-      'Andrea'
-    ]
+    console.log(this.state)
     return (
       <form onSubmit={this.submitData}>
         <div>
@@ -165,7 +184,7 @@ export class MissionForm extends React.Component {
           <div>
             <AutoComplete
               hintText="Pilotos"
-              dataSource={pilotsDataSource}
+              dataSource={this.mappedPilots()}
               onNewRequest={this.handleUpdatePilots}
               fullWidth={true}
               />
