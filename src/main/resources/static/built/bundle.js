@@ -64086,6 +64086,8 @@
 	    _this.handleUpdateTo = _this.handleUpdateTo.bind(_this);
 	    _this.handleUpdateFiles = _this.handleUpdateFiles.bind(_this);
 	    _this.handleUpdateFilesError = _this.handleUpdateFilesError.bind(_this);
+	    _this.handleAddNewPassenger = _this.handleAddNewPassenger.bind(_this);
+	    _this.handleAddNewPilot = _this.handleAddNewPilot.bind(_this);
 	    _this.airplanesRender = _this.airplanesRender.bind(_this);
 	    _this.mappedPassengers = _this.mappedPassengers.bind(_this);
 	    _this.mappedPilots = _this.mappedPilots.bind(_this);
@@ -64115,6 +64117,16 @@
 	    value: function submitData(event) {
 	      event.prevenDefault();
 	      console.log('data was sent');
+	    }
+	  }, {
+	    key: 'handleAddNewPassenger',
+	    value: function handleAddNewPassenger() {
+	      console.log('clicked');
+	    }
+	  }, {
+	    key: 'handleAddNewPilot',
+	    value: function handleAddNewPilot() {
+	      console.log('clicked');
 	    }
 	
 	    //TODO(andredeloliveira): Ask how exactly it has to show
@@ -64311,7 +64323,7 @@
 	            }),
 	            _react2.default.createElement(
 	              _FloatingActionButton2.default,
-	              { mini: true },
+	              { mini: true, onTapTouch: this.handleAddNewPassenger },
 	              _react2.default.createElement(_add2.default, null)
 	            )
 	          ),
@@ -64326,7 +64338,7 @@
 	            }),
 	            _react2.default.createElement(
 	              _FloatingActionButton2.default,
-	              { mini: true },
+	              { mini: true, onTapTouch: this.handleUpdatePilot },
 	              _react2.default.createElement(_add2.default, null)
 	            )
 	          ),

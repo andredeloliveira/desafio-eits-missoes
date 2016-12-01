@@ -46,6 +46,8 @@ export class MissionForm extends React.Component {
     this.handleUpdateTo = this.handleUpdateTo.bind(this);
     this.handleUpdateFiles = this.handleUpdateFiles.bind(this);
     this.handleUpdateFilesError = this.handleUpdateFilesError.bind(this);
+    this.handleAddNewPassenger = this.handleAddNewPassenger.bind(this);
+    this.handleAddNewPilot = this.handleAddNewPilot.bind(this);
     this.airplanesRender = this.airplanesRender.bind(this);
     this.mappedPassengers = this.mappedPassengers.bind(this);
     this.mappedPilots = this.mappedPilots.bind(this);
@@ -68,6 +70,14 @@ export class MissionForm extends React.Component {
   submitData(event) {
     event.prevenDefault();
     console.log('data was sent')
+  }
+
+  handleAddNewPassenger() {
+    console.log('clicked')
+  }
+
+  handleAddNewPilot() {
+    console.log('clicked')
   }
 
   //TODO(andredeloliveira): Ask how exactly it has to show
@@ -228,7 +238,7 @@ export class MissionForm extends React.Component {
                 onNewRequest={this.handleUpdatePassengers}
                 fullWidth={true}
                 />
-              <FloatingActionButton mini={true} >
+              <FloatingActionButton mini={true} onTapTouch={this.handleAddNewPassenger}>
                 <ContentAdd />
               </FloatingActionButton>
             </div>
@@ -239,7 +249,7 @@ export class MissionForm extends React.Component {
               onNewRequest={this.handleUpdatePilots}
               fullWidth={true}
               />
-            <FloatingActionButton mini={true} >
+            <FloatingActionButton mini={true} onTapTouch={this.handleUpdatePilot}>
               <ContentAdd />
             </FloatingActionButton>
           </div>

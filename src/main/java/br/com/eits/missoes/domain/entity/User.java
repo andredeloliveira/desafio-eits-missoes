@@ -9,6 +9,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author andre
  * @version 1.0
@@ -35,10 +37,11 @@ public class User {
 	private Profile profile;
 	
 	@Column(name = "password")
+	@JsonIgnore
 	@NotBlank(message = "Senha é obrigatória")
 	private String password;
 	
-	//TODO(andre): Define a initial value for status (Activated -> Then we can activate it aferwards)
+	//TODO(andre): Define a initial value for status (Activated -> Then we can activate it afterwards)
 	@Column(name = "status")
 	private Boolean status;
 
