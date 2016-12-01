@@ -32,16 +32,18 @@ export class MissionForm extends React.Component {
     super(props);
     this.state = {
       selectedAirplane: null,
-      selectedPilot: null,
+      selectedPilots: [],
+      selectedPassengers: [],
       selectedPassenger: null,
+      selectedPilot: null,
       selectedTo: null,
       selectedFrom: null,
       files: null,
       filesError: null,
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
-    this.handleUpdatePassengers = this.handleUpdatePassengers.bind(this);
-    this.handleUpdatePilots = this.handleUpdatePilots.bind(this);
+    this.handleUpdatePassenger = this.handleUpdatePassenger.bind(this);
+    this.handleUpdatePilot = this.handleUpdatePilot.bind(this);
     this.handleUpdateFrom = this.handleUpdateFrom.bind(this);
     this.handleUpdateTo = this.handleUpdateTo.bind(this);
     this.handleUpdateFiles = this.handleUpdateFiles.bind(this);
@@ -52,6 +54,8 @@ export class MissionForm extends React.Component {
     this.mappedPassengers = this.mappedPassengers.bind(this);
     this.mappedPilots = this.mappedPilots.bind(this);
     this.mappedAirports = this.mappedAirports.bind(this);
+    this.renderSelectedPassengers = this.renderSelectedPassengers.bind(this);
+    this.renderSelectedPilots = this.renderSelectedPilots.bind(this);
   }
 
   componentWillMount() {
@@ -62,23 +66,6 @@ export class MissionForm extends React.Component {
     dispatch(findAllAirports(dispatch))
   }
 
-  handleSelectAirplaneChange(event, index, airplane) {
-    this.setState({
-      selectedAirplane: airplane
-    })
-  }
-  submitData(event) {
-    event.prevenDefault();
-    console.log('data was sent')
-  }
-
-  handleAddNewPassenger() {
-    console.log('clicked')
-  }
-
-  handleAddNewPilot() {
-    console.log('clicked')
-  }
 
   //TODO(andredeloliveira): Ask how exactly it has to show
   airplanesRender() {
@@ -140,6 +127,36 @@ export class MissionForm extends React.Component {
     }
   }
 
+  renderSelectedPassengers() {
+    return this.state.selectedPassengers.map((passenger) => {
+      return <span key={passenger.id}>{passenger.name}</span>
+    })
+  }
+
+  renderSelectedPilots() {
+    return this.state.selectedPilots.map((pilot) => {
+      return <span key={pilot.id}>{pilot.name}</span>
+    })
+  }
+
+  handleSelectAirplaneChange(event, index, airplane) {
+    this.setState({
+      selectedAirplane: airplane
+    })
+  }
+  submitData(event) {
+    event.prevenDefault();
+    console.log('data was sent')
+  }
+
+  handleAddNewPassenger() {
+    console.log('adding new passenger')
+  }
+
+  handleAddNewPilot() {
+    console.log('adding new pilot')
+  }
+
   handleUpdateFrom(autocompleteResult) {
     this.setState({
       selectedFrom: autocompleteResult.airport
@@ -152,16 +169,30 @@ export class MissionForm extends React.Component {
     })
   }
 
-  handleUpdatePassengers(autocompleteResult) {
+  handleUpdatePassenger(autocompleteResult) {
+    let actualSelectedPassengers = this.state.selectedPassengers;
     this.setState({
       selectedPassenger: autocompleteResult.passenger,
     })
+    if (actualSelectedPassengers.length === 0) {
+      actualSelectedPassengers.push(this.state.selectedPassenger)
+      this.setState({
+        selectedPassengers: actualSelectedPassengers
+      })
+    }
   }
 
-  handleUpdatePilots(autocompleteResult) {
+  handleUpdatePilot(autocompleteResult) {
+    let actualSelectedPilots = this.state.selectedPilots;
     this.setState({
       selectedPilot: autocompleteResult.pilot,
     })
+    if (actualSelectedPilots.length === 0) {
+      actualSelectedPilots.push(this.state.selectedPilot)
+      this.setState({
+        selectedPilots: actualSelectedPilots
+      })
+    }
   }
 
   handleUpdateFiles(files) {
@@ -235,23 +266,29 @@ export class MissionForm extends React.Component {
               <AutoComplete
                 hintText="Passageiros"
                 dataSource={this.mappedPassengers()}
-                onNewRequest={this.handleUpdatePassengers}
+                onNewRequest={this.handleUpdatePassenger}
                 fullWidth={true}
                 />
-              <FloatingActionButton mini={true} onTapTouch={this.handleAddNewPassenger}>
+              <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPassenger}>
                 <ContentAdd />
               </FloatingActionButton>
+              <div>
+                { this.renderSelectedPassengers() }
+              </div>
             </div>
             <div>
             <AutoComplete
               hintText="Pilotos"
               dataSource={this.mappedPilots()}
-              onNewRequest={this.handleUpdatePilots}
+              onNewRequest={this.handleUpdatePilot}
               fullWidth={true}
               />
-            <FloatingActionButton mini={true} onTapTouch={this.handleUpdatePilot}>
+            <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPilot}>
               <ContentAdd />
             </FloatingActionButton>
+            <div>
+              { this.renderSelectedPilots() }
+            </div>
           </div>
           <div>
             <Files

@@ -64072,16 +64072,18 @@
 	
 	    _this.state = {
 	      selectedAirplane: null,
-	      selectedPilot: null,
+	      selectedPilots: [],
+	      selectedPassengers: [],
 	      selectedPassenger: null,
+	      selectedPilot: null,
 	      selectedTo: null,
 	      selectedFrom: null,
 	      files: null,
 	      filesError: null
 	    };
 	    _this.handleSelectAirplaneChange = _this.handleSelectAirplaneChange.bind(_this);
-	    _this.handleUpdatePassengers = _this.handleUpdatePassengers.bind(_this);
-	    _this.handleUpdatePilots = _this.handleUpdatePilots.bind(_this);
+	    _this.handleUpdatePassenger = _this.handleUpdatePassenger.bind(_this);
+	    _this.handleUpdatePilot = _this.handleUpdatePilot.bind(_this);
 	    _this.handleUpdateFrom = _this.handleUpdateFrom.bind(_this);
 	    _this.handleUpdateTo = _this.handleUpdateTo.bind(_this);
 	    _this.handleUpdateFiles = _this.handleUpdateFiles.bind(_this);
@@ -64092,6 +64094,8 @@
 	    _this.mappedPassengers = _this.mappedPassengers.bind(_this);
 	    _this.mappedPilots = _this.mappedPilots.bind(_this);
 	    _this.mappedAirports = _this.mappedAirports.bind(_this);
+	    _this.renderSelectedPassengers = _this.renderSelectedPassengers.bind(_this);
+	    _this.renderSelectedPilots = _this.renderSelectedPilots.bind(_this);
 	    return _this;
 	  }
 	
@@ -64104,29 +64108,6 @@
 	      dispatch((0, _userActions.findAllPilots)(dispatch));
 	      dispatch((0, _userActions.findAllPassengers)(dispatch));
 	      dispatch((0, _airportActions.findAllAirports)(dispatch));
-	    }
-	  }, {
-	    key: 'handleSelectAirplaneChange',
-	    value: function handleSelectAirplaneChange(event, index, airplane) {
-	      this.setState({
-	        selectedAirplane: airplane
-	      });
-	    }
-	  }, {
-	    key: 'submitData',
-	    value: function submitData(event) {
-	      event.prevenDefault();
-	      console.log('data was sent');
-	    }
-	  }, {
-	    key: 'handleAddNewPassenger',
-	    value: function handleAddNewPassenger() {
-	      console.log('clicked');
-	    }
-	  }, {
-	    key: 'handleAddNewPilot',
-	    value: function handleAddNewPilot() {
-	      console.log('clicked');
 	    }
 	
 	    //TODO(andredeloliveira): Ask how exactly it has to show
@@ -64197,6 +64178,51 @@
 	      }
 	    }
 	  }, {
+	    key: 'renderSelectedPassengers',
+	    value: function renderSelectedPassengers() {
+	      return this.state.selectedPassengers.map(function (passenger) {
+	        return _react2.default.createElement(
+	          'span',
+	          { key: passenger.id },
+	          passenger.name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'renderSelectedPilots',
+	    value: function renderSelectedPilots() {
+	      return this.state.selectedPilots.map(function (pilot) {
+	        return _react2.default.createElement(
+	          'span',
+	          { key: pilot.id },
+	          pilot.name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'handleSelectAirplaneChange',
+	    value: function handleSelectAirplaneChange(event, index, airplane) {
+	      this.setState({
+	        selectedAirplane: airplane
+	      });
+	    }
+	  }, {
+	    key: 'submitData',
+	    value: function submitData(event) {
+	      event.prevenDefault();
+	      console.log('data was sent');
+	    }
+	  }, {
+	    key: 'handleAddNewPassenger',
+	    value: function handleAddNewPassenger() {
+	      console.log('adding new passenger');
+	    }
+	  }, {
+	    key: 'handleAddNewPilot',
+	    value: function handleAddNewPilot() {
+	      console.log('adding new pilot');
+	    }
+	  }, {
 	    key: 'handleUpdateFrom',
 	    value: function handleUpdateFrom(autocompleteResult) {
 	      this.setState({
@@ -64211,18 +64237,32 @@
 	      });
 	    }
 	  }, {
-	    key: 'handleUpdatePassengers',
-	    value: function handleUpdatePassengers(autocompleteResult) {
+	    key: 'handleUpdatePassenger',
+	    value: function handleUpdatePassenger(autocompleteResult) {
+	      var actualSelectedPassengers = this.state.selectedPassengers;
 	      this.setState({
 	        selectedPassenger: autocompleteResult.passenger
 	      });
+	      if (actualSelectedPassengers.length === 0) {
+	        actualSelectedPassengers.push(this.state.selectedPassenger);
+	        this.setState({
+	          selectedPassengers: actualSelectedPassengers
+	        });
+	      }
 	    }
 	  }, {
-	    key: 'handleUpdatePilots',
-	    value: function handleUpdatePilots(autocompleteResult) {
+	    key: 'handleUpdatePilot',
+	    value: function handleUpdatePilot(autocompleteResult) {
+	      var actualSelectedPilots = this.state.selectedPilots;
 	      this.setState({
 	        selectedPilot: autocompleteResult.pilot
 	      });
+	      if (actualSelectedPilots.length === 0) {
+	        actualSelectedPilots.push(this.state.selectedPilot);
+	        this.setState({
+	          selectedPilots: actualSelectedPilots
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'handleUpdateFiles',
@@ -64318,13 +64358,18 @@
 	            _react2.default.createElement(_AutoComplete2.default, {
 	              hintText: 'Passageiros',
 	              dataSource: this.mappedPassengers(),
-	              onNewRequest: this.handleUpdatePassengers,
+	              onNewRequest: this.handleUpdatePassenger,
 	              fullWidth: true
 	            }),
 	            _react2.default.createElement(
 	              _FloatingActionButton2.default,
-	              { mini: true, onTapTouch: this.handleAddNewPassenger },
+	              { mini: true, onTouchTap: this.handleAddNewPassenger },
 	              _react2.default.createElement(_add2.default, null)
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              this.renderSelectedPassengers()
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -64333,13 +64378,18 @@
 	            _react2.default.createElement(_AutoComplete2.default, {
 	              hintText: 'Pilotos',
 	              dataSource: this.mappedPilots(),
-	              onNewRequest: this.handleUpdatePilots,
+	              onNewRequest: this.handleUpdatePilot,
 	              fullWidth: true
 	            }),
 	            _react2.default.createElement(
 	              _FloatingActionButton2.default,
-	              { mini: true, onTapTouch: this.handleUpdatePilot },
+	              { mini: true, onTouchTap: this.handleAddNewPilot },
 	              _react2.default.createElement(_add2.default, null)
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              this.renderSelectedPilots()
 	            )
 	          ),
 	          _react2.default.createElement(
