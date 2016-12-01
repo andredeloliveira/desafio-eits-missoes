@@ -46,7 +46,10 @@ export class NewEntryDialog extends React.Component {
     const fabStyle = {
       marginRight: '20px',
       float: 'right',
-    };
+    }
+    const dialogStyle = {
+      overflow: "hidden",
+    }
     const actions = [
       <FlatButton
         label="Cancel"
@@ -62,9 +65,11 @@ export class NewEntryDialog extends React.Component {
         </FloatingActionButton>
         <Dialog
           actions={actions}
-          modal={false}
+          modal={true}
           open={this.state.open}
           onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
+          style={dialogStyle}
         >
           { this.renderProperForm(name) }
         </Dialog>
