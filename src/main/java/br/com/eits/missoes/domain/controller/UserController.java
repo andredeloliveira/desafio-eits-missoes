@@ -35,11 +35,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
 	User insertUser(@Valid @RequestBody User user, BindingResult result) {
-		if(result.hasErrors()) {
-			return null;
-		} else {
-			return userService.insertUser(user);
-		}
+		return userService.insertUser(user);
 	}
 
 	@RequestMapping(value= "/users/remove/{id}", method = RequestMethod.DELETE)
