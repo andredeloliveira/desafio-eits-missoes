@@ -4,6 +4,7 @@ import airplaneModelsReducer from './airplaneModelsReducer';
 import userReducer from './userReducer';
 import missionReducer from './missionReducer';
 import loginReducer from './loginReducer';
+import airportReducer from './airportReducer';
 //import all other reducers here
 
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   userReducer,
   missionReducer,
   loginReducer,
+  airportReducer,
 });
 
 export default rootReducer;

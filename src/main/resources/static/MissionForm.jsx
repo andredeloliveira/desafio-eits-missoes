@@ -34,13 +34,22 @@ export class MissionForm extends React.Component {
       selectedAirplane: null,
       selectedPilot: null,
       selectedPassenger: null,
+      selectedTo: null,
+      selectedFrom: null,
+      files: null,
+      filesError: null,
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
     this.handleUpdatePassengers = this.handleUpdatePassengers.bind(this);
     this.handleUpdatePilots = this.handleUpdatePilots.bind(this);
+    this.handleUpdateFrom = this.handleUpdateFrom.bind(this);
+    this.handleUpdateTo = this.handleUpdateTo.bind(this);
+    this.handleUpdateFiles = this.handleUpdateFiles.bind(this);
+    this.handleUpdateFilesError = this.handleUpdateFilesError.bind(this);
     this.airplanesRender = this.airplanesRender.bind(this);
     this.mappedPassengers = this.mappedPassengers.bind(this);
     this.mappedPilots = this.mappedPilots.bind(this);
+    this.mappedAirports = this.mappedAirports.bind(this);
   }
 
   componentWillMount() {
@@ -91,6 +100,21 @@ export class MissionForm extends React.Component {
     }
   }
 
+  mappedAirports() {
+    const { airports } = this.props.airports;
+    if (airports) {
+      return airports.map((airport, index) => {
+        return {
+          text: airport.acronym + ' - ' + airport.name,
+          value: index,
+          airport: airport,
+        }
+      })
+    } else {
+      return [];
+    }
+  }
+
   mappedPilots() {
     const { pilots } = this.props.users;
     if (pilots) {
@@ -106,12 +130,16 @@ export class MissionForm extends React.Component {
     }
   }
 
-  handleUpdateInputFrom(inputQuery) {
-    console.log('input query', inputQuery)
+  handleUpdateFrom(autocompleteResult) {
+    this.setState({
+      selectedFrom: autocompleteResult.airport
+    })
   }
 
-  handleUpdateInputTo(inputQuery) {
-    console.log('input query', inputQuery)
+  handleUpdateTo(autocompleteResult) {
+    this.setState({
+      selectedTo: autocompleteResult.airport
+    })
   }
 
   handleUpdatePassengers(autocompleteResult) {
@@ -126,65 +154,85 @@ export class MissionForm extends React.Component {
     })
   }
 
-  onFilesChange(files) {
-    console.log('here are the files', files);
+  handleUpdateFiles(files) {
+    this.setState({
+      files: files
+    })
   }
 
-  onFilesError(error, file) {
-    console.log('error code ', error.code, ':', error.message)
+  handleUpdateFilesError(error, file) {
+    this.setState({
+      filesError: error
+    })
   }
 
   render() {
-    const airportDataSource = [
-      'IGU - Foz do Iguaçu',
-      'GRU - Guarulhos',
-      'GIG - Galeão'
-    ]
     console.log(this.state)
     return (
       <form onSubmit={this.submitData}>
         <div>
-          <DatePicker hintText="Data" fullWidth={true} />
-          <TimePicker hintText="Hora" format="24hr" fullWidth={true} />
-          <TextField
-            hintText="Objetivo"
-            floatingLabelText="Objetivo"
-            type="text"
-            fullWidth={true}
-            multiLine={true}
-          />
+          <div>
+            <DatePicker
+              hintText="Data"
+              fullWidth={true}
+              name="date"
+              />
+          </div>
+          <div>
+            <TimePicker
+              hintText="Hora"
+              format="24hr"
+              fullWidth={true}
+              name="time"
+              />
+          </div>
+          <div>
+            <TextField
+              hintText="Objetivo"
+              type="text"
+              fullWidth={true}
+              multiLine={true}
+              name="reason"
+              />
+          </div>
+          <div>
             <SelectField
-              floatingLabelText="Aeronave"
+              hintText="Aeronave"
               onChange={this.handleSelectAirplaneChange}
               value={this.state.selectedAirplane}
               fullWidth={true}
-            >
+              >
               {this.airplanesRender() }
             </SelectField>
-          <AutoComplete
-            hintText="Origem"
-            dataSource={airportDataSource}
-            onNewRequest={this.handleUpdateInputFrom}
-            fullWidth={true}
-          />
-          <AutoComplete
-            hintText="Destino"
-            dataSource={airportDataSource}
-            onNewRequest={this.handleUpdateInputTo}
-            fullWidth={true}
-          />
-          <div>
-            <AutoComplete
-              hintText="Passageiros"
-              dataSource={this.mappedPassengers()}
-              onNewRequest={this.handleUpdatePassengers}
-              fullWidth={true}
-              />
-            <FloatingActionButton mini={true} >
-              <ContentAdd />
-            </FloatingActionButton>
           </div>
-          <div>
+            <div>
+              <AutoComplete
+                hintText="Origem"
+                dataSource={this.mappedAirports()}
+                onNewRequest={this.handleUpdateFrom}
+                fullWidth={true}
+                />
+            </div>
+            <div>
+              <AutoComplete
+                hintText="Destino"
+                dataSource={this.mappedAirports()}
+                onNewRequest={this.handleUpdateTo}
+                fullWidth={true}
+                />
+            </div>
+            <div>
+              <AutoComplete
+                hintText="Passageiros"
+                dataSource={this.mappedPassengers()}
+                onNewRequest={this.handleUpdatePassengers}
+                fullWidth={true}
+                />
+              <FloatingActionButton mini={true} >
+                <ContentAdd />
+              </FloatingActionButton>
+            </div>
+            <div>
             <AutoComplete
               hintText="Pilotos"
               dataSource={this.mappedPilots()}
@@ -195,16 +243,18 @@ export class MissionForm extends React.Component {
               <ContentAdd />
             </FloatingActionButton>
           </div>
-          <Files
-            className="files-dropzone"
-            onChange={this.onFilesChange}
-            onError={this.onFilesError}
-            maxFileSize={10000000}
-            minFileSize={0}
-            clickable
-          >
-            <FlatButton label="Anexar.." />
-          </Files>
+          <div>
+            <Files
+              className="files-dropzone"
+              onChange={this.handleUpdateFiles}
+              onError={this.handleUpdateFilesError}
+              maxFileSize={10000000}
+              minFileSize={0}
+              clickable
+              >
+              <FlatButton label="Anexar.." />
+            </Files>
+          </div>
         </div>
       </form>
     )
