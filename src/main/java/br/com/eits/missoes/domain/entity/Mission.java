@@ -38,7 +38,7 @@ public class Mission {
 	private Byte[] attachedFile;
 	
 	@Column(name = "date_time")
-	private Instant dateTime;
+	private Calendar dateTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
@@ -51,10 +51,10 @@ public class Mission {
 	@Column(name = "reason")
 	private String reason;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
 	private List<MissionPassenger> passengers;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.MERGE, fetch= FetchType.EAGER)
 	private List<MissionPilot> pilots;
 	
 	
@@ -81,10 +81,10 @@ public class Mission {
 	public void setAttachedFile(Byte[] attachedFile) {
 		this.attachedFile = attachedFile;
 	}
-	public Instant getDateTime() {
+	public Calendar getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(Instant instant) {
+	public void setDateTime(Calendar instant) {
 		this.dateTime = instant;
 	}
 	public Airport getMissionTo() {

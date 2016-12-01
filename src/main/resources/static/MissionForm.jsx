@@ -16,6 +16,7 @@ import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
 import { findAllAirports } from './actions/airportActions';
+import { insertUpdateMission } from './actions/missionActions';
 
 
 //TODO(andredeloliveira): consider refactoring this massive component and splitting into smaller components
@@ -59,7 +60,8 @@ export class MissionForm extends React.Component {
     this.renderSelectedPassengers = this.renderSelectedPassengers.bind(this);
     this.renderSelectedPilots = this.renderSelectedPilots.bind(this);
     this.renderPassengersAutoComplete = this.renderPassengersAutoComplete.bind(this);
-    this.renderPilotsAutoComplete = this.renderPilotsAutoComplete.bind(this)
+    this.renderPilotsAutoComplete = this.renderPilotsAutoComplete.bind(this);
+    this.submitData = this.submitData.bind(this);
   }
 
   componentWillMount() {
@@ -181,8 +183,20 @@ export class MissionForm extends React.Component {
     })
   }
   submitData(event) {
-    event.prevenDefault();
-    console.log('data was sent')
+    event.preventDefault();
+    const { dispatch } = this.props;
+    //TODO(02/12/2016) -> find out if I need another service here to add into the 'relational' table
+    const newMission = {
+      //dateTime: event.target.date.value + ' ' + event.target.time.value + ':00',
+      missionTo: this.state.selectedTo,
+      missionFrom: this.state.selectedFrom,
+      airplane: this.state.selectedAirplane,
+      reason: event.target.reason.value,
+      passengers: this.state.selectedPassengers,
+      pilots: this.state.selectedPilots,
+      attachedFile: null,
+    }
+    dispatch(insertUpdateMission(newMission, dispatch))
   }
 
   handleAddNewPassenger() {
@@ -244,7 +258,16 @@ export class MissionForm extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    const submitInput = {
+      cursor: 'pointer',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      width: '100%',
+      opacity: 0,
+    }
     return (
       <form onSubmit={this.submitData}>
         <div>
@@ -309,9 +332,6 @@ export class MissionForm extends React.Component {
             <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPilot}>
               <ContentAdd />
             </FloatingActionButton>
-            <div>
-              { this.renderSelectedPilots() }
-            </div>
           </div>
           <div>
             <Files
@@ -324,6 +344,9 @@ export class MissionForm extends React.Component {
               >
               <FlatButton label="Anexar.." />
             </Files>
+            <FlatButton label="Salvar" labelPosition="before">
+              <input type="submit" style={submitInput} />
+            </FlatButton>
           </div>
         </div>
       </form>

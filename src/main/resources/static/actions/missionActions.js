@@ -26,3 +26,31 @@ export function missionsError(error) {
     error: error
   }
 }
+
+export function insertUpdateMission(mission, dispatch) {
+  console.log('mission at actions', mission)
+  axios.post('/missoes/missions/insert', mission)
+    .then((missionResponse) => {
+      dispatch(insertUpdateMissionDone(missionResponse.data))
+    })
+    .catch((error) => {
+      dispatch(insertUpdateMissionError(error))
+    })
+  return {
+    type: 'REQUEST_INSERT_UPDATE_MISSION_PENDING'
+  }
+}
+
+export function insertUpdateMissionDone(mission) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_MISSION_FULFILLED',
+    payload: mission
+  }
+}
+
+export function insertUpdateMissionError(error) {
+  return {
+    type: 'REQUEST_INSERT_UPDATE_MISSION_ERROR',
+    error: error,
+  }
+}
