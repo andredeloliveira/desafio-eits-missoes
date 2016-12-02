@@ -20,6 +20,11 @@ public class MissionService {
 	private IMissionRepository missionRepository;
 	
 	@Transactional
+	public void removeMissionById(Long id) {
+		missionRepository.delete(id);
+	}
+	
+	@Transactional
 	public List<Mission> findAllMission() {
 		return missionRepository.findAll();
 	}

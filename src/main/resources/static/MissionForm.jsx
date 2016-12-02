@@ -189,7 +189,6 @@ export class MissionForm extends React.Component {
     const { dispatch } = this.props;
     //Sometimes the user is not present in the Redux Store, so we get it from the sessionStorage variable ;), which is still valid
     const currentUser = this.props.auth.currentUser || JSON.parse(sessionStorage.getItem('currentUser'));
-    const { newMission } = this.props.missions;
     const mission = {
       mission: {
         dateTime: event.target.date.value + ' ' + event.target.time.value,
@@ -197,7 +196,7 @@ export class MissionForm extends React.Component {
         missionFrom: this.state.selectedFrom,
         airplane: this.state.selectedAirplane,
         reason: event.target.reason.value,
-        attachedFile: null,
+        attachedFile: null,//this.state.files[0],
       },
       planner: currentUser,
       passengers: this.state.selectedPassengers,
@@ -205,7 +204,6 @@ export class MissionForm extends React.Component {
     }
     //Now we need set all the associative tables that need some data.. everthing needs to be at the actions..
      dispatch(insertUpdateMission(mission, currentUser, dispatch))
-    console.log('wow, this mission looks sassy', mission)
   }
 
   handleAddNewPassenger() {
@@ -267,7 +265,6 @@ export class MissionForm extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const submitInput = {
       cursor: 'pointer',
       position: 'absolute',

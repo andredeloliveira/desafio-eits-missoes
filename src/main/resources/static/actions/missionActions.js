@@ -65,6 +65,45 @@ export function insertUpdateMissionDone(newMission, mission, dispatch) {
   }
 }
 
+export function insertUpdateMissionError(error) {
+
+  return {
+    type: 'REQUEST_INSERT_UPDATE_MISSION_ERROR',
+    error: error,
+  }
+}
+
+//WE MUST remove everything that is tied to this especific mission. (ALL associative data)
+export function removeMission(mission, dispatch) {
+  //axios.delete... please remember to add inside then() callback..
+  dispatch(removeMissionPlanner(mission))
+  dispatch(removeMissionPassengers(mission))
+  dispatch(removeMissionPilots(mission))
+  dispatch(removeMissionDone(mission))
+  return {
+    type: 'REQUEST_DELETE_MISSION_PENDING'
+  }
+}
+
+export function removeMissionPassengers() {
+  //axios.delete
+  return {
+    type: 'REQUEST_DELETE_MISSION_PASSENGERS_PENDING',
+  }
+}
+
+export function removeMissionPilots() {
+  //axios.delete,
+  return {
+    type: 'REQUEST_DELETE_MISSION_PILOTS_PENDING'
+  }
+}
+
+
+
+
+
+
 /*****************************************************************************************/
 // Mission Planner
 /*****************************************************************************************/
@@ -96,14 +135,6 @@ export function insertUpdatemissionPlannerDone(missionPlanner) {
 export function insertUpdateMissionPlannerError(error) {
   return {
     type: 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_ERROR',
-    error: error,
-  }
-}
-
-export function insertUpdateMissionError(error) {
-
-  return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_ERROR',
     error: error,
   }
 }

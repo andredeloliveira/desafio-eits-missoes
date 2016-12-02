@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,4 +63,25 @@ public class MissionController {
 	public MissionPilot insertMissionPilot(@RequestBody MissionPilot pilot, BindingResult result){
 		return missionPilotService.insertMissionPilot(pilot);
 	}
+	
+	@RequestMapping(value = "/missions/remove/{id}", method = RequestMethod.DELETE)
+	public void removeMission(@PathVariable("id") Long id) {
+		missionService.removeMissionById(id);
+	}
+	
+	@RequestMapping(value = "/missions/missionPlanner/remove/{id}", method = RequestMethod.DELETE)
+	public void removeMissionPlanner(@PathVariable("id") Long id) {
+		missionPlannerService.removeMissionPlannerById(id);
+	}
+	
+	@RequestMapping(value = "/missions/missionPilot/remove/{id}", method = RequestMethod.DELETE)
+	public void removeMissionPilot(@PathVariable("id") Long id){
+		missionPilotService.removeMissionPilotById(id);
+	}
+	
+	@RequestMapping(value = "/missions/missionPassenger/{id}", method = RequestMethod.DELETE)
+	public void removeMissionPassenger(@PathVariable("id") Long id){
+		missionPassengerService.removeMissionPassengerById(id);
+	}
+	
 } 

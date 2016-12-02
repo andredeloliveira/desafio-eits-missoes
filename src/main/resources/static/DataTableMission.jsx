@@ -1,10 +1,17 @@
 import React from 'react';
 import moment from 'moment'
+import { connect } from 'react-redux';
 import { MuiDataTable } from 'mui-data-table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
+//import { removeMission } from './actions/missionActions';
 
+@connect((Store) => {
+  return {
+    missions: Store.missionReducer,
+  }
+})
 export class DataTableMission extends React.Component {
 
   constructor(props) {
@@ -16,6 +23,7 @@ export class DataTableMission extends React.Component {
   }
 
   formattedFetchedData() {
+    const { dispatch } = this.props;
     return this.props.data.missions.map((mission) => {
       return {
         id: mission.mission.id,
@@ -24,7 +32,12 @@ export class DataTableMission extends React.Component {
         missionTo: mission.mission.missionTo.acronym + ' - ' + mission.mission.missionTo.name,
         missionFrom: mission.mission.missionFrom.acronym + ' - ' + mission.mission.missionFrom.name,
         planner: mission.planner.name,
-        options: <CRUDMenu data={mission.mission} customButtons={[<FinishFlightButton key={'finishFlightButton'} />]} />,
+        options: <CRUDMenu
+                  data={mission.mission}
+                  dispatch={dispatch}
+                  remove={}
+                  customButtons={[<FinishFlightButton
+                  key={'finishFlightButton'} />]} />,
       }
     })
   }

@@ -18,6 +18,11 @@ public class MissionPlannerService {
 	private IMissionPlannerRepository missionPlannerRepository;
 	
 	@Transactional
+	public void removeMissionPlannerById(Long id) {
+		missionPlannerRepository.delete(id);
+	}
+	
+	@Transactional
 	public List<MissionPlanner> findAllMissionPlanner() {
 		return missionPlannerRepository.findAll();
 	}

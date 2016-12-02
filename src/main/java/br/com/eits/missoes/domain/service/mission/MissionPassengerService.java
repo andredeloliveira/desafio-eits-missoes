@@ -20,6 +20,11 @@ public class MissionPassengerService {
 	IMissionPassengerRepository missionPassengerRepository;
 	
 	@Transactional
+	public void removeMissionPassengerById(Long id) {
+		missionPassengerRepository.delete(id);
+	}
+	
+	@Transactional
 	public List<MissionPassenger> findAllMissionPassenger() {
 		return missionPassengerRepository.findAll();
 	}
