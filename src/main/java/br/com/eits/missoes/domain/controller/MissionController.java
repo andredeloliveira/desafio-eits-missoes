@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eits.missoes.domain.entity.Mission;
+import br.com.eits.missoes.domain.entity.MissionPassenger;
+import br.com.eits.missoes.domain.entity.MissionPilot;
 import br.com.eits.missoes.domain.entity.MissionPlanner;
+import br.com.eits.missoes.domain.service.mission.MissionPassengerService;
+import br.com.eits.missoes.domain.service.mission.MissionPilotService;
 import br.com.eits.missoes.domain.service.mission.MissionPlannerService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
 
@@ -24,6 +28,12 @@ public class MissionController {
 	
 	@Autowired(required = false)
 	private MissionService missionService;
+	
+	@Autowired(required = false)
+	private MissionPassengerService missionPassengerService;
+	
+	@Autowired(required = false)
+	private MissionPilotService missionPilotService;
 	
 	@RequestMapping(value = "/missions", method = RequestMethod.GET)
 	List<MissionPlanner> findAllMission() {
@@ -37,4 +47,19 @@ public class MissionController {
 		}
 		return missionService.insertMission(mission);
 	}
-}
+	
+	@RequestMapping(value = "/missions/planner/insert", method = RequestMethod.POST)
+	public MissionPlanner insertMissionPlanner(@RequestBody MissionPlanner planner, BindingResult result){
+		return missionPlannerService.insertMissionPlanner(planner);
+	}
+	
+	@RequestMapping(value = "/missions/passenger/insert", method = RequestMethod.POST)
+	public MissionPassenger insertMissionPassenger(@RequestBody MissionPassenger passenger, BindingResult result){
+		return missionPassengerService.insertMissionPassenger(passenger);
+	}
+	
+	@RequestMapping(value = "/missions/pilot/insert", method = RequestMethod.POST)
+	public MissionPilot insertMissionPilot(@RequestBody MissionPilot pilot, BindingResult result){
+		return missionPilotService.insertMissionPilot(pilot);
+	}
+} 

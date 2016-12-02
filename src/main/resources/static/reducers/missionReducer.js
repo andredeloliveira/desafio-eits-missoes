@@ -6,6 +6,13 @@ const initialState = {
   newMission: null,
   missions: null,
   error: null,
+  insertingPassengers: false,
+  insertedPassengers: false,
+  insertingPilots: false,
+  insertedPilots: false,
+  insertingPlanner: false,
+  insertedPlanner: false,
+  missionPlanner: null,
 }
 
 export default function missionReducer(state = initialState, action) {
@@ -45,6 +52,58 @@ export default function missionReducer(state = initialState, action) {
           ...state,
           inserting: false,
           inserted: false,
+          error: action.payload,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_PENDING':
+        return {
+          ...state,
+          insertingPassengers: true,
+          insertedPassengers: false,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_FULFILLED':
+        return {
+          ...state,
+          insertingPassengers: false,
+          insertedPassengers: true,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_ERROR':
+        return {
+          ...state,
+          error: action.payload
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_PENDING':
+        return {
+          ...state,
+          insertingPilots: true,
+          insertedPilots: false,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_FULFILLED':
+        return {
+          ...state,
+          insertingPilots: false,
+          insertedPilots: true,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_ERROR':
+        return {
+          ...state,
+          error: action.payload,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_PENDING':
+        return {
+          ...state,
+          insertingPlanner: true,
+          insertedPlanner: false,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_FULFILLED':
+        return {
+          ...state,
+          insertingPlanner: false,
+          insertedPlanner: true,
+          missionPlanner: action.payload,
+        }
+      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_ERROR':
+        return {
+          ...state,
           error: action.payload,
         }
     default:

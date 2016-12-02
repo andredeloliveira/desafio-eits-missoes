@@ -21,5 +21,10 @@ public class MissionPlannerService {
 	public List<MissionPlanner> findAllMissionPlanner() {
 		return missionPlannerRepository.findAll();
 	}
+	
+	@Transactional 
+	public MissionPlanner insertMissionPlanner(MissionPlanner planner) {
+		return missionPlannerRepository.saveAndFlush(planner);
+	}
 
 }

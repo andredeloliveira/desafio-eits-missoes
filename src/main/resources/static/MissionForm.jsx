@@ -25,6 +25,8 @@ import { insertUpdateMission } from './actions/missionActions';
     airplanes: Store.airplaneReducer,
     users: Store.userReducer,
     airports: Store.airportReducer,
+    missions: Store.missionReducer,
+    auth: Store.loginReducer,
   }
 })
 export class MissionForm extends React.Component {
@@ -185,18 +187,25 @@ export class MissionForm extends React.Component {
   submitData(event) {
     event.preventDefault();
     const { dispatch } = this.props;
-    //TODO(02/12/2016) -> find out if I need another service here to add into the 'relational' table
-    const newMission = {
-      dateTime: event.target.date.value + ' ' + event.target.time.value,
-      missionTo: this.state.selectedTo,
-      missionFrom: this.state.selectedFrom,
-      airplane: this.state.selectedAirplane,
-      reason: event.target.reason.value,
-      // passengers: this.state.selectedPassengers,
-      // pilots: this.state.selectedPilots,
-      attachedFile: null,
+    //Sometimes the user is not present in the Redux Store, so we get it from the sessionStorage variable ;), which is still valid
+    const currentUser = this.props.auth.currentUser || JSON.parse(sessionStorage.getItem('currentUser'));
+    const { newMission } = this.props.missions;
+    const mission = {
+      mission: {
+        dateTime: event.target.date.value + ' ' + event.target.time.value,
+        missionTo: this.state.selectedTo,
+        missionFrom: this.state.selectedFrom,
+        airplane: this.state.selectedAirplane,
+        reason: event.target.reason.value,
+        attachedFile: null,
+      },
+      planner: currentUser,
+      passengers: this.state.selectedPassengers,
+      pilots: this.state.selectedPilots,
     }
-    dispatch(insertUpdateMission(newMission, dispatch))
+    //Now we need set all the associative tables that need some data.. everthing needs to be at the actions..
+     dispatch(insertUpdateMission(mission, currentUser, dispatch))
+    console.log('wow, this mission looks sassy', mission)
   }
 
   handleAddNewPassenger() {
@@ -258,6 +267,7 @@ export class MissionForm extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const submitInput = {
       cursor: 'pointer',
       position: 'absolute',

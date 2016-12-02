@@ -20,7 +20,7 @@ export class DataTableMission extends React.Component {
       return {
         id: mission.mission.id,
         dateTime: moment(mission.mission.dateTime).format('lll'),
-        airplane: mission.mission.airplane.subscriptionNumber + ' - ' + mission.mission.airplane.model.name,
+        airplane: mission.mission.airplane.subscriptionNumber + ' - ' + mission.mission.airplane.airplaneModel.name,
         missionTo: mission.mission.missionTo.acronym + ' - ' + mission.mission.missionTo.name,
         missionFrom: mission.mission.missionFrom.acronym + ' - ' + mission.mission.missionFrom.name,
         planner: mission.planner.name,

@@ -44,7 +44,6 @@ export class Airplanes extends React.Component {
 
   render() {
     const { airplanes } = this.props;
-    const { newAirplane } = this.props.airplanes;
     return(
       <div>
         <CRUDBaseComponent label="Aeronaves" name="airplane" data={airplanes}/>
