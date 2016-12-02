@@ -1,20 +1,18 @@
 package br.com.eits.missoes.domain.entity;
 
-import java.time.Instant;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 /**
  * @author andre
@@ -38,7 +36,8 @@ public class Mission {
 	private Byte[] attachedFile;
 	
 	@Column(name = "date_time")
-	private Calendar dateTime;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
+	private Date dateTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
@@ -50,14 +49,7 @@ public class Mission {
 	
 	@Column(name = "reason")
 	private String reason;
-	
-	@OneToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
-	private List<MissionPassenger> passengers;
-	
-	@OneToMany(cascade = CascadeType.MERGE, fetch= FetchType.EAGER)
-	private List<MissionPilot> pilots;
-	
-	
+
 	
 	public Long getId() {
 		return id;
@@ -66,7 +58,6 @@ public class Mission {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	
 	public Airplane getAirplane() {
 		return airplane;
@@ -81,10 +72,10 @@ public class Mission {
 	public void setAttachedFile(Byte[] attachedFile) {
 		this.attachedFile = attachedFile;
 	}
-	public Calendar getDateTime() {
+	public Date getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(Calendar instant) {
+	public void setDateTime(Date instant) {
 		this.dateTime = instant;
 	}
 	public Airport getMissionTo() {
@@ -99,24 +90,14 @@ public class Mission {
 	public void setMissionFrom(Airport from) {
 		this.missionFrom = from;
 	}
-	public List<MissionPassenger> getPassengers() {
-		return passengers;
-	}
-	public void setPassengers(List<MissionPassenger> passengers) {
-		this.passengers = passengers;
-	}
+	
 	public String getReason() {
 		return reason;
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	public List<MissionPilot> getPilots() {
-		return pilots;
-	}
-	public void setPilots(List<MissionPilot> pilots) {
-		this.pilots = pilots;
-	}
+	
 
 	
 

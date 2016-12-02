@@ -64275,13 +64275,13 @@
 	      //TODO(02/12/2016) -> find out if I need another service here to add into the 'relational' table
 	
 	      var newMission = {
-	        //dateTime: event.target.date.value + ' ' + event.target.time.value + ':00',
+	        dateTime: event.target.date.value + ' ' + event.target.time.value,
 	        missionTo: this.state.selectedTo,
 	        missionFrom: this.state.selectedFrom,
 	        airplane: this.state.selectedAirplane,
 	        reason: event.target.reason.value,
-	        passengers: this.state.selectedPassengers,
-	        pilots: this.state.selectedPilots,
+	        // passengers: this.state.selectedPassengers,
+	        // pilots: this.state.selectedPilots,
 	        attachedFile: null
 	      };
 	      dispatch((0, _missionActions.insertUpdateMission)(newMission, dispatch));
