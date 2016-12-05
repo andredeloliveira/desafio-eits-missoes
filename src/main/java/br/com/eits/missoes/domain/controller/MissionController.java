@@ -41,6 +41,8 @@ public class MissionController {
 		return missionPlannerService.findAllMissionPlanner();
 	}
 	
+	
+	
 	@RequestMapping(value = "/missions/insert", method = RequestMethod.POST)
 	public Mission insertMission(@Valid @RequestBody Mission mission, BindingResult result) {
 		if (result.hasErrors()) {

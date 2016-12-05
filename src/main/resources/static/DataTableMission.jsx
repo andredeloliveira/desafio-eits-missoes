@@ -5,7 +5,7 @@ import { MuiDataTable } from 'mui-data-table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
-//import { removeMission } from './actions/missionActions';
+import { removeMission } from './actions/missionActions';
 
 @connect((Store) => {
   return {
@@ -35,7 +35,7 @@ export class DataTableMission extends React.Component {
         options: <CRUDMenu
                   data={mission.mission}
                   dispatch={dispatch}
-                  remove={}
+                  remove={removeMission}
                   customButtons={[<FinishFlightButton
                   key={'finishFlightButton'} />]} />,
       }

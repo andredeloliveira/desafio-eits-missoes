@@ -49,6 +49,18 @@ public class Mission {
 	
 	@Column(name = "reason")
 	private String reason;
+	
+	@Column(name = "in_mission")
+	private Boolean inMission;
+	
+	
+	public Boolean getInMission() {
+		return inMission;
+	}
+	
+	public void setInMission(Boolean inMission) {
+		this.inMission = inMission;
+	}
 
 	
 	public Long getId() {

@@ -13,6 +13,12 @@ const initialState = {
   insertingPlanner: false,
   insertedPlanner: false,
   missionPlanner: null,
+  removingMissionPlanner: false,
+  removedMissionPlanner: false,
+  removingMissionPassengers: false,
+  removedMissionPassengers: false,
+  removingMissionPilots: false,
+  removedMissionPilots: false,
 }
 
 export default function missionReducer(state = initialState, action) {
@@ -105,6 +111,58 @@ export default function missionReducer(state = initialState, action) {
         return {
           ...state,
           error: action.payload,
+        }
+      case 'REQUEST_DELETE_MISSION_PENDING':
+      return {
+        ...state,
+        removingMission: true,
+        removedMission: false,
+      }
+      case 'REQUEST_DELETE_MISSION_FULFILLED':
+        return {
+          ...state,
+          removingMission: false,
+          removedMission: true,
+        }
+      case 'REQUEST_DELETE_MISSION_ERROR':
+        return {
+          ...state,
+          removingMission: false,
+          removedMission: false,
+          error: action.payload,
+        }
+      case 'REQUEST_DELETE_MISSION_PLANNER_PENDING':
+        return {
+          ...state,
+          removingMissionPlanner: true,
+        }
+      case 'REQUEST_DELETE_MISSION_PLANNER_FULFILLED':
+        return {
+          ...state,
+          removingMissionPlanner: false,
+          removedMissionPlanner: true,
+          }
+      case 'REQUEST_DELETE_MISSION_PASSENGERS_PENDING':
+        return {
+          ...state,
+          removingMissionPassengers: true,
+        }
+      case 'REQUEST_DELETE_MISSION_PASSENGERS_FULFILLED':
+        return {
+          ...state,
+          removingMissionPassengers: false,
+          removedMissionPassengers: true,
+        }
+      case 'REQUEST_DELETE_MISSION_PILOTS_PENDING':
+        return {
+          ...state,
+          removingMissionPassengers: true,
+        }
+      case 'REQUEST_DELETE_MISSION_PILOTS_FULFILLED':
+        return {
+          ...state,
+          removingMissionPilots: false,
+          removedMissionPilots: true,
         }
     default:
       return state;

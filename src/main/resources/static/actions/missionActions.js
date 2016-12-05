@@ -23,7 +23,7 @@ export function allMissions(missionsResult) {
 export function missionsError(error) {
   return {
     type: 'REQUEST_ALL_MISSION_REJECTED',
-    error: error
+    payload: error
   }
 }
 
@@ -69,45 +69,48 @@ export function insertUpdateMissionError(error) {
 
   return {
     type: 'REQUEST_INSERT_UPDATE_MISSION_ERROR',
-    error: error,
+    payload: error,
   }
 }
 
 //WE MUST remove everything that is tied to this especific mission. (ALL associative data)
 export function removeMission(mission, dispatch) {
   //axios.delete... please remember to add inside then() callback..
-  dispatch(removeMissionPlanner(mission))
-  dispatch(removeMissionPassengers(mission))
-  dispatch(removeMissionPilots(mission))
-  dispatch(removeMissionDone(mission))
+  const missionId = mission.id;
+  axios.delete('/missions/remove/' + missionId, missionId)
+    .then(() => {
+      //NOTE: With cascade we might do not need this.
+      // dispatch(removeMissionPlanner(mission, dispatch))
+      // dispatch(removeMissionPassengers(mission, dispatch))
+      // dispatch(removeMissionPilots(mission, dispatch))
+      dispatch(removeMissionDone(mission))
+    })
+    .catch((error) => {
+      dispatch(removeMissionError(error))
+    })
   return {
     type: 'REQUEST_DELETE_MISSION_PENDING'
   }
 }
 
-export function removeMissionPassengers() {
-  //axios.delete
+export function removeMissionDone() {
   return {
-    type: 'REQUEST_DELETE_MISSION_PASSENGERS_PENDING',
+    type: 'REQUEST_DELETE_MISSION_FULFILLED'
   }
 }
 
-export function removeMissionPilots() {
-  //axios.delete,
+export function removeMissionError(error) {
   return {
-    type: 'REQUEST_DELETE_MISSION_PILOTS_PENDING'
+    type: 'REQUEST_DELETE_AIRPLANE_ERROR',
+    payload: error,
   }
 }
-
-
-
-
 
 
 /*****************************************************************************************/
 // Mission Planner
 /*****************************************************************************************/
-//TODO(andredeloliveira): add to reducer as well
+
 export function insertUpdateMissionPlanner(newMission, mission, dispatch){
   const missionPlanner = {
     mission: newMission,
@@ -135,12 +138,37 @@ export function insertUpdatemissionPlannerDone(missionPlanner) {
 export function insertUpdateMissionPlannerError(error) {
   return {
     type: 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_ERROR',
-    error: error,
+    payload: error,
   }
 }
 
+export function removeMissionPlanner(mission, dispatch) {
+  const missionPlannerId  = mission.planner.id
+  axios.delete('/missions/missionPlanner/remove/' + missionPlannerId, missionPlannerId)
+    .then(() => {
+      dispatch(removeMissionPlannerDone())
+    })
+    .catch((error) => {
+      dispatch(removeMissionPlannerError(error))
+    })
+  return {
+    type: 'REQUEST_DELETE_MISSION_PLANNER_PENDING',
+  }
+}
 
-//TODO(andredeloliveira): add to reducer as well
+export function removeMissionPlannerDone() {
+  return {
+    type: 'REQUEST_REMOVE_MISSION_PLANNER_FULFILLED',
+  }
+}
+
+export function removeMissionPlannerError(error) {
+  return {
+    type: 'REQUEST_DELETE_MISSION_PLANNER_ERROR',
+    payload: error,
+  }
+}
+
 
 /*****************************************************************************************/
 // Mission Passengers
@@ -176,7 +204,27 @@ export function insertupdateMissionPassengersDone(){
 export function insertUpdateMissionPassengersError(error) {
   return {
     type: 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_ERROR',
-    error: error,
+    payload: error,
+  }
+}
+
+
+export function removeMissionPassengers(mission, dispatch) {
+  return {
+    type: 'REQUEST_DELETE_MISSION_PASSENGERS_PENDING',
+  }
+}
+
+export function removeMissionPassengersDone() {
+  return {
+    type: 'REQUEST_DELETE_MISSION_PASSENGERS_FULFILLED',
+  }
+}
+
+export function removeMissionPassengersError(error) {
+  return {
+    type: 'REQUEST_DELETE_MISSION_PASSENGERS_ERROR',
+    payload: error,
   }
 }
 
@@ -211,9 +259,16 @@ export function insertUpdateMissionPilots(newMission, mission, dispatch){
    }
  }
 
- export function insertUpdateMissionPilotsError(error) {
-   return {
-     type: 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_ERROR',
-     error: error,
-   }
+export function insertUpdateMissionPilotsError(error) {
+ return {
+   type: 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_ERROR',
+   payload: error,
  }
+}
+
+export function removeMissionPilots(mission) {
+ //axios.delete,
+ return {
+   type: 'REQUEST_DELETE_MISSION_PILOTS_PENDING'
+ }
+}
