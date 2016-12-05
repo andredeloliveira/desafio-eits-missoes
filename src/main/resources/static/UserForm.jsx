@@ -53,6 +53,7 @@ export class UserForm extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
     const submitInput = {
       cursor: 'pointer',
       position: 'absolute',
@@ -71,6 +72,7 @@ export class UserForm extends React.Component {
             floatingLabelText="Nome"
             type="text"
             name="name"
+            defaultValue={user ? user.name : null}
             fullWidth={true}
           />
           <TextField
@@ -78,6 +80,7 @@ export class UserForm extends React.Component {
             floatingLabelText="E-mail"
             type="email"
             name="email"
+            defaultValue={user ? user.email : null}
             fullWidth={true}
           />
           <TextField
@@ -85,6 +88,7 @@ export class UserForm extends React.Component {
             floatingLabelText="Senha"
             type="password"
             name="password"
+            defaultValue={user ? "Senha ocultada" : null}
             fullWidth={true}
           />
           <SelectField

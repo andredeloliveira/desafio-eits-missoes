@@ -64,6 +64,8 @@ export class MissionForm extends React.Component {
     this.renderPassengersAutoComplete = this.renderPassengersAutoComplete.bind(this);
     this.renderPilotsAutoComplete = this.renderPilotsAutoComplete.bind(this);
     this.submitData = this.submitData.bind(this);
+    this.currentTime = this.currentTime.bind(this);
+    this.currentDate = this.currentDate.bind(this);
   }
 
   componentWillMount() {
@@ -264,6 +266,17 @@ export class MissionForm extends React.Component {
     })
   }
 
+  currentTime() {
+    const { dateTime } = this.props.mission;
+    return new Date(dateTime.split(' ')[1])
+  }
+
+  //There is a bug in the component :(
+  currentDate() {
+    const { dateTime } = this.props.mission;
+    return new Date(dateTime)
+  }
+
   render() {
     const submitInput = {
       cursor: 'pointer',
@@ -275,6 +288,7 @@ export class MissionForm extends React.Component {
       width: '100%',
       opacity: 0,
     }
+    const { mission } = this.props;
     return (
       <form onSubmit={this.submitData}>
         <div>
@@ -283,6 +297,7 @@ export class MissionForm extends React.Component {
               hintText="Data"
               fullWidth={true}
               name="date"
+              defaultDate={ mission ? this.currentDate() : null }
               />
           </div>
           <div>
@@ -300,6 +315,7 @@ export class MissionForm extends React.Component {
               fullWidth={true}
               multiLine={true}
               name="reason"
+              defaultValue={ mission ? mission.reason : null }
               />
           </div>
           <div>
