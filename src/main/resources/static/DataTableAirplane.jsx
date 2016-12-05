@@ -43,6 +43,7 @@ export class DataTableAirplane extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
     }

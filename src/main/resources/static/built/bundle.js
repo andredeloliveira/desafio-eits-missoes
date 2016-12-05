@@ -62057,10 +62057,8 @@
 	      var _props$airplaneModels = this.props.airplaneModels,
 	          airplaneModels = _props$airplaneModels.airplaneModels,
 	          fetching = _props$airplaneModels.fetching;
-	      //we chan change the key value to be the id...
 	
 	      if (!airplaneModels) {
-	        console.log('loading');
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
 	      return airplaneModels.map(function (airplaneModel) {
@@ -70885,6 +70883,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
 	      if (!this.props.data.airplanes) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
@@ -74255,14 +74254,8 @@
 	          dispatch = _props.dispatch;
 	
 	      return _react2.default.createElement(
-	        _IconMenu2.default,
-	        {
-	          iconButtonElement: _react2.default.createElement(
-	            _IconButton2.default,
-	            null,
-	            _react2.default.createElement(_moreVert2.default, null)
-	          )
-	        },
+	        'div',
+	        null,
 	        _react2.default.createElement(_CRUDButtons.UpdateButton, null),
 	        _react2.default.createElement(_CRUDButtons.RemoveButton, { action: remove, data: data, dispatch: dispatch }),
 	        _react2.default.createElement(_CRUDButtons.DetailsButton, null),

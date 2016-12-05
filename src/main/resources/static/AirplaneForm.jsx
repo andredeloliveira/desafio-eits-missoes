@@ -41,9 +41,7 @@ export class AirplaneForm extends React.Component {
 
   airplaneModelsRender() {
     const { airplaneModels, fetching } = this.props.airplaneModels;
-    //we chan change the key value to be the id...
     if (! airplaneModels) {
-      console.log('loading')
       return <MissoesLoading />
     }
     return airplaneModels.map( (airplaneModel) => {
