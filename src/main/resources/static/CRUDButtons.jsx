@@ -1,24 +1,93 @@
 import React from 'react';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import ContentRemoveCircle from 'material-ui/svg-icons/content/remove-circle';
 import ActionVisibility from 'material-ui/svg-icons/action/visibility';
+import { AirplaneForm } from './AirplaneForm.jsx';
+import { MissionForm } from './MissionForm.jsx';
+import { UserForm } from './UserForm.jsx';
 
 export class UpdateButton extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      open: false,
+    }
+    this.update = this.update.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.renderEditForm = this.renderEditForm.bind(this);
+  }
+
+  handleClose() {
+    this.setState({
+      open: false,
+    })
+  }
+
+  renderEditForm() {
+    const { name, data } = this.props;
+    if (name === 'airplane') {
+      return (
+        <AirplaneForm
+          handleCloseDialog={this.handleClose}
+          edit={true}
+          airplane={data}
+        />
+      )
+    } else if (name === 'mission') {
+      return (
+        <MissionForm
+          handleCloseDialog={this.handleClose}
+          edit={true}
+          mission={data}
+        />
+      )
+    } else if ( name === 'user') {
+      return (
+        <UserForm
+          handleCloseDialog={this.handleClose}
+          edit={true}
+          user={data}
+        />
+      )
+    }
   }
 
   update() {
-    console.log('something was updated')
+    this.setState({
+      open: true,
+    })
   }
 
   render() {
+    const dialogStyle = {
+      overflow: "hidden",
+    }
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+    ]
+    const { data } = this.props;
     return (
       <IconButton onTouchTap={this.update}>
         <ContentCreate />
-      </IconButton>
+      <Dialog
+        modal={true}
+        open={this.state.open}
+        onRequestClose={this.handleClose}
+        autoScrollBodyContent={true}
+        style={dialogStyle}
+        actions={actions}
+      >
+      { this.renderEditForm() }
+      </Dialog>
+    </IconButton>
     )
   }
 }
@@ -53,16 +122,49 @@ export class RemoveButton extends React.Component {
 export class DetailsButton extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      open: false,
+    }
+    this.handleClose = this.handleClose.bind(this);
+    this.showDetails = this.showDetails.bind(this);
   }
 
   showDetails() {
-    console.log('showingup details')
+    this.setState({
+      open: true,
+    })
+  }
+
+  handleClose() {
+    this.setState({
+      open: false
+    })
   }
 
   render() {
+    const dialogStyle = {
+      overflow: "hidden",
+    }
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+    ]
     return (
       <IconButton  onTouchTap={this.showDetails}>
         <ActionVisibility />
+        <Dialog
+          modal={true}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
+          style={dialogStyle}
+          actions={actions}
+        >
+          DETAILS CONTENT, YAY
+        </Dialog>
       </IconButton>
     )
   }

@@ -19,7 +19,7 @@ export class DataTableAirplane extends React.Component {
   }
 
   formattedFetchedData() {
-    const { dispatch } = this.props;
+    const { dispatch, name } = this.props;
     const { airplanes } = this.props.data;
     const { removedAirplane }  = this.props.airplanes;
     if (removedAirplane) {
@@ -37,13 +37,14 @@ export class DataTableAirplane extends React.Component {
                   data={airplane}
                   customButtons={null}
                   remove={removeAirplane}
-                  dispatch={dispatch}/>
+                  dispatch={dispatch}
+                  name={name}
+                />
       }
     });
   }
 
   render() {
-    console.log(this.props)
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
     }

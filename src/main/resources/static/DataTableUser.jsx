@@ -20,7 +20,7 @@ export class DataTableUser extends React.Component {
   }
 
   formattedFetchedData() {
-    const { dispatch } = this.props;
+    const { dispatch, name } = this.props;
     return this.props.data.users.map( (user) => {
       if (user.status) {
         user.status = 'ATIVO'
@@ -35,6 +35,7 @@ export class DataTableUser extends React.Component {
         options: <CRUDMenu
                     data={user}
                     customButtons={[<DeactivateUserButton key={'deactivateUserButton'}/>]}
+                    name={name}
                     remove={removeUser}
                     dispatch={dispatch}
                   />

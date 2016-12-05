@@ -23,7 +23,7 @@ export class DataTableMission extends React.Component {
   }
 
   formattedFetchedData() {
-    const { dispatch } = this.props;
+    const { dispatch, name } = this.props;
     return this.props.data.missions.map((mission) => {
       return {
         id: mission.mission.id,
@@ -36,6 +36,7 @@ export class DataTableMission extends React.Component {
                   data={mission.mission}
                   dispatch={dispatch}
                   remove={removeMission}
+                  name={name}
                   customButtons={[<FinishFlightButton
                   key={'finishFlightButton'} />]} />,
       }

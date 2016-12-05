@@ -16,11 +16,11 @@ export class CRUDBaseComponent extends React.Component {
   fetchedDataContainerRender() {
     const { name, data } = this.props;
     if (name === 'airplane') {
-      return <DataTableAirplane data={data} />
+      return <DataTableAirplane data={data} name={name} />
     } else if (name === 'user') {
-      return <DataTableUser data={data} />
+      return <DataTableUser data={data} name={name} />
     } else if (name === 'mission') {
-      return <DataTableMission data={data} />;
+      return <DataTableMission data={data} name={name} />;
     }
   }
   //Opens a new Entry dialog, that is a dependency of this component.

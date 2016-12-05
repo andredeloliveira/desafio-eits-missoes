@@ -53942,11 +53942,11 @@
 	          data = _props.data;
 	
 	      if (name === 'airplane') {
-	        return _react2.default.createElement(_DataTableAirplane.DataTableAirplane, { data: data });
+	        return _react2.default.createElement(_DataTableAirplane.DataTableAirplane, { data: data, name: name });
 	      } else if (name === 'user') {
-	        return _react2.default.createElement(_DataTableUser.DataTableUser, { data: data });
+	        return _react2.default.createElement(_DataTableUser.DataTableUser, { data: data, name: name });
 	      } else if (name === 'mission') {
-	        return _react2.default.createElement(_DataTableMission.DataTableMission, { data: data });
+	        return _react2.default.createElement(_DataTableMission.DataTableMission, { data: data, name: name });
 	      }
 	    }
 	    //Opens a new Entry dialog, that is a dependency of this component.
@@ -62011,6 +62011,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	//TODO: show actual value of airplane (when editing)..actually not showing at the moment
 	var AirplaneForm = exports.AirplaneForm = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
 	    airplaneModels: Store.airplaneModelsReducer,
@@ -62031,6 +62032,7 @@
 	    };
 	    _this.handleSelectAirplaneModelChange = _this.handleSelectAirplaneModelChange.bind(_this);
 	    _this.submitData = _this.submitData.bind(_this);
+	    _this.renderActualAirplaneValue = _this.renderActualAirplaneValue.bind(_this);
 	    return _this;
 	  }
 	
@@ -62043,6 +62045,25 @@
 	      var dispatch = this.props.dispatch;
 	
 	      dispatch((0, _airplaneModelsActions.findAllAirplaneModels)(dispatch));
+	    }
+	  }, {
+	    key: 'submitData',
+	    value: function submitData(event) {
+	      event.preventDefault();
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          airplane = _props.airplane;
+	
+	      var newAirplane = {
+	        seatsNumber: event.target.seatsNumber.value,
+	        subscriptionNumber: event.target.subscriptionNumber.value,
+	        airplaneModel: this.state.airplaneModel ? this.state.airplaneModel : airplane.airplaneModel
+	      };
+	      if (airplane) {
+	        newAirplane.id = airplane.id;
+	      }
+	      dispatch((0, _airplaneActions.insertUpdateAirplane)(newAirplane, dispatch));
+	      this.props.handleCloseDialog();
 	    }
 	  }, {
 	    key: 'handleSelectAirplaneModelChange',
@@ -62066,19 +62087,16 @@
 	        return _react2.default.createElement(_MenuItem2.default, { key: airplaneModel.id, value: airplaneModel, primaryText: completeAirplaneModelName });
 	      });
 	    }
-	  }, {
-	    key: 'submitData',
-	    value: function submitData(event) {
-	      var dispatch = this.props.dispatch;
 	
-	      event.preventDefault();
-	      var airplane = {
-	        seatsNumber: event.target.seatsNumber.value,
-	        subscriptionNumber: event.target.subscriptionNumber.value,
-	        airplaneModel: this.state.airplaneModel
-	      };
-	      dispatch((0, _airplaneActions.insertUpdateAirplane)(airplane, dispatch));
-	      this.props.handleCloseDialog();
+	    //this was supposed to show the defaultValue for a select field... apparently it isn't implemented in the right way :/
+	
+	  }, {
+	    key: 'renderActualAirplaneValue',
+	    value: function renderActualAirplaneValue() {
+	      var airplane = this.props.airplane;
+	
+	      var currentAirplaneModel = airplane.airplaneModel.manufacturer.name + ' - ' + airplane.airplaneModel.name;
+	      return _react2.default.createElement(_MenuItem2.default, { value: airplane.airplaneModel, primaryText: currentAirplaneModel });
 	    }
 	  }, {
 	    key: 'render',
@@ -62094,6 +62112,7 @@
 	        opacity: 0
 	      };
 	      var newAirplane = this.props.airplanes.newAirplane;
+	      var airplane = this.props.airplane;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -62106,14 +62125,16 @@
 	            floatingLabelText: 'Matricula',
 	            type: 'text',
 	            fullWidth: true,
-	            name: 'subscriptionNumber'
+	            name: 'subscriptionNumber',
+	            defaultValue: airplane ? airplane.subscriptionNumber : null
 	          }),
 	          _react2.default.createElement(_TextField2.default, {
 	            hintText: 'Ex: 200',
 	            floatingLabelText: 'N\xFAmero de Assentos',
 	            type: 'number',
 	            fullWidth: true,
-	            name: 'seatsNumber'
+	            name: 'seatsNumber',
+	            defaultValue: airplane ? airplane.seatsNumber : null
 	          }),
 	          _react2.default.createElement(
 	            _SelectField2.default,
@@ -70859,7 +70880,9 @@
 	  _createClass(DataTableAirplane, [{
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          name = _props.name;
 	      var airplanes = this.props.data.airplanes;
 	      var removedAirplane = this.props.airplanes.removedAirplane;
 	
@@ -70877,13 +70900,14 @@
 	          data: airplane,
 	          customButtons: null,
 	          remove: _airplaneActions.removeAirplane,
-	          dispatch: dispatch })), _ref;
+	          dispatch: dispatch,
+	          name: name
+	        })), _ref;
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      if (!this.props.data.airplanes) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
@@ -74251,14 +74275,15 @@
 	      var _props = this.props,
 	          remove = _props.remove,
 	          data = _props.data,
-	          dispatch = _props.dispatch;
+	          dispatch = _props.dispatch,
+	          name = _props.name;
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_CRUDButtons.UpdateButton, null),
+	        _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }),
 	        _react2.default.createElement(_CRUDButtons.RemoveButton, { action: remove, data: data, dispatch: dispatch }),
-	        _react2.default.createElement(_CRUDButtons.DetailsButton, null),
+	        _react2.default.createElement(_CRUDButtons.DetailsButton, { name: name }),
 	        this.renderCustomButtons()
 	      );
 	    }
@@ -74321,6 +74346,14 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Dialog = __webpack_require__(618);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _FlatButton = __webpack_require__(490);
+	
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	
 	var _IconButton = __webpack_require__(456);
 	
 	var _IconButton2 = _interopRequireDefault(_IconButton);
@@ -74337,6 +74370,12 @@
 	
 	var _visibility2 = _interopRequireDefault(_visibility);
 	
+	var _AirplaneForm = __webpack_require__(623);
+	
+	var _MissionForm = __webpack_require__(639);
+	
+	var _UserForm = __webpack_require__(637);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74351,21 +74390,87 @@
 	  function UpdateButton(props) {
 	    _classCallCheck(this, UpdateButton);
 	
-	    return _possibleConstructorReturn(this, (UpdateButton.__proto__ || Object.getPrototypeOf(UpdateButton)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (UpdateButton.__proto__ || Object.getPrototypeOf(UpdateButton)).call(this, props));
+	
+	    _this.state = {
+	      open: false
+	    };
+	    _this.update = _this.update.bind(_this);
+	    _this.handleClose = _this.handleClose.bind(_this);
+	    _this.renderEditForm = _this.renderEditForm.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(UpdateButton, [{
+	    key: 'handleClose',
+	    value: function handleClose() {
+	      this.setState({
+	        open: false
+	      });
+	    }
+	  }, {
+	    key: 'renderEditForm',
+	    value: function renderEditForm() {
+	      var _props = this.props,
+	          name = _props.name,
+	          data = _props.data;
+	
+	      if (name === 'airplane') {
+	        return _react2.default.createElement(_AirplaneForm.AirplaneForm, {
+	          handleCloseDialog: this.handleClose,
+	          edit: true,
+	          airplane: data
+	        });
+	      } else if (name === 'mission') {
+	        return _react2.default.createElement(_MissionForm.MissionForm, {
+	          handleCloseDialog: this.handleClose,
+	          edit: true,
+	          mission: data
+	        });
+	      } else if (name === 'user') {
+	        return _react2.default.createElement(_UserForm.UserForm, {
+	          handleCloseDialog: this.handleClose,
+	          edit: true,
+	          user: data
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'update',
 	    value: function update() {
-	      console.log('something was updated');
+	      this.setState({
+	        open: true
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var dialogStyle = {
+	        overflow: "hidden"
+	      };
+	      var actions = [_react2.default.createElement(_FlatButton2.default, {
+	        label: 'Cancel',
+	        primary: true,
+	        onTouchTap: this.handleClose
+	      })];
+	      var data = this.props.data;
+	
 	      return _react2.default.createElement(
 	        _IconButton2.default,
 	        { onTouchTap: this.update },
-	        _react2.default.createElement(_create2.default, null)
+	        _react2.default.createElement(_create2.default, null),
+	        _react2.default.createElement(
+	          _Dialog2.default,
+	          {
+	            modal: true,
+	            open: this.state.open,
+	            onRequestClose: this.handleClose,
+	            autoScrollBodyContent: true,
+	            style: dialogStyle,
+	            actions: actions
+	          },
+	          this.renderEditForm()
+	        )
 	      );
 	    }
 	  }]);
@@ -74388,10 +74493,10 @@
 	  _createClass(RemoveButton, [{
 	    key: 'remove',
 	    value: function remove() {
-	      var _props = this.props,
-	          action = _props.action,
-	          data = _props.data,
-	          dispatch = _props.dispatch;
+	      var _props2 = this.props,
+	          action = _props2.action,
+	          data = _props2.data,
+	          dispatch = _props2.dispatch;
 	      //execute the action passed with the data (if needed)
 	
 	      if (data) {
@@ -74420,21 +74525,57 @@
 	  function DetailsButton(props) {
 	    _classCallCheck(this, DetailsButton);
 	
-	    return _possibleConstructorReturn(this, (DetailsButton.__proto__ || Object.getPrototypeOf(DetailsButton)).call(this, props));
+	    var _this3 = _possibleConstructorReturn(this, (DetailsButton.__proto__ || Object.getPrototypeOf(DetailsButton)).call(this, props));
+	
+	    _this3.state = {
+	      open: false
+	    };
+	    _this3.handleClose = _this3.handleClose.bind(_this3);
+	    _this3.showDetails = _this3.showDetails.bind(_this3);
+	    return _this3;
 	  }
 	
 	  _createClass(DetailsButton, [{
 	    key: 'showDetails',
 	    value: function showDetails() {
-	      console.log('showingup details');
+	      this.setState({
+	        open: true
+	      });
+	    }
+	  }, {
+	    key: 'handleClose',
+	    value: function handleClose() {
+	      this.setState({
+	        open: false
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var dialogStyle = {
+	        overflow: "hidden"
+	      };
+	      var actions = [_react2.default.createElement(_FlatButton2.default, {
+	        label: 'Cancel',
+	        primary: true,
+	        onTouchTap: this.handleClose
+	      })];
 	      return _react2.default.createElement(
 	        _IconButton2.default,
 	        { onTouchTap: this.showDetails },
-	        _react2.default.createElement(_visibility2.default, null)
+	        _react2.default.createElement(_visibility2.default, null),
+	        _react2.default.createElement(
+	          _Dialog2.default,
+	          {
+	            modal: true,
+	            open: this.state.open,
+	            onRequestClose: this.handleClose,
+	            autoScrollBodyContent: true,
+	            style: dialogStyle,
+	            actions: actions
+	          },
+	          'DETAILS CONTENT, YAY'
+	        )
 	      );
 	    }
 	  }]);
@@ -74611,7 +74752,9 @@
 	  _createClass(DataTableUser, [{
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          name = _props.name;
 	
 	      return this.props.data.users.map(function (user) {
 	        if (user.status) {
@@ -74627,6 +74770,7 @@
 	          options: _react2.default.createElement(_CRUDMenu.CRUDMenu, {
 	            data: user,
 	            customButtons: [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton' })],
+	            name: name,
 	            remove: _userActions.removeUser,
 	            dispatch: dispatch
 	          })
@@ -74833,7 +74977,9 @@
 	  }, {
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          name = _props.name;
 	
 	      return this.props.data.missions.map(function (mission) {
 	        return {
@@ -74847,6 +74993,7 @@
 	            data: mission.mission,
 	            dispatch: dispatch,
 	            remove: _missionActions.removeMission,
+	            name: name,
 	            customButtons: [_react2.default.createElement(_FinishFlightButton.FinishFlightButton, {
 	              key: 'finishFlightButton' })] })
 	        };
