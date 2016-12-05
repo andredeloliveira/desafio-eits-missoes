@@ -8,6 +8,9 @@ import ActionVisibility from 'material-ui/svg-icons/action/visibility';
 import { AirplaneForm } from './AirplaneForm.jsx';
 import { MissionForm } from './MissionForm.jsx';
 import { UserForm } from './UserForm.jsx';
+import { AirplaneDetails } from './AirplaneDetails.jsx';
+import { MissionDetails } from './MissionDetails.jsx';
+import { UserDetails } from './UserDetails.jsx';
 
 export class UpdateButton extends React.Component {
 
@@ -127,6 +130,7 @@ export class DetailsButton extends React.Component {
     }
     this.handleClose = this.handleClose.bind(this);
     this.showDetails = this.showDetails.bind(this);
+    this.renderDetailsPage = this.renderDetailsPage.bind(this);
   }
 
   showDetails() {
@@ -137,8 +141,22 @@ export class DetailsButton extends React.Component {
 
   handleClose() {
     this.setState({
-      open: false
+      open: false,
     })
+  }
+
+  renderDetailsPage() {
+    const { name, data } = this.props;
+    console.log(data)
+    if (name === 'airplane') {
+      return <AirplaneDetails airplane={data}/>
+    } else if (name === 'mission') {
+      return <MissionDetails mission={data} />
+    } else if (name === 'user') {
+      return <UserDetails user={data} />
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -163,7 +181,7 @@ export class DetailsButton extends React.Component {
           style={dialogStyle}
           actions={actions}
         >
-          DETAILS CONTENT, YAY
+          { this.renderDetailsPage() }
         </Dialog>
       </IconButton>
     )

@@ -30,7 +30,7 @@ export class CRUDMenu extends React.Component {
       <div>
         <UpdateButton name={name} data={data}/>
         <RemoveButton action={remove} data={data} dispatch={dispatch} />
-        <DetailsButton name={name} />
+        <DetailsButton name={name} data={data} />
         {this.renderCustomButtons()}
       </div>
     )
