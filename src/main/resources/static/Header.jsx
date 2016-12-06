@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import { UserInfo } from './UserInfo.jsx';
 import { connect } from 'react-redux';
+import { NavigationButtons } from './NavigationButtons.jsx';
 
 
 @connect((Store) => {
@@ -49,6 +50,7 @@ export class Header extends React.Component {
       <div>
         <AppBar title="gAviator"
                 onLeftIconButtonTouchTap={this.showDrawer.bind(this, this.state.open)}
+                iconElementRight={<NavigationButtons />}
         />
         <Drawer open={this.state.open}>
           <MenuItem
