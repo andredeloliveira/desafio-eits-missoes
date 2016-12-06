@@ -7,6 +7,7 @@ const initialState = {
   missionPlanner: null,
   missions: null,
   missionPassengers: null,
+  missionPilots: null,
   error: null,
   insertingPassengers: false,
   insertedPassengers: false,
@@ -81,6 +82,26 @@ export default function missionReducer(state = initialState, action) {
         ...state,
         fetched: false,
         fetching: false,
+        error: action.payload,
+      }
+    case 'REQUEST_MISSION_PILOTS_BY_MISSION_PENDING':
+      return {
+        ...state,
+        fetched: false,
+        fetching: true,
+      }
+    case 'REQUEST_MISSION_PILOTS_BY_MISSION_FULFILLED':
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        missionPilots: action.payload,
+      }
+    case 'REQUEST_MISSION_PILOTS_BY_MISSION_ERROR':
+      return {
+        ...state,
+        feching: false,
+        fetched: false,
         error: action.payload,
       }
     case 'REQUEST_INSERT_UPDATE_MISSION_PENDING':

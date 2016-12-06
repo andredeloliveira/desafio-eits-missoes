@@ -36994,6 +36994,7 @@
 	  missionPlanner: null,
 	  missions: null,
 	  missionPassengers: null,
+	  missionPilots: null,
 	  error: null,
 	  insertingPassengers: false,
 	  insertedPassengers: false,
@@ -37055,6 +37056,23 @@
 	      return _extends({}, state, {
 	        fetched: false,
 	        fetching: false,
+	        error: action.payload
+	      });
+	    case 'REQUEST_MISSION_PILOTS_BY_MISSION_PENDING':
+	      return _extends({}, state, {
+	        fetched: false,
+	        fetching: true
+	      });
+	    case 'REQUEST_MISSION_PILOTS_BY_MISSION_FULFILLED':
+	      return _extends({}, state, {
+	        fetching: false,
+	        fetched: true,
+	        missionPilots: action.payload
+	      });
+	    case 'REQUEST_MISSION_PILOTS_BY_MISSION_ERROR':
+	      return _extends({}, state, {
+	        feching: false,
+	        fetched: false,
 	        error: action.payload
 	      });
 	    case 'REQUEST_INSERT_UPDATE_MISSION_PENDING':
@@ -70627,6 +70645,9 @@
 	exports.insertupdateMissionPilotsDone = insertupdateMissionPilotsDone;
 	exports.insertUpdateMissionPilotsError = insertUpdateMissionPilotsError;
 	exports.removeMissionPilots = removeMissionPilots;
+	exports.findMissionPilotsByMission = findMissionPilotsByMission;
+	exports.missionPilotsByMission = missionPilotsByMission;
+	exports.findMissionPilotsByMissionError = findMissionPilotsByMissionError;
 	
 	var _axios = __webpack_require__(539);
 	
@@ -70934,9 +70955,33 @@
 	}
 	
 	function removeMissionPilots(mission) {
-	  //axios.delete,
 	  return {
 	    type: 'REQUEST_DELETE_MISSION_PILOTS_PENDING'
+	  };
+	}
+	
+	function findMissionPilotsByMission(mission, dispatch) {
+	  _axios2.default.post('/missoes/missions/missionPilotsByMission', mission).then(function (missionPilotsResponse) {
+	    dispatch(missionPilotsByMission(missionPilotsResponse.data));
+	  }).catch(function (error) {
+	    dispatch(findMissionPilotsByMissionError(error));
+	  });
+	  return {
+	    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_PENDING'
+	  };
+	}
+	
+	function missionPilotsByMission(missionPilots) {
+	  return {
+	    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_FULFILLED',
+	    payload: missionPilots
+	  };
+	}
+	
+	function findMissionPilotsByMissionError(error) {
+	  return {
+	    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_ERROR',
+	    payload: error
 	  };
 	}
 
@@ -74964,6 +75009,10 @@
 	
 	var _MissoesLoading = __webpack_require__(632);
 	
+	var _Divider = __webpack_require__(676);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74985,6 +75034,7 @@
 	    var _this = _possibleConstructorReturn(this, (MissionDetails.__proto__ || Object.getPrototypeOf(MissionDetails)).call(this, props));
 	
 	    _this.passengersRender = _this.passengersRender.bind(_this);
+	    _this.pilotsRender = _this.pilotsRender.bind(_this);
 	    return _this;
 	  }
 	
@@ -74999,6 +75049,7 @@
 	      if (mission) {
 	        dispatch((0, _missionActions.findMissionPlannerByMission)(mission, dispatch));
 	        dispatch((0, _missionActions.findMissionPassengersByMission)(mission, dispatch));
+	        dispatch((0, _missionActions.findMissionPilotsByMission)(mission, dispatch));
 	      }
 	    }
 	  }, {
@@ -75019,12 +75070,26 @@
 	      }
 	    }
 	  }, {
+	    key: 'pilotsRender',
+	    value: function pilotsRender() {
+	      var missionPilots = this.props.missions.missionPilots;
+	
+	      if (missionPilots) {
+	        return missionPilots.map(function (missionPilot) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: missionPilot.id },
+	            missionPilot.pilot.name
+	          );
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var mission = this.props.mission;
 	      var missionPlanner = this.props.missions.missionPlanner;
 	
-	      console.log(this.props);
 	      var labelStyle = {
 	        fontSize: "1.2em"
 	      };
@@ -75033,7 +75098,7 @@
 	        paddingLeft: "40px"
 	      };
 	      var elementContainer = {
-	        paddingBottom: "10px"
+	        padding: "10px"
 	      };
 	      return _react2.default.createElement(
 	        'div',
@@ -75044,7 +75109,7 @@
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Data/Hora'
+	            'Data/Hora:'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -75052,13 +75117,14 @@
 	            (0, _moment2.default)(mission.dateTime).format('lll')
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Aeronave'
+	            'Aeronave:'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -75066,13 +75132,14 @@
 	            mission.airplane.subscriptionNumber + ' - ' + mission.airplane.airplaneModel.name
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Origem'
+	            'Origem:'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -75080,13 +75147,14 @@
 	            mission.missionTo.acronym + ' - ' + mission.missionTo.name
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Destino'
+	            'Destino:'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -75094,13 +75162,14 @@
 	            mission.missionFrom.acronym + ' - ' + mission.missionFrom.name
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Planejado por'
+	            'Planejado por:'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -75108,18 +75177,34 @@
 	            missionPlanner ? missionPlanner.planner.name : 'Carregando..'
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
 	            'label',
 	            { style: labelStyle },
-	            'Passageiros'
+	            'Passageiros:'
 	          ),
 	          _react2.default.createElement(
 	            'ul',
 	            null,
 	            this.passengersRender()
+	          )
+	        ),
+	        _react2.default.createElement(_Divider2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { style: elementContainer },
+	          _react2.default.createElement(
+	            'label',
+	            { style: labelStyle },
+	            'Pilotos:'
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            this.pilotsRender()
 	          )
 	        )
 	      );

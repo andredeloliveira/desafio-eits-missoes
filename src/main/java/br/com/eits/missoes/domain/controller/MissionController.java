@@ -51,6 +51,11 @@ public class MissionController {
 		return missionPassengerService.findMissionPassengerByMission(mission);
 	}
 	
+	@RequestMapping(value = "/missions/missionPilotsByMission", method = RequestMethod.POST)
+	public List<MissionPilot> findMissionPilotsByMission(@RequestBody Mission mission){
+		return missionPilotService.findMissionPilotByMission(mission);
+	}
+	
 	/**/
 	
 	@RequestMapping(value = "/missions/insert", method = RequestMethod.POST)

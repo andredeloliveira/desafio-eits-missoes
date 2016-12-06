@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
-import { findMissionPlannerByMission, findMissionPassengersByMission } from './actions/missionActions';
+import { findMissionPlannerByMission, findMissionPassengersByMission, findMissionPilotsByMission } from './actions/missionActions';
 import { MissoesLoading } from './MissoesLoading.jsx';
+import Divider from 'material-ui/Divider';
+
 @connect((Store) => {
   return {
     missions: Store.missionReducer,
@@ -13,6 +15,7 @@ export class MissionDetails extends React.Component {
   constructor(props) {
     super(props);
     this.passengersRender = this.passengersRender.bind(this);
+    this.pilotsRender = this.pilotsRender.bind(this);
   }
 
   componentWillMount() {
@@ -21,6 +24,7 @@ export class MissionDetails extends React.Component {
     if (mission) {
       dispatch(findMissionPlannerByMission(mission, dispatch))
       dispatch(findMissionPassengersByMission(mission, dispatch))
+      dispatch(findMissionPilotsByMission(mission, dispatch))
     }
   }
 
@@ -35,10 +39,18 @@ export class MissionDetails extends React.Component {
     }
   }
 
+  pilotsRender() {
+    const { missionPilots } = this.props.missions;
+    if (missionPilots) {
+      return missionPilots.map((missionPilot) => {
+        return <li key={missionPilot.id}>{missionPilot.pilot.name}</li>
+      })
+    }
+  }
+
   render() {
     const { mission } = this.props;
     const { missionPlanner } = this.props.missions;
-    console.log(this.props)
     const labelStyle = {
       fontSize: "1.2em",
     }
@@ -47,28 +59,38 @@ export class MissionDetails extends React.Component {
       paddingLeft: "40px"
     }
     const elementContainer = {
-      paddingBottom: "10px",
+      padding: "10px",
     }
     return (
       <div>
         <div style={elementContainer}>
-          <label style={labelStyle}>Data/Hora</label><span style={spanStyle}>{moment(mission.dateTime).format('lll')}</span>
+          <label style={labelStyle}>Data/Hora:</label><span style={spanStyle}>{moment(mission.dateTime).format('lll')}</span>
         </div>
+        <Divider />
         <div style={elementContainer}>
-          <label style={labelStyle}>Aeronave</label><span style={spanStyle}>{mission.airplane.subscriptionNumber + ' - ' + mission.airplane.airplaneModel.name}</span>
+          <label style={labelStyle}>Aeronave:</label><span style={spanStyle}>{mission.airplane.subscriptionNumber + ' - ' + mission.airplane.airplaneModel.name}</span>
         </div>
+        <Divider />
         <div style={elementContainer}>
-          <label style={labelStyle}>Origem</label><span style={spanStyle}>{mission.missionTo.acronym + ' - ' + mission.missionTo.name}</span>
+          <label style={labelStyle}>Origem:</label><span style={spanStyle}>{mission.missionTo.acronym + ' - ' + mission.missionTo.name}</span>
         </div>
+        <Divider />
         <div style={elementContainer}>
-          <label style={labelStyle}>Destino</label><span style={spanStyle}>{mission.missionFrom.acronym + ' - ' + mission.missionFrom.name}</span>
+          <label style={labelStyle}>Destino:</label><span style={spanStyle}>{mission.missionFrom.acronym + ' - ' + mission.missionFrom.name}</span>
         </div>
+        <Divider />
         <div style={elementContainer}>
-          <label style={labelStyle}>Planejado por</label><span style={spanStyle}>{missionPlanner ? missionPlanner.planner.name : 'Carregando..'}</span>
+          <label style={labelStyle}>Planejado por:</label><span style={spanStyle}>{missionPlanner ? missionPlanner.planner.name : 'Carregando..'}</span>
         </div>
+        <Divider />
         <div style={elementContainer}>
-          <label style={labelStyle}>Passageiros</label>
+          <label style={labelStyle}>Passageiros:</label>
           <ul>{ this.passengersRender() }</ul>
+        </div>
+        <Divider />
+        <div style={elementContainer}>
+          <label style={labelStyle}>Pilotos:</label>
+          <ul>{ this.pilotsRender() }</ul>
         </div>
       </div>
     )

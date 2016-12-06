@@ -321,8 +321,34 @@ export function insertUpdateMissionPilotsError(error) {
 }
 
 export function removeMissionPilots(mission) {
- //axios.delete,
  return {
    type: 'REQUEST_DELETE_MISSION_PILOTS_PENDING'
  }
+}
+
+export function findMissionPilotsByMission(mission, dispatch) {
+  axios.post('/missoes/missions/missionPilotsByMission', mission)
+    .then((missionPilotsResponse) => {
+      dispatch(missionPilotsByMission(missionPilotsResponse.data))
+    })
+    .catch((error) => {
+      dispatch(findMissionPilotsByMissionError(error))
+    })
+  return {
+    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_PENDING',
+  }
+}
+
+export function missionPilotsByMission(missionPilots) {
+  return {
+    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_FULFILLED',
+    payload: missionPilots,
+  }
+}
+
+export function findMissionPilotsByMissionError(error) {
+  return {
+    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_ERROR',
+    payload: error,
+  }
 }
