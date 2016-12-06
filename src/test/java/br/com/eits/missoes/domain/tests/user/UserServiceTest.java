@@ -37,7 +37,7 @@ public class UserServiceTest extends AbstractIntegrationTest{
 		user.setName("Eu sou o máximo");
 		user.setEmail("eu@sou.com");
 		user.setPassword("1235sou");
-		user.setStatus("Ativo");
+		user.setStatus(true);
 		user.setPerfilAcesso(Profile.ADMINISTRADOR);
 		User newUser = userService.insertUser(user);
 		final User newUserX = userRepository.findUserById(user.getId());
@@ -51,7 +51,7 @@ public class UserServiceTest extends AbstractIntegrationTest{
 	@DatabaseTearDown(CLEAN_DATASET)
 	public void testRemoveUser() {
 		User user = userService.findUserById(new Long(1));
-		userService.removeUser(user);
+		userService.removeUser(user.getId());
 		List<User> users = userService.findAllUsers();
 		Assert.assertEquals(2, users.size());
 	}
@@ -65,14 +65,7 @@ public class UserServiceTest extends AbstractIntegrationTest{
 		Assert.assertEquals(3, users.size());
 	}
 	
-	@Test
-	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {USERS_DATASET}, connection = "dataSource")
-	public void testFindUser() {
-		User user = userService.findUser("Jonas Silveira", null);
-		System.out.println(Profile.ADMINISTRADOR);
-		Assert.assertNotNull(user);
-		Assert.assertEquals(user.getName(), "Jonas Silveira");
-	}
+	
 }
 
 

@@ -17,6 +17,7 @@ import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
 import { findAllAirports } from './actions/airportActions';
 import { insertUpdateMission } from './actions/missionActions';
+import { uploadFile } from './actions/fileUploadActions';
 
 
 //TODO(andredeloliveira): consider refactoring this massive component and splitting into smaller components
@@ -27,6 +28,7 @@ import { insertUpdateMission } from './actions/missionActions';
     airports: Store.airportReducer,
     missions: Store.missionReducer,
     auth: Store.loginReducer,
+    fileUpload: Store.fileUploadReducer,
   }
 })
 export class MissionForm extends React.Component {
@@ -43,7 +45,7 @@ export class MissionForm extends React.Component {
       selectedPilot: null,
       selectedTo: null,
       selectedFrom: null,
-      files: null,
+      file: null,
       filesError: null,
     }
     this.handleSelectAirplaneChange = this.handleSelectAirplaneChange.bind(this);
@@ -189,6 +191,7 @@ export class MissionForm extends React.Component {
   submitData(event) {
     event.preventDefault();
     const { dispatch } = this.props;
+    const { file } = this.props.fileUpload;
     //Sometimes the user is not present in the Redux Store, so we get it from the sessionStorage variable ;), which is still valid
     const currentUser = this.props.auth.currentUser || JSON.parse(sessionStorage.getItem('currentUser'));
     const mission = {
@@ -198,14 +201,13 @@ export class MissionForm extends React.Component {
         missionFrom: this.state.selectedFrom,
         airplane: this.state.selectedAirplane,
         reason: event.target.reason.value,
-        attachedFile: null,//this.state.files[0],
+        attachedFile: null,
       },
       planner: currentUser,
       passengers: this.state.selectedPassengers,
       pilots: this.state.selectedPilots,
     }
-    //Now we need set all the associative tables that need some data.. everthing needs to be at the actions..
-     dispatch(insertUpdateMission(mission, currentUser, dispatch))
+    dispatch(insertUpdateMission(mission, currentUser, dispatch))
   }
 
   handleAddNewPassenger() {
@@ -255,9 +257,14 @@ export class MissionForm extends React.Component {
   }
 
   handleUpdateFiles(files) {
-    this.setState({
-      files: files
-    })
+    const { dispatch } = this.props;
+    const { file } = this.props.fileUpload;
+    dispatch(uploadFile(files[0], dispatch))
+    if (file) {
+      this.setState({
+        file: file
+      })
+    }
   }
 
   handleUpdateFilesError(error, file) {
@@ -297,7 +304,6 @@ export class MissionForm extends React.Component {
               hintText="Data"
               fullWidth={true}
               name="date"
-              defaultDate={ mission ? this.currentDate() : null }
               />
           </div>
           <div>

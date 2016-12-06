@@ -1,6 +1,7 @@
 package br.com.eits.missoes.domain.tests.mission;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -59,7 +60,7 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 	public void testinsertMission() {
 		
 		Mission mission = new Mission();
-		Instant now = Instant.now();
+		Date now = new Date();
 		
 		//TODO: add on dataset;
 		
@@ -90,8 +91,6 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 		/****/
 		mission.setDateTime(now);
 		mission.setReason("Viagem a negócios");
-		mission.setPilots(missionPilots);
-		mission.setPassengers(missionPassengers);
 		mission.setMissionTo(missionTo);
 		mission.setMissionFrom(missionFrom);
 		mission.setAirplane(new Airplane(1L));

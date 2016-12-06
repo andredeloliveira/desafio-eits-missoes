@@ -37,7 +37,7 @@ public class AirplaneServiceTest extends AbstractIntegrationTest{
 		//We need two services here. One to get the existing airplane model from the db and the other to
 		//actually add an airplane
 		AirplaneModel airplaneModel = airplaneModelService.findAirplaneModelById(new Long(122));
-		airplane.setModel(airplaneModel);
+		airplane.setAirplaneModel(airplaneModel);
 		Airplane airplaneResult = airplaneService.insertAirplane(airplane);
 		Assert.assertNotNull(airplaneResult);
 		Assert.assertEquals(200,airplane.getSeatsNumber());

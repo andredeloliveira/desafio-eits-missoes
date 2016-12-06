@@ -33,7 +33,7 @@ public class Mission {
 	private Airplane airplane;
 	
 	@Column(name = "attached_file")
-	private Byte[] attachedFile;
+	private Byte[]  attachedFile;
 	
 	@Column(name = "date_time")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")

@@ -5,10 +5,19 @@ export class FinishFlightButton extends React.Component {
 
   constructor(props) {
     super(props);
+    this.finishFlight = this.finishFlight.bind(this);
   }
 
   finishFlight() {
-    console.log('a flight was finished')
+    const { mission } = this.props;
+    const currentDateTime = new Date();
+    const currentDay = currentDateTime.getDate();
+    const currentMonth = currentDateTime.getMonth();
+    const currentYear = currentDateTime.getFullYear();
+    const currentHours = currentDateTime.getHours();
+    const currentMinutes = currentDateTime.getMinutes();
+    const currentSeconds = currentDateTime.getSeconds();
+    console.log(mission.dateTime)
   }
   render() {
     return (

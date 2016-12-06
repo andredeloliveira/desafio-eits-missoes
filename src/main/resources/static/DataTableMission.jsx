@@ -38,7 +38,7 @@ export class DataTableMission extends React.Component {
                   remove={removeMission}
                   name={name}
                   customButtons={[<FinishFlightButton
-                  key={'finishFlightButton'} />]} />,
+                  key={'finishFlightButton'} mission={mission.mission}/>]} />,
       }
     })
   }
