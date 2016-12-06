@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.eits.missoes.domain.entity.Mission;
 import br.com.eits.missoes.domain.entity.MissionPlanner;
 import br.com.eits.missoes.domain.repository.mission.IMissionPlannerRepository;
 
@@ -30,6 +31,11 @@ public class MissionPlannerService {
 	@Transactional 
 	public MissionPlanner insertMissionPlanner(MissionPlanner planner) {
 		return missionPlannerRepository.saveAndFlush(planner);
+	}
+	
+	@Transactional 
+	public MissionPlanner findMissionPlannerByMission(Mission mission) {
+		return missionPlannerRepository.findMissionPlannerByMission(mission);
 	}
 
 }

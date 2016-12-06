@@ -169,6 +169,33 @@ export function removeMissionPlannerError(error) {
   }
 }
 
+export function findMissionPlannerByMission(mission, dispatch) {
+   axios.post('/missoes/missions/missionPlannerByMission', mission)
+    .then((missionPlannerResponse) => {
+      dispatch(missionPlannerByMission(missionPlannerResponse.data))
+    })
+    .catch((error) => {
+      dispatch(findMissionPlannerByMissionError(error))
+    })
+  return {
+    type: 'REQUEST_MISSION_PLANNER_BY_MISSION_PENDING',
+  }
+}
+
+export function missionPlannerByMission(missionPlanner) {
+  return {
+    type: 'REQUEST_MISSION_PLANNER_BY_MISSION_FULFILLED',
+    payload: missionPlanner,
+  }
+}
+
+export function findMissionPlannerByMissionError(error) {
+  return {
+    type: 'REQUEST_MISSION_PLANNER_BY_MISSION_ERROR',
+    payload: error,
+  }
+}
+
 
 /*****************************************************************************************/
 // Mission Passengers
@@ -224,6 +251,33 @@ export function removeMissionPassengersDone() {
 export function removeMissionPassengersError(error) {
   return {
     type: 'REQUEST_DELETE_MISSION_PASSENGERS_ERROR',
+    payload: error,
+  }
+}
+
+export function findMissionPassengersByMission(mission, dispatch) {
+  axios.post('/missoes/missions/missionPassengersByMission', mission)
+    .then((missionPassengersResponse) => {
+      dispatch(missionPassengers(missionPassengersResponse.data))
+    })
+    .catch((error) => {
+      dispatch(findMissionPassengersByMissionError(error))
+    })
+  return {
+    type: 'REQUEST_MISSION_PASSENGERS_BY_MISSION_PENDING',
+  }
+}
+
+export function missionPassengers(missionPassengers) {
+  return {
+    type: 'REQUEST_MISSION_PASSENGERS_BY_MISSION_FULFILLED',
+    payload: missionPassengers,
+  }
+}
+
+export function findMissionPassengersByMissionError(error) {
+  return {
+    type: 'REQUEST_MISSION_PASSENGERS_BY_MISSION_ERROR',
     payload: error,
   }
 }

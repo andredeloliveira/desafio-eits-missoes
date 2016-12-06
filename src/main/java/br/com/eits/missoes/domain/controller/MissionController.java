@@ -41,13 +41,20 @@ public class MissionController {
 		return missionPlannerService.findAllMissionPlanner();
 	}
 	
+	@RequestMapping(value = "/missions/missionPlannerByMission", method = RequestMethod.POST)
+	public MissionPlanner findMissionPlannerByMission(@RequestBody Mission mission) {
+		return missionPlannerService.findMissionPlannerByMission(mission);
+	}
 	
+	@RequestMapping(value = "/missions/missionPassengersByMission", method = RequestMethod.POST)
+	public List<MissionPassenger> findMissionPassengersByMission(@RequestBody Mission mission){
+		return missionPassengerService.findMissionPassengerByMission(mission);
+	}
+	
+	/**/
 	
 	@RequestMapping(value = "/missions/insert", method = RequestMethod.POST)
 	public Mission insertMission(@Valid @RequestBody Mission mission, BindingResult result) {
-		if (result.hasErrors()) {
-			System.out.println(result.getErrorCount());
-		}
 		return missionService.insertMission(mission);
 	}
 	
