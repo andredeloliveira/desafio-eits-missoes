@@ -147,7 +147,6 @@ export class DetailsButton extends React.Component {
 
   renderDetailsPage() {
     const { name, data } = this.props;
-    console.log(data)
     if (name === 'airplane') {
       return <AirplaneDetails airplane={data}/>
     } else if (name === 'mission') {
