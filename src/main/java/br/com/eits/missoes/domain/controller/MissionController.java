@@ -107,4 +107,9 @@ public class MissionController {
 		System.out.println("requested file " + file);
 		return missionService.uploadFile(file);
 	}
+	
+	@RequestMapping( value = "/missions/finishFlight", method = RequestMethod.POST)
+	public Boolean finishFlight(@RequestBody Mission mission) {
+		return missionService.finishFlight(mission);
+	}
 } 

@@ -37,7 +37,7 @@ public class Mission {
 	
 	@Column(name = "date_time")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
-	private Date dateTime;
+	private Calendar dateTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_mission_to")
@@ -50,18 +50,20 @@ public class Mission {
 	@Column(name = "reason")
 	private String reason;
 	
-	@Column(name = "in_mission")
-	private Boolean inMission;
+	@Column(name = "finished")
+	private Boolean finished;
 	
-	
-	public Boolean getInMission() {
-		return inMission;
+	public Mission() {
+		this.finished = false;
 	}
 	
-	public void setInMission(Boolean inMission) {
-		this.inMission = inMission;
+	public Boolean getFinished() {
+		return finished;
 	}
-
+	
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
 	
 	public Long getId() {
 		return id;
@@ -84,10 +86,10 @@ public class Mission {
 	public void setAttachedFile(Byte[] attachedFile) {
 		this.attachedFile = attachedFile;
 	}
-	public Date getDateTime() {
+	public Calendar getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(Date instant) {
+	public void setDateTime(Calendar instant) {
 		this.dateTime = instant;
 	}
 	public Airport getMissionTo() {

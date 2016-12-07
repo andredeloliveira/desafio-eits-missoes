@@ -352,3 +352,33 @@ export function findMissionPilotsByMissionError(error) {
     payload: error,
   }
 }
+/*****************************************************************************************/
+// Finish Mission
+/*****************************************************************************************/
+
+export function finishFlight(mission, dispatch) {
+  axios.post('/missoes/missions/finishFlight', mission)
+    .then((finishFlightResult) => {
+      dispatch(finishFlightDone(finishFlightResult))
+    })
+    .catch((error) => {
+      dispatch(finishFlightError(error))
+    })
+  return {
+    type: 'REQUEST_FINISH_FLIGHT_PENDING',
+  }
+}
+
+export function finishFlightDone(finishFlightResult) {
+  return {
+    type: 'REQUEST_FINISH_FLIGHT_FULFILLED',
+    payload: finishFlightResult,
+  }
+}
+
+export function finishFlightError(error) {
+  return {
+    type: 'REQUEST_FINISH_FLIGHT_ERROR',
+    payload: error,
+  }
+}

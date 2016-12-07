@@ -1,6 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import IconButton from 'material-ui/IconButton';
 import ActionFlightLand from 'material-ui/svg-icons/action/flight-land';
+import { finishFlight } from './actions/missionActions';
+
+@connect((Store) => {
+  return {
+    missions: Store.missionReducer,
+  }
+})
 export class FinishFlightButton extends React.Component {
 
   constructor(props) {
@@ -9,19 +17,19 @@ export class FinishFlightButton extends React.Component {
   }
 
   finishFlight() {
-    const { mission } = this.props;
-    const currentDateTime = new Date();
-    const currentDay = currentDateTime.getDate();
-    const currentMonth = currentDateTime.getMonth();
-    const currentYear = currentDateTime.getFullYear();
-    const currentHours = currentDateTime.getHours();
-    const currentMinutes = currentDateTime.getMinutes();
-    const currentSeconds = currentDateTime.getSeconds();
-    console.log(mission.dateTime)
+    const { dispatch } = this.props;
+    dispatch(finishFlight(mission, dispatch))
   }
   render() {
+    const { mission } = this.props;
+    let disabled = false;
+    const currentDate = new Date().getTime();
+    const missionDate = new Date(mission.dateTime).getTime();
+    if (currentDate < missionDate) {
+      disabled = true;
+    }
     return (
-      <IconButton onTouchTap={this.finishFlight}>
+      <IconButton onTouchTap={this.finishFlight} disabled={disabled}>
         <ActionFlightLand />
       </IconButton>
     )

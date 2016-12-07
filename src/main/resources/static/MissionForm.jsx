@@ -201,6 +201,7 @@ export class MissionForm extends React.Component {
         missionFrom: this.state.selectedFrom,
         airplane: this.state.selectedAirplane,
         reason: event.target.reason.value,
+        //Will have to have it null and then pass it as a MultiPartFile..
         attachedFile: null,
       },
       planner: currentUser,

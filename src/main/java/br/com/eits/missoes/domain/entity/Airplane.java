@@ -30,7 +30,7 @@ public class Airplane {
 	
 	@Column(name = "total_flight_time")
 	@NotNull(message = "O tempo total de vôo é obrigatório")
-	private Double totalFlightTime;
+	private Long totalFlightTime;
 	
 	@Column(name = "subscription_number")
 	@NotBlank(message = "A matrícula é obrigatória")
@@ -58,13 +58,13 @@ public class Airplane {
 	}
 	
 	public Airplane() {
-		this.totalFlightTime = 0.0;
+		this.totalFlightTime = (long) 0;
 	}
 	
-	public Double getTotalFlightTime() {
+	public Long getTotalFlightTime() {
 		return totalFlightTime;
 	}
-	public void setTotalFlightTime(Double totalFlightTime) {
+	public void setTotalFlightTime(Long totalFlightTime) {
 		this.totalFlightTime = totalFlightTime;
 	}
 	public String getSubscriptionNumber() {

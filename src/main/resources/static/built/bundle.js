@@ -37182,6 +37182,20 @@
 	        removingMissionPilots: false,
 	        removedMissionPilots: true
 	      });
+	    case 'REQUEST_FINISH_FLIGHT_PENDING':
+	      return _extends({}, state, {
+	        finishingFlight: true
+	      });
+	    case 'REQUEST_FINISH_FLIGHT_FULFILLED':
+	      return _extends({}, state, {
+	        finishingFlight: false,
+	        finishedFlight: action.payload
+	      });
+	    case 'REQUEST_FINISH_FLIGHT_ERROR':
+	      return _extends({}, state, {
+	        finishingFlight: false,
+	        error: action.payload
+	      });
 	    default:
 	      return state;
 	  }
@@ -64577,6 +64591,7 @@
 	          missionFrom: this.state.selectedFrom,
 	          airplane: this.state.selectedAirplane,
 	          reason: event.target.reason.value,
+	          //Will have to have it null and then pass it as a MultiPartFile..
 	          attachedFile: null
 	        },
 	        planner: currentUser,
@@ -70770,6 +70785,9 @@
 	exports.findMissionPilotsByMission = findMissionPilotsByMission;
 	exports.missionPilotsByMission = missionPilotsByMission;
 	exports.findMissionPilotsByMissionError = findMissionPilotsByMissionError;
+	exports.finishFlight = finishFlight;
+	exports.finishFlightDone = finishFlightDone;
+	exports.finishFlightError = finishFlightError;
 	
 	var _axios = __webpack_require__(540);
 	
@@ -71103,6 +71121,34 @@
 	function findMissionPilotsByMissionError(error) {
 	  return {
 	    type: 'REQUEST_MISSION_PILOTS_BY_MISSION_ERROR',
+	    payload: error
+	  };
+	}
+	/*****************************************************************************************/
+	// Finish Mission
+	/*****************************************************************************************/
+	
+	function finishFlight(mission, dispatch) {
+	  _axios2.default.post('/missoes/missions/finishFlight', mission).then(function (finishFlightResult) {
+	    dispatch(finishFlightDone(finishFlightResult));
+	  }).catch(function (error) {
+	    dispatch(finishFlightError(error));
+	  });
+	  return {
+	    type: 'REQUEST_FINISH_FLIGHT_PENDING'
+	  };
+	}
+	
+	function finishFlightDone(finishFlightResult) {
+	  return {
+	    type: 'REQUEST_FINISH_FLIGHT_FULFILLED',
+	    payload: finishFlightResult
+	  };
+	}
+	
+	function finishFlightError(error) {
+	  return {
+	    type: 'REQUEST_FINISH_FLIGHT_ERROR',
 	    payload: error
 	  };
 	}
@@ -90760,9 +90806,13 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _dec, _class;
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(384);
 	
 	var _IconButton = __webpack_require__(457);
 	
@@ -90772,6 +90822,8 @@
 	
 	var _flightLand2 = _interopRequireDefault(_flightLand);
 	
+	var _missionActions = __webpack_require__(684);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -90780,7 +90832,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FinishFlightButton = exports.FinishFlightButton = function (_React$Component) {
+	var FinishFlightButton = exports.FinishFlightButton = (_dec = (0, _reactRedux.connect)(function (Store) {
+	  return {
+	    missions: Store.missionReducer
+	  };
+	}), _dec(_class = function (_React$Component) {
 	  _inherits(FinishFlightButton, _React$Component);
 	
 	  function FinishFlightButton(props) {
@@ -90795,30 +90851,31 @@
 	  _createClass(FinishFlightButton, [{
 	    key: 'finishFlight',
 	    value: function finishFlight() {
-	      var mission = this.props.mission;
+	      var dispatch = this.props.dispatch;
 	
-	      var currentDateTime = new Date();
-	      var currentDay = currentDateTime.getDate();
-	      var currentMonth = currentDateTime.getMonth();
-	      var currentYear = currentDateTime.getFullYear();
-	      var currentHours = currentDateTime.getHours();
-	      var currentMinutes = currentDateTime.getMinutes();
-	      var currentSeconds = currentDateTime.getSeconds();
-	      console.log(mission.dateTime);
+	      dispatch((0, _missionActions.finishFlight)(mission, dispatch));
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var mission = this.props.mission;
+	
+	      var disabled = false;
+	      var currentDate = new Date().getTime();
+	      var missionDate = new Date(mission.dateTime).getTime();
+	      if (currentDate < missionDate) {
+	        disabled = true;
+	      }
 	      return _react2.default.createElement(
 	        _IconButton2.default,
-	        { onTouchTap: this.finishFlight },
+	        { onTouchTap: this.finishFlight, disabled: disabled },
 	        _react2.default.createElement(_flightLand2.default, null)
 	      );
 	    }
 	  }]);
 	
 	  return FinishFlightButton;
-	}(_react2.default.Component);
+	}(_react2.default.Component)) || _class);
 
 /***/ },
 /* 836 */

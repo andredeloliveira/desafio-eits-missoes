@@ -227,6 +227,23 @@ export default function missionReducer(state = initialState, action) {
           removingMissionPilots: false,
           removedMissionPilots: true,
         }
+      case 'REQUEST_FINISH_FLIGHT_PENDING':
+        return {
+          ...state,
+          finishingFlight: true,
+        }
+      case 'REQUEST_FINISH_FLIGHT_FULFILLED':
+        return {
+          ...state,
+          finishingFlight: false,
+          finishedFlight: action.payload,
+        }
+      case 'REQUEST_FINISH_FLIGHT_ERROR':
+        return {
+          ...state,
+          finishingFlight: false,
+          error: action.payload,
+        }
     default:
       return state;
   }
