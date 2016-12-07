@@ -54218,7 +54218,10 @@
 	  function CRUDBaseComponent(props) {
 	    _classCallCheck(this, CRUDBaseComponent);
 	
-	    return _possibleConstructorReturn(this, (CRUDBaseComponent.__proto__ || Object.getPrototypeOf(CRUDBaseComponent)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (CRUDBaseComponent.__proto__ || Object.getPrototypeOf(CRUDBaseComponent)).call(this, props));
+	
+	    _this.canCreate = _this.canCreate.bind(_this);
+	    return _this;
 	  }
 	
 	  //this method will decide which DataTable Component to render
@@ -54245,6 +54248,16 @@
 	    key: 'openCreateNewEntryDialog',
 	    value: function openCreateNewEntryDialog() {
 	      this.refs.openDialog.handleOpen();
+	    }
+	  }, {
+	    key: 'canCreate',
+	    value: function canCreate() {
+	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+	      if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
+	        return true;
+	      } else {
+	        return false;
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -54277,7 +54290,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'dialog-container', style: dialogContainer },
-	          _react2.default.createElement(_NewEntryDialog.NewEntryDialog, { ref: 'openDialog', name: name })
+	          this.canCreate() ? _react2.default.createElement(_NewEntryDialog.NewEntryDialog, { ref: 'openDialog', name: name }) : null
 	        )
 	      );
 	    }
@@ -74738,6 +74751,16 @@
 	  }
 	
 	  _createClass(CRUDMenu, [{
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+	      if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    }
+	  }, {
 	    key: 'renderCustomButtons',
 	    value: function renderCustomButtons() {
 	      var customButtons = this.props.customButtons;
@@ -74762,8 +74785,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }),
-	        _react2.default.createElement(_CRUDButtons.RemoveButton, { action: remove, data: data, dispatch: dispatch }),
+	        this.isAdmin() ? _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }) : null,
+	        this.isAdmin() ? _react2.default.createElement(_CRUDButtons.RemoveButton, { action: remove, data: data, dispatch: dispatch }) : null,
 	        _react2.default.createElement(_CRUDButtons.DetailsButton, { name: name, data: data }),
 	        this.renderCustomButtons()
 	      );
@@ -90609,8 +90632,20 @@
 	  }
 	
 	  _createClass(DataTableUser, [{
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+	      if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    }
+	  }, {
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
+	      var _this2 = this;
+	
 	      var _props = this.props,
 	          dispatch = _props.dispatch,
 	          name = _props.name;
@@ -90628,7 +90663,7 @@
 	          status: user.status,
 	          options: _react2.default.createElement(_CRUDMenu.CRUDMenu, {
 	            data: user,
-	            customButtons: [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton' })],
+	            customButtons: _this2.isAdmin() ? [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton' })] : [],
 	            name: name,
 	            remove: _userActions.removeUser,
 	            dispatch: dispatch
@@ -90834,8 +90869,20 @@
 	      _moment2.default.locale('pt-br');
 	    }
 	  }, {
+	    key: 'isPiloto',
+	    value: function isPiloto() {
+	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+	      if (currentUser.perfilAcesso === 'PILOTO') {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    }
+	  }, {
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
+	      var _this2 = this;
+	
 	      var _props = this.props,
 	          dispatch = _props.dispatch,
 	          name = _props.name;
@@ -90853,8 +90900,8 @@
 	            dispatch: dispatch,
 	            remove: _missionActions.removeMission,
 	            name: name,
-	            customButtons: [_react2.default.createElement(_FinishFlightButton.FinishFlightButton, {
-	              key: 'finishFlightButton', mission: mission.mission })] })
+	            customButtons: _this2.isPiloto() ? [_react2.default.createElement(_FinishFlightButton.FinishFlightButton, {
+	              key: 'finishFlightButton', mission: mission.mission })] : [] })
 	        };
 	      });
 	    }

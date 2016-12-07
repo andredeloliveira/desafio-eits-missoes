@@ -10,6 +10,7 @@ export class CRUDBaseComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.canCreate = this.canCreate.bind(this);
   }
 
   //this method will decide which DataTable Component to render
@@ -28,6 +29,15 @@ export class CRUDBaseComponent extends React.Component {
     this.refs.openDialog.handleOpen();
   }
 
+  canCreate() {
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
+    if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
     const { label, name } = this.props;
     const dialogContainer = {
@@ -43,7 +53,7 @@ export class CRUDBaseComponent extends React.Component {
           </div>
         </div>
         <div className="dialog-container" style={dialogContainer}>
-          <NewEntryDialog ref="openDialog" name={name}/>
+          { this.canCreate() ? <NewEntryDialog ref="openDialog" name={name} /> : null}
         </div>
       </div>
     )

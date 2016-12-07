@@ -19,6 +19,15 @@ export class DataTableUser extends React.Component {
     this.formattedFetchedData = this.formattedFetchedData.bind(this);
   }
 
+  isAdmin() {
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
+    if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   formattedFetchedData() {
     const { dispatch, name } = this.props;
     return this.props.data.users.map( (user) => {
@@ -34,7 +43,7 @@ export class DataTableUser extends React.Component {
         status: user.status,
         options: <CRUDMenu
                     data={user}
-                    customButtons={[<DeactivateUserButton key={'deactivateUserButton'}/>]}
+                    customButtons={ this.isAdmin() ? [<DeactivateUserButton key={'deactivateUserButton'}/>] : []}
                     name={name}
                     remove={removeUser}
                     dispatch={dispatch}
