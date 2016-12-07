@@ -62415,7 +62415,9 @@
 	        opacity: 0
 	      };
 	      var newAirplane = this.props.airplanes.newAirplane;
-	      var airplane = this.props.airplane;
+	      var _props2 = this.props,
+	          airplane = _props2.airplane,
+	          dispatch = _props2.dispatch;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -90860,7 +90862,10 @@
 	  function DataTableMission(props) {
 	    _classCallCheck(this, DataTableMission);
 	
-	    return _possibleConstructorReturn(this, (DataTableMission.__proto__ || Object.getPrototypeOf(DataTableMission)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (DataTableMission.__proto__ || Object.getPrototypeOf(DataTableMission)).call(this, props));
+	
+	    _this.updateMissions = _this.updateMissions.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(DataTableMission, [{
@@ -90879,6 +90884,21 @@
 	      }
 	    }
 	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.props.missions.newMission !== nextProps.missions.newMission) {
+	        this.updateMissions();
+	      }
+	    }
+	  }, {
+	    key: 'updateMissions',
+	    value: function updateMissions() {
+	      console.log('it entered here');
+	      var dispatch = this.props.dispatch;
+	
+	      dispatch((0, _missionActions.findAllMissions)(dispatch));
+	    }
+	  }, {
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
 	      var _this2 = this;
@@ -90887,7 +90907,7 @@
 	          dispatch = _props.dispatch,
 	          name = _props.name;
 	
-	      return this.props.data.missions.map(function (mission) {
+	      return this.props.missions.missions.map(function (mission) {
 	        return {
 	          id: mission.mission.id,
 	          dateTime: (0, _moment2.default)(mission.mission.dateTime).format('lll'),
