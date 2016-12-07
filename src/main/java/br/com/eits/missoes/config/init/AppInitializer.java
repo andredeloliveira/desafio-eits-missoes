@@ -6,6 +6,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import br.com.eits.missoes.config.JPAConfig;
+import br.com.eits.missoes.config.MailConfig;
 import br.com.eits.missoes.config.SecurityConfig;
 import br.com.eits.missoes.config.ServiceConfig;
 import br.com.eits.missoes.config.WebConfig;
@@ -19,7 +20,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
+		return new Class<?>[] { WebConfig.class, MailConfig.class };
 	}
 
 	@Override

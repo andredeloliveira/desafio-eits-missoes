@@ -8,6 +8,7 @@ const initialState = {
   missions: null,
   missionPassengers: null,
   missionPilots: null,
+  finishedFlight: false,
   error: null,
   insertingPassengers: false,
   insertedPassengers: false,
@@ -16,12 +17,8 @@ const initialState = {
   insertingPlanner: false,
   insertedPlanner: false,
   missionPlanner: null,
-  removingMissionPlanner: false,
-  removedMissionPlanner: false,
-  removingMissionPassengers: false,
-  removedMissionPassengers: false,
-  removingMissionPilots: false,
-  removedMissionPilots: false,
+  removedMission: false,
+  removingMission: false,
 }
 
 export default function missionReducer(state = initialState, action) {
@@ -236,7 +233,7 @@ export default function missionReducer(state = initialState, action) {
         return {
           ...state,
           finishingFlight: false,
-          finishedFlight: action.payload,
+          finishedFlight: true,
         }
       case 'REQUEST_FINISH_FLIGHT_ERROR':
         return {

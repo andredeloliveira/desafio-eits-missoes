@@ -17,7 +17,7 @@ export class FinishFlightButton extends React.Component {
   }
 
   finishFlight() {
-    const { dispatch } = this.props;
+    const { dispatch, mission } = this.props;
     dispatch(finishFlight(mission, dispatch))
   }
   render() {

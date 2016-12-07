@@ -37000,6 +37000,7 @@
 	  missions: null,
 	  missionPassengers: null,
 	  missionPilots: null,
+	  finishedFlight: false,
 	  error: null,
 	  insertingPassengers: false,
 	  insertedPassengers: false,
@@ -37007,7 +37008,7 @@
 	  insertedPilots: false,
 	  insertingPlanner: false,
 	  insertedPlanner: false
-	}, _defineProperty(_initialState, 'missionPlanner', null), _defineProperty(_initialState, 'removingMissionPlanner', false), _defineProperty(_initialState, 'removedMissionPlanner', false), _defineProperty(_initialState, 'removingMissionPassengers', false), _defineProperty(_initialState, 'removedMissionPassengers', false), _defineProperty(_initialState, 'removingMissionPilots', false), _defineProperty(_initialState, 'removedMissionPilots', false), _initialState);
+	}, _defineProperty(_initialState, 'missionPlanner', null), _defineProperty(_initialState, 'removedMission', false), _defineProperty(_initialState, 'removingMission', false), _initialState);
 	
 	function missionReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -37189,7 +37190,7 @@
 	    case 'REQUEST_FINISH_FLIGHT_FULFILLED':
 	      return _extends({}, state, {
 	        finishingFlight: false,
-	        finishedFlight: action.payload
+	        finishedFlight: true
 	      });
 	    case 'REQUEST_FINISH_FLIGHT_ERROR':
 	      return _extends({}, state, {
@@ -90846,7 +90847,9 @@
 	  _createClass(FinishFlightButton, [{
 	    key: 'finishFlight',
 	    value: function finishFlight() {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          mission = _props.mission;
 	
 	      dispatch((0, _missionActions.finishFlight)(mission, dispatch));
 	    }
@@ -91800,11 +91803,22 @@
 	      var _props$missions = this.props.missions,
 	          newMission = _props$missions.newMission,
 	          error = _props$missions.error,
-	          removed = _props$missions.removed;
+	          removedMission = _props$missions.removedMission,
+	          finishedFlight = _props$missions.finishedFlight;
 	
 	      if (newMission) {
 	        return _react2.default.createElement(_Formfeedback.Formfeedback, {
 	          message: "Missão agendada com sucesso!",
+	          duration: 3000
+	        });
+	      } else if (removedMission) {
+	        return _react2.default.createElement(_Formfeedback.Formfeedback, {
+	          message: "Missão removida com sucesso!",
+	          duration: 3000
+	        });
+	      } else if (finishedFlight) {
+	        return _react2.default.createElement(_Formfeedback.Formfeedback, {
+	          message: "Missão finalizada com sucesso!",
 	          duration: 3000
 	        });
 	      }

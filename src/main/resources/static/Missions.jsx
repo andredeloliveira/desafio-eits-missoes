@@ -21,11 +21,25 @@ export class Missions extends React.Component {
   }
 
   renderFeedback() {
-    const { newMission, error, removed } = this.props.missions;
+    const { newMission, error, removedMission, finishedFlight } = this.props.missions;
     if (newMission) {
       return (
         <Formfeedback
           message={"Missão agendada com sucesso!" }
+          duration={3000}
+        />
+      )
+    } else if (removedMission) {
+      return (
+        <Formfeedback
+          message={"Missão removida com sucesso!" }
+          duration={3000}
+        />
+      )
+    } else if (finishedFlight) {
+      return (
+        <Formfeedback
+          message={"Missão finalizada com sucesso!" }
           duration={3000}
         />
       )
