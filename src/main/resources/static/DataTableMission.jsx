@@ -22,6 +22,16 @@ export class DataTableMission extends React.Component {
     moment.locale('pt-br');
   }
 
+
+  isPiloto() {
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
+    if (currentUser.perfilAcesso === 'PILOTO') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   formattedFetchedData() {
     const { dispatch, name } = this.props;
     return this.props.data.missions.map((mission) => {
@@ -37,8 +47,8 @@ export class DataTableMission extends React.Component {
                   dispatch={dispatch}
                   remove={removeMission}
                   name={name}
-                  customButtons={[<FinishFlightButton
-                  key={'finishFlightButton'} mission={mission.mission}/>]} />,
+                  customButtons={this.isPiloto() ? [<FinishFlightButton
+                  key={'finishFlightButton'} mission={mission.mission}/>]: []} />,
       }
     })
   }

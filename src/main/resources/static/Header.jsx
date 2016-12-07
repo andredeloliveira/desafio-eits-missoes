@@ -45,19 +45,18 @@ export class Header extends React.Component {
     }
 
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const loggedIn = sessionStorage.getItem('loggedIn');
     return (
       <div>
         <AppBar title="gAviator"
                 onLeftIconButtonTouchTap={this.showDrawer.bind(this, this.state.open)}
-                iconElementRight={<NavigationButtons />}
+                iconElementRight={currentUser ? <NavigationButtons /> : null}
         />
         <Drawer open={this.state.open}>
           <MenuItem
             onTouchTap={this.showDrawer.bind(this, this.state.open)}
             rightIcon={<NavigationClose />}
             style={sideBarStyle} />
-          <UserInfo style={sideBarStyle} loggedIn={loggedIn} userInfo={currentUser}/>
+          <UserInfo style={sideBarStyle} />
         </Drawer>
       </div>
     )

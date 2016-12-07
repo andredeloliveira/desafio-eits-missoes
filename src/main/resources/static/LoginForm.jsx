@@ -51,10 +51,13 @@ export class LoginForm extends React.Component {
         floatingLabelText="Senha"
         type="password"
         name="password"
+        fullWidth={true}
       />
+    <div>
       <FlatButton label="Entrar">
         <input type="submit" style={submitInput} />
       </FlatButton>
+    </div>
       </form>
     )
   }

@@ -42,6 +42,7 @@ export class NewEntryDialog extends React.Component {
     }
   }
 
+
   render() {
     const fabStyle = {
       marginRight: '20px',
