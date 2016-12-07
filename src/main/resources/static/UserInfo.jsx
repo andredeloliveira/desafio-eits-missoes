@@ -12,7 +12,10 @@ export class UserInfo extends React.Component {
     super(props);
 
   }
-
+  logout() {
+    sessionStorage.setItem('currentUser', null);
+    sessionStorage.setItem('loggedIn', null);
+  }
   render() {
     const { centerStyle, loggedIn, userInfo } = this.props;
     let userName = 'Usuário';
@@ -30,7 +33,7 @@ export class UserInfo extends React.Component {
          <img src="https://api.adorable.io/avatars/200/abott@adorable.io.png" />
        </CardMedia>
        <CardActions>
-         {currentUser ? <FlatButton label="Sair" /> : <LoginForm />}
+         {currentUser ? <FlatButton label="Sair" onTouchTap={this.logout} /> : <LoginForm />}
        </CardActions>
      </Card>
     )
