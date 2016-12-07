@@ -76,14 +76,9 @@ export function insertUpdateMissionError(error) {
 //WE MUST remove everything that is tied to this especific mission. (ALL associative data)
 export function removeMission(mission, dispatch) {
   //axios.delete... please remember to add inside then() callback..
-  const missionId = mission.id;
-  axios.delete('/missions/remove/' + missionId, missionId)
+  axios.post('/missoes/missions/remove/', mission)
     .then(() => {
-      //NOTE: With cascade we might do not need this.
-      // dispatch(removeMissionPlanner(mission, dispatch))
-      // dispatch(removeMissionPassengers(mission, dispatch))
-      // dispatch(removeMissionPilots(mission, dispatch))
-      dispatch(removeMissionDone(mission))
+      dispatch(removeMissionDone())
     })
     .catch((error) => {
       dispatch(removeMissionError(error))

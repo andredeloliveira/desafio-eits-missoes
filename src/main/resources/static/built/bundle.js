@@ -70867,13 +70867,8 @@
 	//WE MUST remove everything that is tied to this especific mission. (ALL associative data)
 	function removeMission(mission, dispatch) {
 	  //axios.delete... please remember to add inside then() callback..
-	  var missionId = mission.id;
-	  _axios2.default.delete('/missions/remove/' + missionId, missionId).then(function () {
-	    //NOTE: With cascade we might do not need this.
-	    // dispatch(removeMissionPlanner(mission, dispatch))
-	    // dispatch(removeMissionPassengers(mission, dispatch))
-	    // dispatch(removeMissionPilots(mission, dispatch))
-	    dispatch(removeMissionDone(mission));
+	  _axios2.default.post('/missoes/missions/remove/', mission).then(function () {
+	    dispatch(removeMissionDone());
 	  }).catch(function (error) {
 	    dispatch(removeMissionError(error));
 	  });

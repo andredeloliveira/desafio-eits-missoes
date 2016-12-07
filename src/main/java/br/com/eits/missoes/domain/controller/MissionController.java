@@ -82,9 +82,9 @@ public class MissionController {
 		return missionPilotService.insertMissionPilot(pilot);
 	}
 	
-	@RequestMapping(value = "/missions/remove/{id}", method = RequestMethod.DELETE)
-	public void removeMission(@PathVariable("id") Long id) {
-		missionService.removeMissionById(id);
+	@RequestMapping(value = "/missions/remove", method = RequestMethod.POST)
+	public void removeMission(@RequestBody Mission mission) {
+		missionService.removeMission(mission);
 	}
 	
 	@RequestMapping(value = "/missions/missionPlanner/remove/{id}", method = RequestMethod.DELETE)
