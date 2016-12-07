@@ -96,6 +96,8 @@
 	
 	var _Missions = __webpack_require__(843);
 	
+	var _Login = __webpack_require__(844);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44437,7 +44439,12 @@
 	  function MainComponent(props) {
 	    _classCallCheck(this, MainComponent);
 	
-	    return _possibleConstructorReturn(this, (MainComponent.__proto__ || Object.getPrototypeOf(MainComponent)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (MainComponent.__proto__ || Object.getPrototypeOf(MainComponent)).call(this, props));
+	
+	    _this.state = {
+	      currentUser: sessionStorage.getItem('currentUser')
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(MainComponent, [{
@@ -44445,6 +44452,7 @@
 	    value: function render() {
 	      var main = this.props.main;
 	
+	      console.log(this.state);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -44452,7 +44460,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'main' },
-	          main
+	          this.state.currentUser ? main : _react2.default.createElement(Login, null)
 	        ),
 	        _react2.default.createElement(_Footer.Footer, null)
 	      );
@@ -44567,13 +44575,12 @@
 	      };
 	
 	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-	      var loggedIn = sessionStorage.getItem('loggedIn');
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_AppBar2.default, { title: 'gAviator',
 	          onLeftIconButtonTouchTap: this.showDrawer.bind(this, this.state.open),
-	          iconElementRight: _react2.default.createElement(_NavigationButtons.NavigationButtons, null)
+	          iconElementRight: currentUser ? _react2.default.createElement(_NavigationButtons.NavigationButtons, null) : null
 	        }),
 	        _react2.default.createElement(
 	          _Drawer2.default,
@@ -44582,7 +44589,7 @@
 	            onTouchTap: this.showDrawer.bind(this, this.state.open),
 	            rightIcon: _react2.default.createElement(_close2.default, null),
 	            style: sideBarStyle }),
-	          _react2.default.createElement(_UserInfo.UserInfo, { style: sideBarStyle, loggedIn: loggedIn, userInfo: currentUser })
+	          _react2.default.createElement(_UserInfo.UserInfo, { style: sideBarStyle })
 	        )
 	      );
 	    }
@@ -51034,8 +51041,9 @@
 	          userInfo = _props.userInfo;
 	
 	      var userName = 'Usuário';
-	      if (loggedIn) {
-	        userName = userInfo.name;
+	      var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+	      if (currentUser) {
+	        userName = currentUser.name;
 	      }
 	      return _react2.default.createElement(
 	        _Card.Card,
@@ -51052,7 +51060,7 @@
 	        _react2.default.createElement(
 	          _Card.CardActions,
 	          null,
-	          loggedIn ? _react2.default.createElement(_FlatButton2.default, { label: 'Sair' }) : _react2.default.createElement(_LoginForm.LoginForm, null)
+	          currentUser ? _react2.default.createElement(_FlatButton2.default, { label: 'Sair' }) : _react2.default.createElement(_LoginForm.LoginForm, null)
 	        )
 	      );
 	    }
@@ -51155,12 +51163,17 @@
 	          hintText: 'Senha',
 	          floatingLabelText: 'Senha',
 	          type: 'password',
-	          name: 'password'
+	          name: 'password',
+	          fullWidth: true
 	        }),
 	        _react2.default.createElement(
-	          _FlatButton2.default,
-	          { label: 'Entrar' },
-	          _react2.default.createElement('input', { type: 'submit', style: submitInput })
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _FlatButton2.default,
+	            { label: 'Entrar' },
+	            _react2.default.createElement('input', { type: 'submit', style: submitInput })
+	          )
 	        )
 	      );
 	    }
@@ -91840,6 +91853,73 @@
 	
 	  return Missions;
 	}(_react2.default.Component)) || _class);
+
+/***/ },
+/* 844 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Login = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _LoginForm = __webpack_require__(532);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Login = exports.Login = function (_React$Component) {
+	  _inherits(Login, _React$Component);
+	
+	  function Login(props) {
+	    _classCallCheck(this, Login);
+	
+	    return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+	  }
+	
+	  _createClass(Login, [{
+	    key: 'render',
+	    value: function render() {
+	      var mainBlockStyle = {
+	        display: "block",
+	        margin: "0 auto"
+	      };
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'onerow', style: mainBlockStyle },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col6' },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Entrar'
+	            )
+	          ),
+	          _react2.default.createElement(_LoginForm.LoginForm, null)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Login;
+	}(_react2.default.Component);
 
 /***/ }
 /******/ ]);

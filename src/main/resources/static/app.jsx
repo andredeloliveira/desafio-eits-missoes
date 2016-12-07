@@ -10,6 +10,7 @@ import { MainComponent } from './MainComponent.jsx';
 import { Airplanes } from './Airplanes.jsx';
 import { Users } from './Users.jsx';
 import { Missions } from './Missions.jsx';
+import { Login } from './Login.jsx';
 
 export default class App extends React.Component {
 
@@ -30,6 +31,7 @@ export default class App extends React.Component {
   	)
   }
 }
+
 
 ReactDOM.render(
   <Router history={hashHistory}>

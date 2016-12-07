@@ -16,8 +16,9 @@ export class UserInfo extends React.Component {
   render() {
     const { centerStyle, loggedIn, userInfo } = this.props;
     let userName = 'Usuário';
-    if (loggedIn) {
-      userName = userInfo.name;
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (currentUser) {
+      userName = currentUser.name
     }
     return (
       <Card>
@@ -29,7 +30,7 @@ export class UserInfo extends React.Component {
          <img src="https://api.adorable.io/avatars/200/abott@adorable.io.png" />
        </CardMedia>
        <CardActions>
-         {loggedIn ? <FlatButton label="Sair" /> : <LoginForm />}
+         {currentUser ? <FlatButton label="Sair" /> : <LoginForm />}
        </CardActions>
      </Card>
     )
