@@ -6,15 +6,19 @@ import { NewEntryDialog } from './NewEntryDialog.jsx';
 import { DataTableAirplane } from './DataTableAirplane.jsx';
 import { DataTableUser } from './DataTableUser.jsx';
 import { DataTableMission } from './DataTableMission.jsx';
-import { browserHistory } from 'history'
+import { browserHistory } from 'react-router';
 
-//TODO(andredeloliveira): THis component won't be a dumb one. Many actions will happen in here.
+
+
+
 export class CRUDBaseComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.canCreate = this.canCreate.bind(this);
+    this.redirectPage = this.redirectPage.bind(this)
   }
+
 
   //this method will decide which DataTable Component to render
   fetchedDataContainerRender() {
@@ -29,7 +33,15 @@ export class CRUDBaseComponent extends React.Component {
   }
   //Opens a new Entry dialog, that is a dependency of this component.
   redirectPage() {
-    console.log(this.props.history)
+    const { name, data } = this.props;
+    if (name === 'airplane') {
+      browserHistory.push('/aeronaves/novo')
+    } else if (name === 'user') {
+      browserHistory.push('/usuarios/novo')
+    } else if (name === 'mission') {
+      browserHistory.push('/missoes/novo')
+    }
+
   }
 
   canCreate() {

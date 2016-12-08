@@ -10,6 +10,7 @@ import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Container from 'muicss/lib/react/container';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
@@ -298,88 +299,90 @@ export class MissionForm extends React.Component {
     }
     const { mission } = this.props;
     return (
-      <form onSubmit={this.submitData}>
-        <div>
+      <Container>
+        <form onSubmit={this.submitData}>
           <div>
-            <DatePicker
-              hintText="Data"
-              fullWidth={true}
-              name="date"
-              />
-          </div>
-          <div>
-            <TimePicker
-              hintText="Hora"
-              format="24hr"
-              fullWidth={true}
-              name="time"
-              />
-          </div>
-          <div>
-            <TextField
-              hintText="Objetivo"
-              type="text"
-              fullWidth={true}
-              multiLine={true}
-              name="reason"
-              defaultValue={ mission ? mission.reason : null }
-              />
-          </div>
-          <div>
-            <SelectField
-              hintText="Aeronave"
-              onChange={this.handleSelectAirplaneChange}
-              value={this.state.selectedAirplane}
-              fullWidth={true}
-              >
-              {this.airplanesRender() }
-            </SelectField>
-          </div>
             <div>
-              <AutoComplete
-                hintText="Origem"
-                dataSource={this.mappedAirports()}
-                onNewRequest={this.handleUpdateFrom}
+              <DatePicker
+                hintText="Data"
                 fullWidth={true}
+                name="date"
                 />
             </div>
             <div>
-              <AutoComplete
-                hintText="Destino"
-                dataSource={this.mappedAirports()}
-                onNewRequest={this.handleUpdateTo}
+              <TimePicker
+                hintText="Hora"
+                format="24hr"
                 fullWidth={true}
+                name="time"
                 />
             </div>
             <div>
-              { this.renderPassengersAutoComplete() }
-              <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPassenger}>
+              <TextField
+                hintText="Objetivo"
+                type="text"
+                fullWidth={true}
+                multiLine={true}
+                name="reason"
+                defaultValue={ mission ? mission.reason : null }
+                />
+            </div>
+            <div>
+              <SelectField
+                hintText="Aeronave"
+                onChange={this.handleSelectAirplaneChange}
+                value={this.state.selectedAirplane}
+                fullWidth={true}
+                >
+                {this.airplanesRender() }
+              </SelectField>
+            </div>
+              <div>
+                <AutoComplete
+                  hintText="Origem"
+                  dataSource={this.mappedAirports()}
+                  onNewRequest={this.handleUpdateFrom}
+                  fullWidth={true}
+                  />
+              </div>
+              <div>
+                <AutoComplete
+                  hintText="Destino"
+                  dataSource={this.mappedAirports()}
+                  onNewRequest={this.handleUpdateTo}
+                  fullWidth={true}
+                  />
+              </div>
+              <div>
+                { this.renderPassengersAutoComplete() }
+                <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPassenger}>
+                  <ContentAdd />
+                </FloatingActionButton>
+              </div>
+              <div>
+              { this.renderPilotsAutoComplete() }
+              <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPilot}>
                 <ContentAdd />
               </FloatingActionButton>
             </div>
             <div>
-            { this.renderPilotsAutoComplete() }
-            <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPilot}>
-              <ContentAdd />
-            </FloatingActionButton>
+              <Files
+                className="files-dropzone"
+                onChange={this.handleUpdateFiles}
+                onError={this.handleUpdateFilesError}
+                maxFileSize={10000000}
+                minFileSize={0}
+                clickable
+                >
+                <FlatButton label="Anexar.." />
+              </Files>
+              <FlatButton label="Salvar" labelPosition="before">
+                <input type="submit" style={submitInput} />
+              </FlatButton>
+            </div>
           </div>
-          <div>
-            <Files
-              className="files-dropzone"
-              onChange={this.handleUpdateFiles}
-              onError={this.handleUpdateFilesError}
-              maxFileSize={10000000}
-              minFileSize={0}
-              clickable
-              >
-              <FlatButton label="Anexar.." />
-            </Files>
-            <FlatButton label="Salvar" labelPosition="before">
-              <input type="submit" style={submitInput} />
-            </FlatButton>
-          </div>
-        </div>
-      </form>
+        </form>
+      </Container>
     )
   }
 
