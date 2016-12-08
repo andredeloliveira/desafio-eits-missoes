@@ -37,7 +37,7 @@ public class User {
 	private Profile profile;
 	
 	@Column(name = "password")
-	@JsonIgnore
+	//@JsonIgnore this should be activated..
 	@NotBlank(message = "Senha é obrigatória")
 	private String password;
 	

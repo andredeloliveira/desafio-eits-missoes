@@ -43,7 +43,7 @@ export class DataTableUser extends React.Component {
         status: user.status,
         options: <CRUDMenu
                     data={user}
-                    customButtons={ this.isAdmin() ? [<DeactivateUserButton key={'deactivateUserButton'}/>] : []}
+                    customButtons={ this.isAdmin() ? [<DeactivateUserButton key={'deactivateUserButton'} user={user}/>] : []}
                     name={name}
                     remove={removeUser}
                     dispatch={dispatch}

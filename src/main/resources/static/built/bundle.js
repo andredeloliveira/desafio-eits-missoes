@@ -92,9 +92,9 @@
 	
 	var _Airplanes = __webpack_require__(568);
 	
-	var _Users = __webpack_require__(843);
+	var _Users = __webpack_require__(842);
 	
-	var _Missions = __webpack_require__(844);
+	var _Missions = __webpack_require__(843);
 	
 	var _Login = __webpack_require__(567);
 	
@@ -54106,7 +54106,7 @@
 	
 	var _CRUDBaseComponent = __webpack_require__(569);
 	
-	var _Formfeedback = __webpack_require__(838);
+	var _Formfeedback = __webpack_require__(837);
 	
 	var _airplaneActions = __webpack_require__(639);
 	
@@ -54201,7 +54201,7 @@
 	
 	var _DataTableUser = __webpack_require__(832);
 	
-	var _DataTableMission = __webpack_require__(835);
+	var _DataTableMission = __webpack_require__(834);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -90665,7 +90665,7 @@
 	          status: user.status,
 	          options: _react2.default.createElement(_CRUDMenu.CRUDMenu, {
 	            data: user,
-	            customButtons: _this2.isAdmin() ? [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton' })] : [],
+	            customButtons: _this2.isAdmin() ? [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton', user: user })] : [],
 	            name: name,
 	            remove: _userActions.removeUser,
 	            dispatch: dispatch
@@ -90724,6 +90724,8 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _dec, _class;
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -90732,9 +90734,13 @@
 	
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 	
-	var _doNotDisturbAlt = __webpack_require__(834);
+	var _Toggle = __webpack_require__(524);
 	
-	var _doNotDisturbAlt2 = _interopRequireDefault(_doNotDisturbAlt);
+	var _Toggle2 = _interopRequireDefault(_Toggle);
+	
+	var _reactRedux = __webpack_require__(384);
+	
+	var _userActions = __webpack_require__(641);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -90744,73 +90750,57 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var DeactivateUserButton = exports.DeactivateUserButton = function (_React$Component) {
+	var DeactivateUserButton = exports.DeactivateUserButton = (_dec = (0, _reactRedux.connect)(function (Store) {
+	  return {
+	    users: Store.userReducer
+	  };
+	}), _dec(_class = function (_React$Component) {
 	  _inherits(DeactivateUserButton, _React$Component);
 	
 	  function DeactivateUserButton(props) {
 	    _classCallCheck(this, DeactivateUserButton);
 	
-	    return _possibleConstructorReturn(this, (DeactivateUserButton.__proto__ || Object.getPrototypeOf(DeactivateUserButton)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (DeactivateUserButton.__proto__ || Object.getPrototypeOf(DeactivateUserButton)).call(this, props));
+	
+	    _this.deactivateUser = _this.deactivateUser.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(DeactivateUserButton, [{
 	    key: 'deactivateUser',
 	    value: function deactivateUser() {
-	      console.log('a user has been deactivated');
+	      var _props = this.props,
+	          user = _props.user,
+	          dispatch = _props.dispatch;
+	
+	      user.status = false;
+	      console.log(user);
+	      dispatch((0, _userActions.insertUpdateUser)(user, dispatch));
+	    }
+	  }, {
+	    key: 'isUserActive',
+	    value: function isUserActive() {
+	      var user = this.props.user;
+	
+	      return user.status === 'ATIVO';
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        _IconButton2.default,
-	        { onTouchTap: this.deactivateUser },
-	        _react2.default.createElement(_doNotDisturbAlt2.default, null)
-	      );
+	      var user = this.props.user;
+	
+	      return _react2.default.createElement(_Toggle2.default, {
+	        defaultToggled: this.isUserActive(),
+	        onToggle: this.deactivateUser
+	      });
 	    }
 	  }]);
 	
 	  return DeactivateUserButton;
-	}(_react2.default.Component);
+	}(_react2.default.Component)) || _class);
 
 /***/ },
 /* 834 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(444);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(454);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var NotificationDoNotDisturbAlt = function NotificationDoNotDisturbAlt(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM4 12c0-4.4 3.6-8 8-8 1.8 0 3.5.6 4.9 1.7L5.7 16.9C4.6 15.5 4 13.8 4 12zm8 8c-1.8 0-3.5-.6-4.9-1.7L18.3 7.1C19.4 8.5 20 10.2 20 12c0 4.4-3.6 8-8 8z' })
-	  );
-	};
-	NotificationDoNotDisturbAlt = (0, _pure2.default)(NotificationDoNotDisturbAlt);
-	NotificationDoNotDisturbAlt.displayName = 'NotificationDoNotDisturbAlt';
-	NotificationDoNotDisturbAlt.muiName = 'SvgIcon';
-	
-	exports.default = NotificationDoNotDisturbAlt;
-
-/***/ },
-/* 835 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90840,7 +90830,7 @@
 	
 	var _CRUDMenu = __webpack_require__(712);
 	
-	var _FinishFlightButton = __webpack_require__(836);
+	var _FinishFlightButton = __webpack_require__(835);
 	
 	var _missionActions = __webpack_require__(685);
 	
@@ -90967,7 +90957,7 @@
 	}(_react2.default.Component)) || _class);
 
 /***/ },
-/* 836 */
+/* 835 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90991,7 +90981,7 @@
 	
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 	
-	var _flightLand = __webpack_require__(837);
+	var _flightLand = __webpack_require__(836);
 	
 	var _flightLand2 = _interopRequireDefault(_flightLand);
 	
@@ -91053,7 +91043,7 @@
 	}(_react2.default.Component)) || _class);
 
 /***/ },
-/* 837 */
+/* 836 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91090,7 +91080,7 @@
 	exports.default = ActionFlightLand;
 
 /***/ },
-/* 838 */
+/* 837 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91106,7 +91096,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Snackbar = __webpack_require__(839);
+	var _Snackbar = __webpack_require__(838);
 	
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
@@ -91169,7 +91159,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 839 */
+/* 838 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91179,7 +91169,7 @@
 	});
 	exports.default = undefined;
 	
-	var _Snackbar = __webpack_require__(840);
+	var _Snackbar = __webpack_require__(839);
 	
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
@@ -91188,7 +91178,7 @@
 	exports.default = _Snackbar2.default;
 
 /***/ },
-/* 840 */
+/* 839 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -91241,7 +91231,7 @@
 	
 	var _ClickAwayListener2 = _interopRequireDefault(_ClickAwayListener);
 	
-	var _SnackbarBody = __webpack_require__(841);
+	var _SnackbarBody = __webpack_require__(840);
 	
 	var _SnackbarBody2 = _interopRequireDefault(_SnackbarBody);
 	
@@ -91503,7 +91493,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 841 */
+/* 840 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -91533,7 +91523,7 @@
 	
 	var _transitions2 = _interopRequireDefault(_transitions);
 	
-	var _withWidth = __webpack_require__(842);
+	var _withWidth = __webpack_require__(841);
 	
 	var _withWidth2 = _interopRequireDefault(_withWidth);
 	
@@ -91673,7 +91663,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 842 */
+/* 841 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91823,7 +91813,7 @@
 	}
 
 /***/ },
-/* 843 */
+/* 842 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91845,7 +91835,7 @@
 	
 	var _CRUDBaseComponent = __webpack_require__(569);
 	
-	var _Formfeedback = __webpack_require__(838);
+	var _Formfeedback = __webpack_require__(837);
 	
 	var _userActions = __webpack_require__(641);
 	
@@ -91917,7 +91907,7 @@
 	}(_react2.default.Component)) || _class);
 
 /***/ },
-/* 844 */
+/* 843 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -91941,7 +91931,7 @@
 	
 	var _CRUDBaseComponent = __webpack_require__(569);
 	
-	var _Formfeedback = __webpack_require__(838);
+	var _Formfeedback = __webpack_require__(837);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	

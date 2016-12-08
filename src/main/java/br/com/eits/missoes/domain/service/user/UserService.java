@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.service.mailer.Mailer;
 
 @Service
 @Configurable
