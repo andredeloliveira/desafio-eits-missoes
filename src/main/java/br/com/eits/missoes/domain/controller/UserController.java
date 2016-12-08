@@ -40,7 +40,6 @@ public class UserController {
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
 	User insertUser(@RequestBody User user, BindingResult result) {
 		if (user.getId() == null) {
-			System.out.println(user.getId());
 			mailer.sendEmail(user);
 		}
 		return userService.insertUser(user);
@@ -53,9 +52,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	User login(@RequestBody User user, BindingResult result){
-		if (result.hasErrors()) {
-			System.out.println(result.getErrorCount());
-		}
 		return userService.login(user);
 	}
 	

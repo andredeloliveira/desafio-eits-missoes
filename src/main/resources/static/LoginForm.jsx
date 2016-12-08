@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
 import { login } from './actions/loginActions';
+import Formfeedback from './Formfeedback.jsx';
+import Form from 'muicss/lib/react/form';
+import Input from 'muicss/lib/react/input';
+import Textarea from 'muicss/lib/react/textarea';
+import Button from 'muicss/lib/react/button';
 
 @connect((Store) => {
   return {
@@ -14,6 +17,18 @@ export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.submitLogin = this.submitLogin.bind(this);
+    this.renderError = this.renderError.bind(this);
+  }
+
+  renderError() {
+    const { error } = this.props.login;
+    const errorStyle = {
+      fontSize: "2em",
+      color: "#FF0000"
+    }
+    if (error) {
+      return ( <span style={errorStyle}>{error}</span> )
+    }
   }
 
   submitLogin(event) {
@@ -27,38 +42,15 @@ export class LoginForm extends React.Component {
   }
 
   render() {
-    const submitInput = {
-      cursor: 'pointer',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      width: '100%',
-      opacity: 0,
-    }
     return (
-      <form onSubmit={this.submitLogin}>
-        <TextField
-          hintText="exemplo@dominio.com"
-          floatingLabelText="E-mail"
-          type="email"
-          fullWidth={true}
-          name="email"
-        />
-      <TextField
-        hintText="Senha"
-        floatingLabelText="Senha"
-        type="password"
-        name="password"
-        fullWidth={true}
-      />
     <div>
-      <FlatButton label="Entrar">
-        <input type="submit" style={submitInput} />
-      </FlatButton>
+      <Form onSubmit={this.submitLogin}>
+        <Input label="E-mail*" type="email" floatingLabel={true} required={true} name="email" />
+        <Input label="Senha*" type="password" floatingLabel={true} required={true} name="password"/>
+        <Button variant="raised">Entrar</Button>
+      </Form>
+      {this.renderError()}
     </div>
-      </form>
     )
   }
 }

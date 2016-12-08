@@ -44,7 +44,8 @@ export class Header extends React.Component {
       width: "100%"
     }
 
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const { currentUser } = this.props.login;
     return (
       <div>
         <AppBar title="gAviator"

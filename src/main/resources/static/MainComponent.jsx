@@ -13,14 +13,10 @@ export class MainComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      currentUser: JSON.parse(sessionStorage.getItem('currentUser'))
-    }
-    this.handleCurrentUserState = this.handleCurrentUserState.bind(this);
   }
 
   handleCurrentUserState() {
-    const { currentUser } = this.props;
+    const { currentUser } = sessionStorage.getItem('currentUser');
     if (currentUser) {
       this.setState({
         currentUser: currentUser,
@@ -29,13 +25,14 @@ export class MainComponent extends React.Component {
   }
 
   render() {
-    const { main, currentUser } = this.props;
-    this.handleCurrentUserState();
+    const { main } = this.props;
+    const { currentUser } = this.props.login;
+    //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     return (
     <div>
       <Header />
         <div className="main">
-          {this.state.currentUser ? main : <Login />}
+          {currentUser ? main : <Login />}
         </div>
       <Footer />
     </div>

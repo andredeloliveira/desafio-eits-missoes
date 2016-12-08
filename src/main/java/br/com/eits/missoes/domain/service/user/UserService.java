@@ -28,9 +28,10 @@ public class UserService {
 	
 	@Transactional
 	public User insertUser(User user) {
-		if (user.getPassword() == null) {
-			user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
+		if (user.getId() == null) {
+		  user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
 		}
+		
 		return userRepository.saveAndFlush(user);
 	}
 	
@@ -67,7 +68,7 @@ public class UserService {
 	public User login(User user) {
 		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
 		Optional<User> userOpt = userRepository.findByEmailIgnoreCaseAndPassword(user.getEmail(), user.getPassword());
-		User nuser = userOpt.orElseThrow(()-> new UsernameNotFoundException("Usuário ou senha não encontrado"));
+		User nuser = userOpt.orElse(null);
 		return nuser;
 	}
 	

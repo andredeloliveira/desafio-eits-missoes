@@ -1,11 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { LoginForm } from './LoginForm.jsx';
 
 
-//TODO(andredeloliveira): Make this component responsible for all the user login
+
+@connect((Store) => {
+  return {
+    login: Store.loginReducer,
+  }
+})
 export class UserInfo extends React.Component {
 
   constructor(props) {
@@ -19,7 +25,8 @@ export class UserInfo extends React.Component {
   render() {
     const { centerStyle, loggedIn, userInfo } = this.props;
     let userName = 'Usuário';
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const { currentUser } = this.props.login;
     if (currentUser) {
       userName = currentUser.name
     }
