@@ -11,6 +11,7 @@ import { Airplanes } from './Airplanes.jsx';
 import { Users } from './Users.jsx';
 import { Missions } from './Missions.jsx';
 import { Login } from './Login.jsx';
+import { AirplaneForm } from './AirplaneForm.jsx';
 
 export default class App extends React.Component {
 
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Route path="/aeronaves" components={{main: Airplanes}} />
       <Route path="/missoes" components={{main: Missions}} />
       <Route path="/usuarios" components={{main: Users}} />
+      <Route path="/aeronaves/novo" components={{main: AirplaneForm }} />
     </Route>
   </Router>,
   document.getElementById('react')

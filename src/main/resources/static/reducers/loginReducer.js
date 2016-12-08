@@ -26,6 +26,7 @@ export default function loginReducer(state = initialState, action){
     case 'REQUEST_LOGOUT': {
       return {
         ...state,
+        error: null,
         currentUser: null,
         loggedIn: false,
       }
