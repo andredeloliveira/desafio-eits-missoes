@@ -8,10 +8,11 @@ import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
+import { LoginForm } from './LoginForm.jsx';
 import { UserInfo } from './UserInfo.jsx';
 import { connect } from 'react-redux';
 import { NavigationButtons } from './NavigationButtons.jsx';
-
+import { logout } from './actions/loginActions';
 
 @connect((Store) => {
   return {
@@ -27,6 +28,12 @@ export class Header extends React.Component {
       open: false
     }
     this.showDrawer = this.showDrawer.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    const { dispatch } = this.props;
+    dispatch(logout())
   }
 
   showDrawer(open, event) {
@@ -35,7 +42,6 @@ export class Header extends React.Component {
       open: !open
     })
   }
-
 
   render() {
     const sideBarStyle = {
@@ -57,7 +63,8 @@ export class Header extends React.Component {
             onTouchTap={this.showDrawer.bind(this, this.state.open)}
             rightIcon={<NavigationClose />}
             style={sideBarStyle} />
-          <UserInfo style={sideBarStyle} />
+          <UserInfo style={sideBarStyle} currentUser={currentUser}/>
+          {currentUser ? <FlatButton label="Sair" onTouchTap={this.logout} /> : <LoginForm />}
         </Drawer>
       </div>
     )

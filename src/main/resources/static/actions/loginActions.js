@@ -34,3 +34,9 @@ export function loginError(error) {
     payload: error
   }
 }
+
+export function logout() {
+  return {
+    type: 'REQUEST_LOGOUT',
+  }
+}
