@@ -38,8 +38,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
-	User insertUser(@Valid @RequestBody User user, BindingResult result) {
+	User insertUser(@RequestBody User user, BindingResult result) {
 		if (user.getId() == null) {
+			System.out.println(user.getId());
 			mailer.sendEmail(user);
 		}
 		return userService.insertUser(user);

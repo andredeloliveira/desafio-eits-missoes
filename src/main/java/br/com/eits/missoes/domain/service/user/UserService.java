@@ -28,7 +28,9 @@ public class UserService {
 	
 	@Transactional
 	public User insertUser(User user) {
-		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
+		if (user.getPassword() == null) {
+			user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
+		}
 		return userRepository.saveAndFlush(user);
 	}
 	

@@ -64171,7 +64171,9 @@
 	  _createClass(UserForm, [{
 	    key: 'submitData',
 	    value: function submitData(event) {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          user = _props.user;
 	
 	      event.preventDefault();
 	      var newUser = {
@@ -64180,6 +64182,9 @@
 	        password: event.target.password.value,
 	        perfilAcesso: this.state.selectedUserProfile
 	      };
+	      if (user) {
+	        newUser.id = user.id;
+	      }
 	      dispatch((0, _userActions.insertUpdateUser)(newUser, dispatch));
 	      this.props.handleCloseDialog();
 	    }
@@ -90769,13 +90774,23 @@
 	  _createClass(DeactivateUserButton, [{
 	    key: 'deactivateUser',
 	    value: function deactivateUser() {
-	      var _props = this.props,
-	          user = _props.user,
-	          dispatch = _props.dispatch;
+	      var dispatch = this.props.dispatch;
 	
-	      user.status = false;
-	      console.log(user);
-	      dispatch((0, _userActions.insertUpdateUser)(user, dispatch));
+	      var user = this.props.user;
+	      if (user.status === 'ATIVO') {
+	        user.status = false;
+	      } else if (user.status === 'INATIVO') {
+	        user.status = true;
+	      }
+	      var newUser = {
+	        id: user.id,
+	        email: user.email,
+	        name: user.name,
+	        perfilAcesso: user.perfilAcesso,
+	        password: user.password,
+	        status: user.status
+	      };
+	      dispatch((0, _userActions.insertUpdateUser)(newUser, dispatch));
 	    }
 	  }, {
 	    key: 'isUserActive',

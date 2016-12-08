@@ -23,13 +23,16 @@ export class UserForm extends React.Component {
   }
 
   submitData(event) {
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
     event.preventDefault();
     const newUser = {
       email: event.target.email.value,
       name: event.target.name.value,
       password: event.target.password.value,
       perfilAcesso: this.state.selectedUserProfile,
+    }
+    if (user) {
+      newUser.id = user.id;
     }
     dispatch(insertUpdateUser(newUser, dispatch))
     this.props.handleCloseDialog()

@@ -98,7 +98,9 @@ public class User {
 	}
 	
 	public User() {
-		this.status = true;
+		if (this.getStatus() == null) {
+			this.status = true;
+		}
 	}
 
 }

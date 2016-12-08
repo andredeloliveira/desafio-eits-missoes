@@ -18,10 +18,22 @@ export class DeactivateUserButton extends React.Component {
   }
 
   deactivateUser() {
-    let { user, dispatch } = this.props;
-    user.status = false;
-    console.log(user);
-    dispatch(insertUpdateUser(user, dispatch))
+    const {  dispatch } = this.props;
+    let user = this.props.user;
+    if (user.status === 'ATIVO') {
+      user.status = false;
+    } else if(user.status === 'INATIVO') {
+      user.status = true;
+    }
+    let newUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      perfilAcesso: user.perfilAcesso,
+      password: user.password,
+      status: user.status
+    }
+    dispatch(insertUpdateUser(newUser, dispatch))
   }
 
   isUserActive() {
