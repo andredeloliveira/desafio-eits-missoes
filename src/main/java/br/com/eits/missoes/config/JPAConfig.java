@@ -26,6 +26,7 @@ import br.com.eits.missoes.domain.service.airport.AirportService;
 import br.com.eits.missoes.domain.service.mission.MissionPlannerService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
 import br.com.eits.missoes.domain.service.user.UserService;
+import br.com.eits.missoes.service.mailer.Mailer;
 
 @Configuration
 @ComponentScan(basePackageClasses = {
@@ -38,7 +39,8 @@ import br.com.eits.missoes.domain.service.user.UserService;
   IMissionRepository.class,
   MissionService.class,
   IAirportRepository.class,
-  AirportService.class
+  AirportService.class,
+  Mailer.class
 })
 
 @EnableJpaRepositories(basePackageClasses = {

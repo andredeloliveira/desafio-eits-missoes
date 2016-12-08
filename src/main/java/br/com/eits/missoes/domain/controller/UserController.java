@@ -18,6 +18,7 @@ import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.security.AppUserDetailService;
 import br.com.eits.missoes.domain.service.user.UserService;
+import br.com.eits.missoes.service.mailer.Mailer;
 
 @RestController
 public class UserController {
@@ -28,13 +29,20 @@ public class UserController {
 	@Autowired(required = false)
 	private AppUserDetailService userDetailsService;
 	
+	@Autowired(required = false)
+	private Mailer mailer;
+	
 	@RequestMapping(value = "/users", method= RequestMethod.GET)
 	List<User> findAllUsers() {
 		return userService.findAllUsers();
 	}
 	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
-	User insertUser(@Valid @RequestBody User user, BindingResult result) {
+	User insertUser(@RequestBody User user, BindingResult result) {
+		if (user.getId() == null) {
+			System.out.println(user.getId());
+			mailer.sendEmail(user);
+		}
 		return userService.insertUser(user);
 	}
 

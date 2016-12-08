@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
 import br.com.eits.missoes.domain.repository.user.IUserRepository;
+import br.com.eits.missoes.service.mailer.Mailer;
 
 @Service
 @Configurable
@@ -27,7 +28,9 @@ public class UserService {
 	
 	@Transactional
 	public User insertUser(User user) {
-		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
+		if (user.getPassword() == null) {
+			user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
+		}
 		return userRepository.saveAndFlush(user);
 	}
 	

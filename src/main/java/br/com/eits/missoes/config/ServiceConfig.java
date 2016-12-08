@@ -6,13 +6,15 @@ import br.com.eits.missoes.domain.service.airplane.AirplaneService;
 import br.com.eits.missoes.domain.service.airport.AirportService;
 import br.com.eits.missoes.domain.service.mission.MissionService;
 import br.com.eits.missoes.domain.service.user.UserService;
+import br.com.eits.missoes.service.mailer.Mailer;
 
 @Configuration
 @ComponentScan(basePackageClasses = {
   UserService.class,
   AirplaneService.class,
   AirportService.class,
-  MissionService.class
+  MissionService.class,
+  Mailer.class,
 })
 public class ServiceConfig {
 

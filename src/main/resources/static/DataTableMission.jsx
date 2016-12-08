@@ -5,7 +5,7 @@ import { MuiDataTable } from 'mui-data-table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
-import { removeMission } from './actions/missionActions';
+import { removeMission, findAllMissions } from './actions/missionActions';
 
 @connect((Store) => {
   return {
@@ -16,6 +16,7 @@ export class DataTableMission extends React.Component {
 
   constructor(props) {
     super(props);
+    this.updateMissions = this.updateMissions.bind(this);
   }
 
   componentWillMount() {
@@ -32,9 +33,21 @@ export class DataTableMission extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.missions.newMission !== nextProps.missions.newMission) {
+      this.updateMissions()
+    }
+   }
+
+  updateMissions() {
+    console.log('it entered here')
+    const { dispatch } = this.props;
+    dispatch(findAllMissions(dispatch))
+  }
+
   formattedFetchedData() {
     const { dispatch, name } = this.props;
-    return this.props.data.missions.map((mission) => {
+    return this.props.missions.missions.map((mission) => {
       return {
         id: mission.mission.id,
         dateTime: moment(mission.mission.dateTime).format('lll'),
@@ -57,7 +70,7 @@ export class DataTableMission extends React.Component {
     if (!this.props.data.missions) {
       return <MissoesLoading />
     }
-    const config = {
+    let config = {
       paginated: true,
       data: this.formattedFetchedData(),
       search: 'planner|missionTo|missionFrom|dateTime',

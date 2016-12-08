@@ -76,6 +76,8 @@ export class AirplaneForm extends React.Component {
     return <MenuItem  value={airplane.airplaneModel} primaryText={currentAirplaneModel} />
   }
 
+  compon
+
   render() {
     const submitInput = {
       cursor: 'pointer',
@@ -88,7 +90,7 @@ export class AirplaneForm extends React.Component {
       opacity: 0,
     }
     const { newAirplane } = this.props.airplanes;
-    const { airplane } = this.props;
+    const { airplane, dispatch } = this.props;
     return (
       <div>
         <form onSubmit={this.submitData}>
