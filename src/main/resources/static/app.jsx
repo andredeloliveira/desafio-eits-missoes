@@ -1,4 +1,4 @@
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, hashHistory, Match } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -37,15 +37,19 @@ export default class App extends React.Component {
 
 
 ReactDOM.render(
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route components={App}>
       <Route path="/" components={{ main: Dashboard}} />
       <Route path="/aeronaves" components={{main: Airplanes}} />
       <Route path="/missoes" components={{main: Missions}} />
       <Route path="/usuarios" components={{main: Users}} />
       <Route path="/aeronaves/novo" components={{main: AirplaneForm }} />
+      <Route path="/aeronaves/update/:id" components={{main: AirplaneForm}} />
+      <Route path="/usuarios/update/:id" components={{main: UserForm}} />
+      <Route path="/missoes/update/:id" components={{main: MissionForm}} />
       <Route path="/usuarios/novo" components={{main: UserForm }} />
       <Route path="/missoes/novo" components={{main: MissionForm }} />
+
     </Route>
   </Router>,
   document.getElementById('react')

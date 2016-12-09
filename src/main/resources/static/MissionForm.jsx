@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
+import Form from 'muicss/lib/react/form';
+import Select from 'muicss/lib/react/select';
+import Option from 'muicss/lib/react/option';
 import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
 import Files from 'react-files';
@@ -58,7 +60,7 @@ export class MissionForm extends React.Component {
     this.handleUpdateFilesError = this.handleUpdateFilesError.bind(this);
     this.handleAddNewPassenger = this.handleAddNewPassenger.bind(this);
     this.handleAddNewPilot = this.handleAddNewPilot.bind(this);
-    this.airplanesRender = this.airplanesRender.bind(this);
+    this.airplaneOptionsRender = this.airplaneOptionsRender.bind(this);
     this.mappedPassengers = this.mappedPassengers.bind(this);
     this.mappedPilots = this.mappedPilots.bind(this);
     this.mappedAirports = this.mappedAirports.bind(this);
@@ -80,15 +82,14 @@ export class MissionForm extends React.Component {
   }
 
 
-  //TODO(andredeloliveira): Ask how exactly it has to show
-  airplanesRender() {
+  airplaneOptionsRender() {
     const { airplanes } = this.props.airplanes;
     if (airplanes) {
       return airplanes.map( (airplane, index) => {
         const airplaneText = airplane.airplaneModel.manufacturer.name +
         ' ' + airplane.airplaneModel.name +
         ' - ' + airplane.subscriptionNumber;
-        return <MenuItem key={index} value={airplane} primaryText={airplaneText} />
+        return <Option key={index} value={airplane} label={airplaneText} />
       })
     } else {
       return <MissoesLoading />
@@ -300,7 +301,7 @@ export class MissionForm extends React.Component {
     const { mission } = this.props;
     return (
       <Container>
-        <form onSubmit={this.submitData}>
+        <Form onSubmit={this.submitData}>
           <div>
             <div>
               <DatePicker
@@ -328,14 +329,9 @@ export class MissionForm extends React.Component {
                 />
             </div>
             <div>
-              <SelectField
-                hintText="Aeronave"
-                onChange={this.handleSelectAirplaneChange}
-                value={this.state.selectedAirplane}
-                fullWidth={true}
-                >
-                {this.airplanesRender() }
-              </SelectField>
+              <Select>
+                {this.airplaneOptionsRender() }
+              </Select>
             </div>
               <div>
                 <AutoComplete
@@ -381,7 +377,7 @@ export class MissionForm extends React.Component {
               </FlatButton>
             </div>
           </div>
-        </form>
+        </Form>
       </Container>
     )
   }

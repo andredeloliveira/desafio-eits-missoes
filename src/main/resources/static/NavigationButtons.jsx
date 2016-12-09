@@ -15,9 +15,9 @@ export class NavigationButtons extends React.Component {
     }
     return (
       <div>
-          <FlatButton style={itemMenuStyle} href="/missoes/#/aeronaves" label="Aeronaves" />
-          <FlatButton style={itemMenuStyle} href="/missoes/#/missoes" label="Missoes" />
-          <FlatButton style={itemMenuStyle} href="/missoes/#/usuarios" label="Usuários" />
+          <Link to="/aeronaves">Aeronaves</Link>
+          <Link to="/usuarios">Usuários</Link>
+          <Link to="/missoes">Missões</Link>
       </div>
     )
   }

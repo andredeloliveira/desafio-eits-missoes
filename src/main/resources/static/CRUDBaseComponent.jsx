@@ -6,7 +6,7 @@ import { NewEntryDialog } from './NewEntryDialog.jsx';
 import { DataTableAirplane } from './DataTableAirplane.jsx';
 import { DataTableUser } from './DataTableUser.jsx';
 import { DataTableMission } from './DataTableMission.jsx';
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 
 
@@ -23,23 +23,23 @@ export class CRUDBaseComponent extends React.Component {
   //this method will decide which DataTable Component to render
   fetchedDataContainerRender() {
     const { name, data } = this.props;
-    if (name === 'airplane') {
+    if (name === 'aeronaves') {
       return <DataTableAirplane data={data} name={name} />
-    } else if (name === 'user') {
+    } else if (name === 'usuarios') {
       return <DataTableUser data={data} name={name} />
-    } else if (name === 'mission') {
+    } else if (name === 'missoes') {
       return <DataTableMission data={data} name={name} />;
     }
   }
   //Opens a new Entry dialog, that is a dependency of this component.
   redirectPage() {
     const { name, data } = this.props;
-    if (name === 'airplane') {
-      browserHistory.push('/aeronaves/novo')
-    } else if (name === 'user') {
-      browserHistory.push('/usuarios/novo')
-    } else if (name === 'mission') {
-      browserHistory.push('/missoes/novo')
+    if (name === 'aeronaves') {
+      hashHistory.push('/aeronaves/novo')
+    } else if (name === 'usuarios') {
+      hashHistory.push('/usuarios/novo')
+    } else if (name === 'missoes') {
+      hashHistory.push('/missoes/novo')
     }
 
   }

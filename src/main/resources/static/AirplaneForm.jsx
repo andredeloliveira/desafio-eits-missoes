@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Form from 'muicss/lib/react/form';
+import Input from 'muicss/lib/react/input';
+import Button from 'muicss/lib/react/button';
+import Select from 'muicss/lib/react/select';
+import Option from 'muicss/lib/react/option';
+import Container from 'muicss/lib/react/container';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { findAllAirplaneModels } from './actions/airplaneModelsActions';
 import { insertUpdateAirplane } from './actions/airplaneActions';
@@ -21,13 +24,12 @@ export class AirplaneForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      airplaneModel: null,
       seatsNumber: null,
       subscriptionNumber: null,
     }
-    this.handleSelectAirplaneModelChange = this.handleSelectAirplaneModelChange.bind(this);
     this.submitData = this.submitData.bind(this);
-    this.renderActualAirplaneValue = this.renderActualAirplaneValue.bind(this);
+    this.setSeatsNumber = this.setSeatsNumber.bind(this);
+    this.isSeatsNumberEmpty = this.isSeatsNumberEmpty.bind(this);
   }
 
   //Dispatching everything before the component is mounted so it will avoid trouble loading the async call
@@ -39,44 +41,37 @@ export class AirplaneForm extends React.Component {
   submitData(event) {
     event.preventDefault();
     const { dispatch, airplane } = this.props;
+    console.log(event.target)
     const newAirplane = {
       seatsNumber: event.target.seatsNumber.value,
       subscriptionNumber: event.target.subscriptionNumber.value,
-      airplaneModel: this.state.airplaneModel ? this.state.airplaneModel : airplane.airplaneModel
+      airplaneModel: event.target.airplaneModel.value,
     }
     if (airplane) {
       newAirplane.id = airplane.id
     }
-    dispatch(insertUpdateAirplane(newAirplane, dispatch))
-    this.props.handleCloseDialog();
+    console.log(newAirplane)
+    //dispatch(insertUpdateAirplane(newAirplane, dispatch))
   }
 
-  handleSelectAirplaneModelChange(event, index, airplaneModel) {
-    this.setState({
-      airplaneModel: airplaneModel
-    })
-  }
 
-  airplaneModelsRender() {
+  airplaneModelsOptionsRender() {
     const { airplaneModels, fetching } = this.props.airplaneModels;
     if (! airplaneModels) {
       return <MissoesLoading />
     }
     return airplaneModels.map( (airplaneModel) => {
       const completeAirplaneModelName = airplaneModel.manufacturer.name + ' - ' + airplaneModel.name
-      return <MenuItem key={airplaneModel.id} value={airplaneModel} primaryText={completeAirplaneModelName} />
+      return <Option key={airplaneModel.id} value={airplaneModel} label={completeAirplaneModelName} />
     });
   }
 
-
-  //this was supposed to show the defaultValue for a select field... apparently it isn't implemented in the right way :/
-  renderActualAirplaneValue() {
-    const { airplane } = this.props;
-    const currentAirplaneModel = airplane.airplaneModel.manufacturer.name + ' - ' + airplane.airplaneModel.name
-    return <MenuItem  value={airplane.airplaneModel} primaryText={currentAirplaneModel} />
+  isSeatsNumberEmpty() {
+    return this.state.seatsNumber === null;
   }
-
-  compon
+  setSeatsNumber(event, seatsNumber) {
+    this.setState({ seatsNumber})
+  }
 
   render() {
     const submitInput = {
@@ -93,36 +88,25 @@ export class AirplaneForm extends React.Component {
     const { airplane, dispatch } = this.props;
     return (
       <div>
-        <form onSubmit={this.submitData}>
-            <TextField
-              hintText="Ex: AAABBB-7777"
-              floatingLabelText="Matricula"
-              type="text"
-              fullWidth={true}
-              name="subscriptionNumber"
-              defaultValue={airplane ? airplane.subscriptionNumber : null }
-            />
-            <TextField
-              hintText="Ex: 200"
-              floatingLabelText="Número de Assentos"
-              type="number"
-              fullWidth={true}
-              name="seatsNumber"
-              defaultValue={ airplane ? airplane.seatsNumber : null }
+        <Container>
+          <h1>Aeronaves</h1>
+          <Form onSubmit={this.submitData}>
+              <Input label="Matrícula*" required={true} floatingLabel={true} name="subscriptionNumber"/>
+              <TextField
+                hintText="Numero de Assentos*"
+                type="number"
+                fullWidth={true}
+                name="seatsNumber"
+                defaultValue={ airplane ? airplane.seatsNumber : null }
+                onChange={this.setSeatsNumber}
+                errorText={this.isSeatsNumberEmpty() ? 'Número de assentos obrigatório' : null}
               />
-            <SelectField
-              floatingLabelText="Modelo Aeronave"
-              onChange={this.handleSelectAirplaneModelChange}
-              value={ this.state.airplaneModel }
-              fullWidth={true}
-              name="airplaneModel"
-              >
-              {this.airplaneModelsRender()}
-            </SelectField>
-            <FlatButton label="Salvar" labelPosition="before">
-              <input type="submit" style={submitInput} />
-            </FlatButton>
-        </form>
+              <Select name="airplaneModel">
+                  {this.airplaneModelsOptionsRender()}
+              </Select>
+              <Button variant="raised">Salvar</Button>
+          </Form>
+        </Container>
       </div>
     )
   }

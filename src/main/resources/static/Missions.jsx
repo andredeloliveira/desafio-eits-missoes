@@ -51,7 +51,7 @@ export class Missions extends React.Component {
 
     return (
       <div>
-        <CRUDBaseComponent label="Missões" name="mission" data={missions}/>
+        <CRUDBaseComponent label="Missões" name="missoes" data={missions}/>
         { this.renderFeedback() }
       </div>
     )

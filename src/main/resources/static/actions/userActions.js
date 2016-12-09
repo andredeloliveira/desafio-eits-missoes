@@ -21,6 +21,26 @@ export function allUsers(usersResult) {
   }
 }
 
+export function findUserById(id, dispatch) {
+  axios.get('/missoes/users/' + id)
+    .then((userResponse) => {
+      dispatch(user(userResponse.data))
+    })
+    .catch((error) => {
+      dispatch(usersError)
+    })
+  return {
+    type: 'REQUEST_USER_BY_ID_PENDING',
+  }
+}
+
+export function user(user) {
+  return {
+    type: 'REQUEST_USER_BY_ID_FULFILLED',
+    payload: user,
+  }
+}
+
 export function usersError(error) {
   return {
     type: 'REQUEST_ALL_USER_REJECTED',
@@ -28,30 +48,57 @@ export function usersError(error) {
   }
 }
 
-export function insertUpdateUser(user, dispatch) {
+export function insertUser(user, dispatch) {
   axios.post('/missoes/users/insert', user)
   .then((newUser) => {
-    dispatch(insertUpdateUserDone(newUser.data))
+    dispatch(insertUserDone(newUser.data))
   })
   .catch((error) => {
-    dispatch(insertUpdateUserError(error))
+    dispatch(insertUserError(error))
   })
   return {
-    type: 'REQUEST_INSERT_UPDATE_USER_PENDING',
+    type: 'REQUEST_INSERT_USER_PENDING',
   }
 }
 
-export function insertUpdateUserDone(newUser) {
+export function insertUserDone(newUser) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_USER_FULFILLED',
+    type: 'REQUEST_INSERT_USER_FULFILLED',
     payload: newUser,
   }
 }
 
-export function insertUpdateUserError(error) {
+export function insertUserError(error) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_USER_ERROR',
+    type: 'REQUEST_INSERT_USER_ERROR',
     error: error
+  }
+}
+
+export function updateUser(user, dispatch) {
+  axios.post('/missoes/users/insert', user)
+    .then((userResponse) => {
+      dispatch(updateUserDone(userResponse.data))
+    })
+    .catch((error) => {
+      dispatch(updateUserError(error))
+    })
+  return {
+    type: 'REQUEST_UPDATE_USER_PENDING'
+  }
+}
+
+export function updateUserDone(user) {
+  return {
+    type: 'REQUEST_UPDATE_USER_FULFILLED',
+    payload: user,
+  }
+}
+
+export function updateUserError(error) {
+  return {
+    type: 'REQUEST_UPDATE_USER_ERROR',
+    payload: error,
   }
 }
 

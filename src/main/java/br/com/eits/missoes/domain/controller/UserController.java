@@ -37,6 +37,11 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET) 
+	User findUserById(@PathVariable("id") Long userId) {
+		return userService.findUserById(userId);
+	}
+	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
 	User insertUser(@RequestBody User user, BindingResult result) {
 		if (user.getId() == null) {

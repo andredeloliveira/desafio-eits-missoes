@@ -46,7 +46,7 @@ export class Users extends React.Component {
     const { users } = this.props;
     return (
       <div>
-        <CRUDBaseComponent label="Usuários" name="user" data={users}/>
+        <CRUDBaseComponent label="Usuários" name="usuarios" data={users}/>
         {this.renderFeedback()}
       </div>
     )

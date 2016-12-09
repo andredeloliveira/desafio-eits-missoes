@@ -1,10 +1,14 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
+import Form from 'muicss/lib/react/form';
+import Input from 'muicss/lib/react/input';
+import Button from 'muicss/lib/react/button';
+import Select from 'muicss/lib/react/select';
+import Option from 'muicss/lib/react/option';
+import Container from 'muicss/lib/react/container';
+import { MissoesLoading } from './MissoesLoading.jsx';
 import { connect } from 'react-redux';
-import { insertUpdateUser } from './actions/userActions';
+import { Formfeedback } from './Formfeedback.jsx';
+import { insertUser, findUserById, updateUser } from './actions/userActions';
 
 @connect((Store) => {
   return {
@@ -18,24 +22,38 @@ export class UserForm extends React.Component {
     this.state = {
       selectedUserProfile: null
     }
-    this.handleSelectUserProfile = this.handleSelectUserProfile.bind(this);
     this.submitData = this.submitData.bind(this);
   }
 
+  componentWillMount() {
+    const { dispatch, params } = this.props;
+    if (params.id) {
+      dispatch(findUserById(params.id, dispatch))
+    }
+  }
+
   submitData(event) {
-    const { dispatch, user } = this.props;
+    const { dispatch, params } = this.props;
+    const { user } = this.props.users;
     event.preventDefault();
     const newUser = {
       email: event.target.email.value,
       name: event.target.name.value,
       password: event.target.password.value,
-      perfilAcesso: this.state.selectedUserProfile,
+      perfilAcesso: event.target.perfilAcesso.value,
     }
     if (user) {
       newUser.id = user.id;
+      dispatch(updateUser(newUser, dispatch))
+    } else {
+      dispatch(insertUser(newUser, dispatch))
     }
-    dispatch(insertUpdateUser(newUser, dispatch))
-    this.props.handleCloseDialog()
+    if (! user) {
+      event.target.email.value = '';
+      event.target.name.value = '';
+      event.target.password.value = '';
+      event.target.perfilAcesso.value = '';
+    }
   }
 
   userProfilesRender() {
@@ -45,18 +63,13 @@ export class UserForm extends React.Component {
       'PASSAGEIRO'
     ]
     return userProfiles.map( (userProfile, index) => {
-      return <MenuItem key={index} value={userProfile} primaryText={userProfile} />
-    })
-  }
-
-  handleSelectUserProfile(event, index, profile) {
-    this.setState({
-      selectedUserProfile: profile
+      return <option key={index} value={userProfile} label={userProfile} />
     })
   }
 
   render() {
-    const { user } = this.props;
+    const { params } = this.props;
+    const { user, newUser, inserting, updating, updatedUser } = this.props.users;
     const submitInput = {
       cursor: 'pointer',
       position: 'absolute',
@@ -67,47 +80,52 @@ export class UserForm extends React.Component {
       width: '100%',
       opacity: 0,
     }
+    if (params.id && !user) {
+      return <MissoesLoading />
+    }
     return (
-      <form onSubmit={this.submitData}>
-        <div>
-          <TextField
-            hintText="Nome"
-            floatingLabelText="Nome"
-            type="text"
-            name="name"
-            defaultValue={user ? user.name : null}
-            fullWidth={true}
-          />
-          <TextField
-            hintText="E-mail"
-            floatingLabelText="E-mail"
-            type="email"
-            name="email"
-            defaultValue={user ? user.email : null}
-            fullWidth={true}
-          />
-          <TextField
-            hintText="Senha"
-            floatingLabelText="Senha"
-            type="password"
-            name="password"
-            defaultValue={user ? "Senha ocultada" : null}
-            fullWidth={true}
-          />
-          <SelectField
-            floatingLabelText="Perfil de Acesso"
-            onChange={this.handleSelectUserProfile}
-            value={this.state.selectedUserProfile}
-            name="profile"
-            fullWidth={true}
-            >
-            { this.userProfilesRender() }
-          </SelectField>
-          <FlatButton label="Salvar" labelPosition="before">
-            <input type="submit" style={submitInput} />
-          </FlatButton>
-        </div>
-      </form>
+      <div>
+        <Container>
+          <h1>Usuários</h1>
+          <Form onSubmit={this.submitData}>
+            <Input
+              label="Nome*"
+              required={true}
+              floatingLabel={true}
+              name="name"
+              defaultValue={user ? user.name : ''}
+              />
+            <Input label="E-mail*" required={true} floatingLabel={true} name="email" type="email" defaultValue={user ? user.email : ''} />
+            <Input label="Senha*" required={true} floatingLabel={true} name="password" type="password" defaultValue={user ? 'anyvalue' : ''}/>
+            <div className="mui-select">
+              <select name="perfilAcesso" defaultValue={user ? user.perfilAcesso : ''}>
+                { this.userProfilesRender() }
+              </select>
+            </div>
+            <Button variant="raised">Salvar</Button>
+          </Form>
+          {inserting ?
+            <Formfeedback
+              message={"Inserindo novo usuário.."}
+              duration={3000}
+            /> :  null }
+          {updating ?
+            <Formfeedback
+              message={"Atualizando usuário.."}
+              duration={3000}
+            /> :  null }
+          {newUser ?
+            <Formfeedback
+              message={"User " + newUser.name + " inserido"}
+              duration={3000}
+            /> :  null }
+          {updatedUser ?
+            <Formfeedback
+              message={"User " + updatedUser.name + " atualizado"}
+              duration={3000}
+            /> :  null }
+        </Container>
+      </div>
     )
   }
 

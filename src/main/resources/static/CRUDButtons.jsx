@@ -11,6 +11,7 @@ import { UserForm } from './UserForm.jsx';
 import { AirplaneDetails } from './AirplaneDetails.jsx';
 import { MissionDetails } from './MissionDetails.jsx';
 import { UserDetails } from './UserDetails.jsx';
+import { hashHistory } from 'react-router'
 
 export class UpdateButton extends React.Component {
 
@@ -32,7 +33,7 @@ export class UpdateButton extends React.Component {
 
   renderEditForm() {
     const { name, data } = this.props;
-    if (name === 'airplane') {
+    if (name === 'aeronaves') {
       return (
         <AirplaneForm
           handleCloseDialog={this.handleClose}
@@ -40,7 +41,7 @@ export class UpdateButton extends React.Component {
           airplane={data}
         />
       )
-    } else if (name === 'mission') {
+    } else if (name === 'missoes') {
       return (
         <MissionForm
           handleCloseDialog={this.handleClose}
@@ -48,7 +49,7 @@ export class UpdateButton extends React.Component {
           mission={data}
         />
       )
-    } else if ( name === 'user') {
+    } else if ( name === 'usuarios') {
       return (
         <UserForm
           handleCloseDialog={this.handleClose}
@@ -60,36 +61,15 @@ export class UpdateButton extends React.Component {
   }
 
   update() {
-    this.setState({
-      open: true,
-    })
+    const { data, name } = this.props;
+    hashHistory.push('/'+ name +'/update/'+ data.id);
   }
 
   render() {
-    const dialogStyle = {
-      overflow: "hidden",
-    }
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-    ]
     const { data } = this.props;
     return (
-      <IconButton onTouchTap={this.update}>
+    <IconButton onTouchTap={this.update}>
         <ContentCreate />
-      <Dialog
-        modal={true}
-        open={this.state.open}
-        onRequestClose={this.handleClose}
-        autoScrollBodyContent={true}
-        style={dialogStyle}
-        actions={actions}
-      >
-      { this.renderEditForm() }
-      </Dialog>
     </IconButton>
     )
   }
