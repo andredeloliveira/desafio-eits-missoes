@@ -27,30 +27,84 @@ export function airplanesError(error) {
   }
 }
 
-export function insertUpdateAirplane(airplane, dispatch) {
+export function findAirplaneById(id, dispatch) {
+  axios.get('/missoes/airplanes/' + id)
+    .then((airplaneResponse) => {
+      dispatch(findAirplaneByIdDone(airplaneResponse.data))
+    })
+    .catch((error) => {
+      dispatch(findAirplaneByIdError(error))
+    })
+  return {
+    type: 'REQUEST_AIRPLANE_BY_ID_PENDING',
+  }
+}
+
+export function findAirplaneByIdDone(airplane) {
+  return {
+    type: 'REQUEST_AIRPLANE_BY_ID_FULFILLED',
+    payload: airplane,
+  }
+}
+
+export function findAirplaneByIdError(error) {
+  return {
+    type: 'REQUEST_AIRPLANE_BY_ID_ERROR',
+    payload: error,
+  }
+}
+
+export function insertAirplane(airplane, dispatch) {
   axios.post('/missoes/airplanes/insert', airplane)
     .then( (newAirplane) => {
-      dispatch(inserteUpdateAirplaneDone(newAirplane.data))
+      dispatch(insertAirplaneDone(newAirplane.data))
     })
     .catch( (error) => {
-      dispatch(insertUpdateAirplaneError(error))
+      dispatch(insertUAirplaneError(error))
     })
     return {
       type: 'REQUEST_INSERT_UPDATE_AIRPLANE_PENDING'
     }
 }
 
-export function inserteUpdateAirplaneDone(newAirplane) {
+export function insertAirplaneDone(newAirplane) {
   return {
     type: 'REQUEST_INSERT_UPDATE_AIRPLANE_FULFILLED',
     payload: newAirplane
   }
 }
 
-export function insertUpdateAirplaneError(error) {
+export function insertAirplaneError(error) {
   return {
     type: 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR',
     error: error
+  }
+}
+
+export function updateAirplane(airplane, dispatch) {
+  axios.post('/missoes/airplanes/insert', airplane)
+    .then((updatedAirplane) => {
+      dispatch(updateAirplaneDone(updatedAirplane.data))
+    })
+    .catch((error) => {
+      dispatch(updateAirplaneError(error))
+    })
+  return {
+    type: 'REQUEST_UPDATE_AIRPLANE_PENDING',
+  }
+}
+
+export function updateAirplaneDone(updatedAirplane) {
+  return {
+    type: 'REQUEST_UPDATE_AIRPLANE_FULFILLED',
+    payload: updatedAirplane,
+  }
+}
+
+export function updateAirplaneError(error) {
+  return {
+    type: 'REQUEST_UPDATE_AIRPLANE_ERROR',
+    payload: error,
   }
 }
 

@@ -26,6 +26,10 @@ public class AirplaneController {
 		return airplaneService.findAllAirplane();
 	}
 	
+	@RequestMapping(value = "/airplanes/{id}", method = RequestMethod.GET)
+	public Airplane findAirplaneById(@PathVariable("id") Long airplaneId) {
+		return airplaneService.findAirplaneById(airplaneId);
+	}
 	
 	@RequestMapping(value="/airplanes/insert", method = RequestMethod.POST)
 	public Airplane insertAirplane(@Valid @RequestBody Airplane airplane, BindingResult result) {

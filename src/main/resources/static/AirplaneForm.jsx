@@ -8,8 +8,9 @@ import Option from 'muicss/lib/react/option';
 import Container from 'muicss/lib/react/container';
 import TextField from 'material-ui/TextField';
 import { MissoesLoading } from './MissoesLoading.jsx';
+import { Formfeedback } from './Formfeedback.jsx';
 import { findAllAirplaneModels } from './actions/airplaneModelsActions';
-import { insertUpdateAirplane } from './actions/airplaneActions';
+import { insertAirplane, findAirplaneById, updateAirplane } from './actions/airplaneActions';
 
 
 //TODO: show actual value of airplane (when editing)..actually not showing at the moment
@@ -28,30 +29,34 @@ export class AirplaneForm extends React.Component {
       subscriptionNumber: null,
     }
     this.submitData = this.submitData.bind(this);
-    this.setSeatsNumber = this.setSeatsNumber.bind(this);
-    this.isSeatsNumberEmpty = this.isSeatsNumberEmpty.bind(this);
+
   }
 
   //Dispatching everything before the component is mounted so it will avoid trouble loading the async call
   componentWillMount() {
-    const { dispatch } = this.props;
+    const { dispatch, params } = this.props;
+    if (params.id) {
+      dispatch(findAirplaneById(params.id, dispatch))
+    }
     dispatch(findAllAirplaneModels(dispatch));
   }
 
   submitData(event) {
     event.preventDefault();
-    const { dispatch, airplane } = this.props;
-    console.log(event.target)
+    const { dispatch, params } = this.props;
+    const { airplane } = this.props.airplanes;
+    const updatingCondition = airplane && params.id
     const newAirplane = {
       seatsNumber: event.target.seatsNumber.value,
       subscriptionNumber: event.target.subscriptionNumber.value,
-      airplaneModel: event.target.airplaneModel.value,
+      airplaneModel: JSON.parse(event.target.airplaneModel.value),
     }
-    if (airplane) {
+    if (updatingCondition) {
       newAirplane.id = airplane.id
+      console.log(newAirplane)
+      dispatch(updateAirplane(newAirplane, dispatch))
     }
-    console.log(newAirplane)
-    //dispatch(insertUpdateAirplane(newAirplane, dispatch))
+    dispatch(insertAirplane(newAirplane, dispatch))
   }
 
 
@@ -62,50 +67,73 @@ export class AirplaneForm extends React.Component {
     }
     return airplaneModels.map( (airplaneModel) => {
       const completeAirplaneModelName = airplaneModel.manufacturer.name + ' - ' + airplaneModel.name
-      return <Option key={airplaneModel.id} value={airplaneModel} label={completeAirplaneModelName} />
+      const airplaneModelValue = JSON.stringify(airplaneModel);
+      return <option key={airplaneModel.id} value={airplaneModelValue}  label={completeAirplaneModelName} />
     });
   }
 
-  isSeatsNumberEmpty() {
-    return this.state.seatsNumber === null;
-  }
-  setSeatsNumber(event, seatsNumber) {
-    this.setState({ seatsNumber})
+  parseAirplaneForSelect(airplane) {
+    return airplane.airplaneModel.manufacturer.name + ' - ' + airplane.airplaneModel.name;
   }
 
   render() {
-    const submitInput = {
-      cursor: 'pointer',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      width: '100%',
-      opacity: 0,
+
+    const { airplane, newAirplane, inserting, updating, updatedAirplane } = this.props.airplanes;
+    const { dispatch, params } = this.props;
+    const isLoading = params.id && !airplane;
+    const showFeedBackUpdate = params.id && updatedAirplane;
+    if (isLoading) {
+      return <MissoesLoading />
     }
-    const { newAirplane } = this.props.airplanes;
-    const { airplane, dispatch } = this.props;
     return (
       <div>
         <Container>
           <h1>Aeronaves</h1>
           <Form onSubmit={this.submitData}>
-              <Input label="Matrícula*" required={true} floatingLabel={true} name="subscriptionNumber"/>
+              <Input
+                label="Matrícula*"
+                required={true}
+                floatingLabel={true}
+                name="subscriptionNumber"
+                defaultValue={!isLoading ? airplane.subscriptionNumber : ''}
+              />
               <TextField
                 hintText="Numero de Assentos*"
                 type="number"
                 fullWidth={true}
                 name="seatsNumber"
-                defaultValue={ airplane ? airplane.seatsNumber : null }
+                defaultValue={!isLoading ? airplane.seatsNumber : '' }
                 onChange={this.setSeatsNumber}
-                errorText={this.isSeatsNumberEmpty() ? 'Número de assentos obrigatório' : null}
               />
-              <Select name="airplaneModel">
+            <div className="mui-select">
+                <select name="airplaneModel">
+                  {!isLoading ? <option label={this.parseAirplaneForSelect(airplane)} value={JSON.stringify(airplane.airplaneModel)}/>
+                  :null}
                   {this.airplaneModelsOptionsRender()}
-              </Select>
+                </select>
+              </div>
               <Button variant="raised">Salvar</Button>
           </Form>
+          {inserting ?
+          <Formfeedback
+            message={"Inserindo nova aeronave.."}
+            duration={3000}
+          /> :null}
+          {updating ?
+          <Formfeedback
+            message={"Atualizando nova aeronave.."}
+            duration={3000}
+          /> :null}
+          {newAirplane ?
+          <Formfeedback
+            message={"Aeronave" + newAirplane.subscriptionNumber + "inserida com sucesso"}
+            duration={3000}
+          /> :null}
+          {updatedAirplane ?
+          <Formfeedback
+            message={"Aeronave" + updatedAirplane.subscriptionNumber + "atualizada com sucesso"}
+            duration={3000}
+          /> :null}
         </Container>
       </div>
     )

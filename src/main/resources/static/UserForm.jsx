@@ -70,16 +70,9 @@ export class UserForm extends React.Component {
   render() {
     const { params } = this.props;
     const { user, newUser, inserting, updating, updatedUser } = this.props.users;
-    const submitInput = {
-      cursor: 'pointer',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      width: '100%',
-      opacity: 0,
-    }
+    const isLoading = params.id && !user;
+    console.log(isLoading)
+    const showFeedBackUpdate = params.id && updatedUser;
     if (params.id && !user) {
       return <MissoesLoading />
     }
@@ -116,12 +109,12 @@ export class UserForm extends React.Component {
             /> :  null }
           {newUser ?
             <Formfeedback
-              message={"User " + newUser.name + " inserido"}
+              message={"Usuário " + newUser.name + " inserido"}
               duration={3000}
             /> :  null }
-          {updatedUser ?
+          {showFeedBackUpdate ?
             <Formfeedback
-              message={"User " + updatedUser.name + " atualizado"}
+              message={"Usuário " + updatedUser.name + " atualizado"}
               duration={3000}
             /> :  null }
         </Container>

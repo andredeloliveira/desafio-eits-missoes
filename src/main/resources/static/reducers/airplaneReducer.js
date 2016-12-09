@@ -5,6 +5,8 @@ const initialState = {
   inserted: false,
   removing: false,
   removed: false,
+  updating: false,
+  updatedAirplane: null,
   airplanes: null,
   newAirplane: null,
   removedAirplane: null,
@@ -32,12 +34,30 @@ export default function airplaneReducer(state = initialState, action) {
         fetching: false,
         error: action.payload
       }
-    case 'REQUEST_INSERT_UPDATE_AIRPLANE_PENDING':
+    case 'REQUEST_AIRPLANE_BY_ID_PENDING':
+      return {
+        ...state,
+        fetching: true,
+      }
+    case 'REQUEST_AIRPLANE_BY_ID_FULFILLED':
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        airplane: action.payload,
+      }
+    case 'REQUEST_AIRPLANE_BY_ID_ERROR':
+      return {
+        ...state,
+        fetching: false,
+        error: action.payload,
+      }
+    case 'REQUEST_INSERT_AIRPLANE_PENDING':
       return {
         ...state,
         inserting: true,
       }
-    case 'REQUEST_INSERT_UPDATE_AIRPLANE_FULFILLED':
+    case 'REQUEST_INSERT_AIRPLANE_FULFILLED':
       return {
         ...state,
         inserting: false,
@@ -48,6 +68,23 @@ export default function airplaneReducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload
+      }
+    case 'REQUEST_UPDATE_AIRPLANE_PENDING':
+      return {
+        ...state,
+        updating: true,
+      }
+    case 'REQUEST_UPDATE_AIRPLANE_FULFILLED':
+      return {
+        ...state,
+        updating: false,
+        updatedAirplane: action.payload,
+      }
+    case 'REQUEST_UPDATE_AIRPLANE_ERROR':
+      return {
+        ...state,
+        updating: false,
+        error: action.payload,
       }
     case 'REQUEST_REMOVE_AIRPLANE':
       return {
