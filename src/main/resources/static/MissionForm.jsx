@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
+import Chip from 'material-ui/Chip';
 import Form from 'muicss/lib/react/form';
 import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
@@ -12,6 +13,7 @@ import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove'
 import Container from 'muicss/lib/react/container';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { MissionPassengers } from './MissionPassengers.jsx';
@@ -40,6 +42,8 @@ export class MissionForm extends React.Component {
     super(props);
     this.state = {
       selectedAirplane: null,
+      pilotsAutoComplete: [],
+      passengersAutoComplete: [],
       selectedPilots: [],
       selectedPassengers: [],
       selectedPassenger: null,
@@ -58,8 +62,6 @@ export class MissionForm extends React.Component {
     this.handleUpdateTo = this.handleUpdateTo.bind(this);
     this.handleUpdateFiles = this.handleUpdateFiles.bind(this);
     this.handleUpdateFilesError = this.handleUpdateFilesError.bind(this);
-    this.handleAddNewPassenger = this.handleAddNewPassenger.bind(this);
-    this.handleAddNewPilot = this.handleAddNewPilot.bind(this);
     this.airplaneOptionsRender = this.airplaneOptionsRender.bind(this);
     this.mappedPassengers = this.mappedPassengers.bind(this);
     this.mappedPilots = this.mappedPilots.bind(this);
@@ -141,48 +143,52 @@ export class MissionForm extends React.Component {
     }
   }
 
+  handleDeleteSelectedPassenger(passengerToRemove, event) {
+    let { selectedPassengers } = this.state;
+    const indexOfPassengerToRemove = selectedPassengers.indexOf(passengerToRemove)
+    selectedPassengers.splice(indexOfPassengerToRemove, 1)
+    this.setState({ selectedPassengers })
+  }
+
+  handleDeleteSelectedPilot(pilotToRemove, event) {
+    let { selectedPilots } = this.state;
+    const indexOfPilotToRemove = selectedPilots.indexOf(pilotToRemove)
+    selectedPilots.splice(indexOfPilotToRemove, 1)
+    this.setState({ selectedPilots })
+  }
+
   renderSelectedPassengers() {
     return this.state.selectedPassengers.map((passenger) => {
-      return <span key={passenger.id}>{passenger.name}</span>
+      return <Chip
+              key={passenger.id}
+              onRequestDelete={this.handleDeleteSelectedPassenger.bind(this, passenger)}
+             >
+              {passenger.name}
+             </Chip>
     })
   }
 
   renderSelectedPilots() {
     return this.state.selectedPilots.map((pilot) => {
-      return <span key={pilot.id}>{pilot.name}</span>
+      return <Chip
+                key={pilot.id}
+                onRequestDelete={this.handleDeleteSelectedPilot.bind(this,pilot)}
+             >
+             {pilot.name}
+             </Chip>
     })
   }
 
   renderPassengersAutoComplete() {
-    let passengersAutoComplete = [];
-    for (let i = 0; i < this.state.numberAutoCompletePassengersToRender; i++) {
-      passengersAutoComplete.push(
-        <AutoComplete
-          key={i}
-          hintText="Passageiro"
-          dataSource={this.mappedPassengers()}
-          onNewRequest={this.handleUpdatePassenger}
-          fullWidth={true}
-        />
-      )
-    }
-    return passengersAutoComplete;
+    return this.state.passengersAutoComplete.map((passengerAutoComplete) => {
+      return passengerAutoComplete;
+    })
   }
 
   renderPilotsAutoComplete() {
-    let pilotsAutoComplete = [];
-    for (let i = 0; i < this.state.numberAutoCompletePilotsToRender; i++) {
-      pilotsAutoComplete.push(
-        <AutoComplete
-          key={i}
-          hintText="Pilotos"
-          dataSource={this.mappedPilots()}
-          onNewRequest={this.handleUpdatePilot}
-          fullWidth={true}
-        />
-      )
-    }
-    return pilotsAutoComplete;
+    return this.state.pilotsAutoComplete.map((pilotAutoComplete) => {
+      return pilotAutoComplete;
+    })
   }
 
   handleSelectAirplaneChange(event, index, airplane) {
@@ -213,17 +219,6 @@ export class MissionForm extends React.Component {
     dispatch(insertUpdateMission(mission, currentUser, dispatch))
   }
 
-  handleAddNewPassenger() {
-    this.setState({
-      numberAutoCompletePassengersToRender: this.state.numberAutoCompletePassengersToRender += 1,
-    })
-  }
-
-  handleAddNewPilot() {
-    this.setState({
-      numberAutoCompletePilotsToRender: this.state.numberAutoCompletePilotsToRender += 1,
-    })
-  }
 
   handleUpdateFrom(autocompleteResult) {
     this.setState({
@@ -350,16 +345,22 @@ export class MissionForm extends React.Component {
                   />
               </div>
               <div>
-                { this.renderPassengersAutoComplete() }
-                <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPassenger}>
-                  <ContentAdd />
-                </FloatingActionButton>
+                <AutoComplete
+                  hintText="Passageiro"
+                  dataSource={this.mappedPassengers()}
+                  onNewRequest={this.handleUpdatePassenger}
+                  fullWidth={true}
+                />
+                { this.renderSelectedPassengers() }
               </div>
               <div>
-              { this.renderPilotsAutoComplete() }
-              <FloatingActionButton mini={true} onTouchTap={this.handleAddNewPilot}>
-                <ContentAdd />
-              </FloatingActionButton>
+              <AutoComplete
+                hintText="Pilotos"
+                dataSource={this.mappedPilots()}
+                onNewRequest={this.handleUpdatePilot}
+                fullWidth={true}
+              />
+              { this.renderSelectedPilots() }
             </div>
             <div>
               <Files
