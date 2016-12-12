@@ -46,6 +46,8 @@ export class MissionForm extends React.Component {
       passengersAutoComplete: [],
       selectedPilots: [],
       selectedPassengers: [],
+      pilotsSearchInput: '',
+      passengersSearchInput: '',
       selectedPassenger: null,
       numberAutoCompletePassengersToRender: 1,
       numberAutoCompletePilotsToRender: 1,
@@ -158,8 +160,10 @@ export class MissionForm extends React.Component {
   }
 
   renderSelectedPassengers() {
+    const chipStyle = { margin: 4}
     return this.state.selectedPassengers.map((passenger) => {
       return <Chip
+              style={chipStyle}
               key={passenger.id}
               onRequestDelete={this.handleDeleteSelectedPassenger.bind(this, passenger)}
              >
@@ -169,10 +173,12 @@ export class MissionForm extends React.Component {
   }
 
   renderSelectedPilots() {
+    const chipStyle = { margin: 4}
     return this.state.selectedPilots.map((pilot) => {
       return <Chip
+                style={chipStyle}
                 key={pilot.id}
-                onRequestDelete={this.handleDeleteSelectedPilot.bind(this,pilot)}
+                onRequestDelete={this.handleDeleteSelectedPilot.bind(this, pilot)}
              >
              {pilot.name}
              </Chip>
@@ -220,7 +226,7 @@ export class MissionForm extends React.Component {
   }
 
 
-  handleUpdateFrom(autocompleteResult) {
+  handleUpdateFrom(autocompleteResult, e) {
     this.setState({
       selectedFrom: autocompleteResult.airport
     })
@@ -237,10 +243,16 @@ export class MissionForm extends React.Component {
     this.setState({
       selectedPassenger: autocompleteResult.passenger,
     })
-    actualSelectedPassengers.push(this.state.selectedPassenger)
-    this.setState({
-      selectedPassengers: actualSelectedPassengers
-    })
+    //We are getting the value from state, so we can be sure that the value was truly updated..
+    //as well not allowing an existing value to be added. An error will be fired at the Chips component
+    const selectedPassengerFromState = this.state.selectedPassenger;
+    if (actualSelectedPassengers.indexOf(selectedPassengerFromState) < 0) {
+      actualSelectedPassengers.push(selectedPassengerFromState)
+      this.setState({
+        selectedPassengers: actualSelectedPassengers,
+        passengersSearchInput: '',
+      })
+    }
   }
 
   handleUpdatePilot(autocompleteResult) {
@@ -248,10 +260,14 @@ export class MissionForm extends React.Component {
     this.setState({
       selectedPilot: autocompleteResult.pilot,
     })
-    actualSelectedPilots.push(this.state.selectedPilot)
-    this.setState({
-      selectedPilots: actualSelectedPilots
-    })
+    const selectedPilotFromState = this.state.selectedPilot;
+    if (actualSelectedPilots.indexOf(selectedPilotFromState) < 0) {
+      actualSelectedPilots.push(selectedPilotFromState)
+      this.setState({
+        selectedPilots: actualSelectedPilots,
+        pilotsSearchInput: '',
+      })
+    }
   }
 
   handleUpdateFiles(files) {
@@ -293,27 +309,22 @@ export class MissionForm extends React.Component {
       width: '100%',
       opacity: 0,
     }
+    const chipsWrapper = { display: 'flex', flexWrap: 'wrap'}
     const { mission } = this.props;
     return (
       <Container>
         <Form onSubmit={this.submitData}>
-          <div>
-            <div>
               <DatePicker
                 hintText="Data"
                 fullWidth={true}
                 name="date"
                 />
-            </div>
-            <div>
               <TimePicker
                 hintText="Hora"
                 format="24hr"
                 fullWidth={true}
                 name="time"
                 />
-            </div>
-            <div>
               <TextField
                 hintText="Objetivo"
                 type="text"
@@ -322,47 +333,41 @@ export class MissionForm extends React.Component {
                 name="reason"
                 defaultValue={ mission ? mission.reason : null }
                 />
-            </div>
-            <div>
               <Select>
                 {this.airplaneOptionsRender() }
               </Select>
-            </div>
-              <div>
                 <AutoComplete
                   hintText="Origem"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateFrom}
                   fullWidth={true}
                   />
-              </div>
-              <div>
                 <AutoComplete
                   hintText="Destino"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateTo}
                   fullWidth={true}
                   />
-              </div>
-              <div>
                 <AutoComplete
                   hintText="Passageiro"
+                  searchText={this.state.passengersSearchInput}
                   dataSource={this.mappedPassengers()}
                   onNewRequest={this.handleUpdatePassenger}
                   fullWidth={true}
                 />
-                { this.renderSelectedPassengers() }
-              </div>
-              <div>
+              <div style={chipsWrapper}>
+                  { this.renderSelectedPassengers() }
+                </div>
               <AutoComplete
                 hintText="Pilotos"
+                searchText={this.state.pilotsSearchInput}
                 dataSource={this.mappedPilots()}
                 onNewRequest={this.handleUpdatePilot}
                 fullWidth={true}
               />
-              { this.renderSelectedPilots() }
-            </div>
-            <div>
+            <div style={chipsWrapper}>
+                { this.renderSelectedPilots() }
+              </div>
               <Files
                 className="files-dropzone"
                 onChange={this.handleUpdateFiles}
@@ -376,8 +381,6 @@ export class MissionForm extends React.Component {
               <FlatButton label="Salvar" labelPosition="before">
                 <input type="submit" style={submitInput} />
               </FlatButton>
-            </div>
-          </div>
         </Form>
       </Container>
     )
