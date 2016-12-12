@@ -40,6 +40,12 @@ public class MissionController {
 	@Autowired(required = false)
 	private MissionPilotService missionPilotService;
 	
+	
+	@RequestMapping(value = "/missions/{id}", method = RequestMethod.GET)
+	Mission findMissionById(@PathVariable("id") Long missionId) {
+		return missionService.findMissionById(missionId);
+	}	
+	
 	@RequestMapping(value = "/missions", method = RequestMethod.GET)
 	List<MissionPlanner> findAllMission() {
 		return missionPlannerService.findAllMissionPlanner();

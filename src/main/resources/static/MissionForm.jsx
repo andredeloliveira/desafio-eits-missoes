@@ -2,26 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-import TextField from 'material-ui/TextField';
+import Input from 'muicss/lib/react/input';
 import Chip from 'material-ui/Chip';
 import Form from 'muicss/lib/react/form';
 import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
+import Button from 'muicss/lib/react/button';
 import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
 import Files from 'react-files';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentRemove from 'material-ui/svg-icons/content/remove'
 import Container from 'muicss/lib/react/container';
+import { Formfeedback } from './Formfeedback.jsx';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { MissionPassengers } from './MissionPassengers.jsx';
 import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
 import { findAllAirports } from './actions/airportActions';
-import { insertUpdateMission } from './actions/missionActions';
+import { insertMission, findMissionById } from './actions/missionActions';
 import { uploadFile } from './actions/fileUploadActions';
 
 
@@ -49,8 +49,6 @@ export class MissionForm extends React.Component {
       pilotsSearchInput: '',
       passengersSearchInput: '',
       selectedPassenger: null,
-      numberAutoCompletePassengersToRender: 1,
-      numberAutoCompletePilotsToRender: 1,
       selectedPilot: null,
       selectedTo: null,
       selectedFrom: null,
@@ -78,7 +76,10 @@ export class MissionForm extends React.Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props;
+    const { dispatch, params } = this.props;
+    if (params.id) {
+      dispatch(findMissionById(params.id, dispatch))
+    }
     dispatch(findAllAirplanes(dispatch))
     dispatch(findAllPilots(dispatch))
     dispatch(findAllPassengers(dispatch))
@@ -93,7 +94,8 @@ export class MissionForm extends React.Component {
         const airplaneText = airplane.airplaneModel.manufacturer.name +
         ' ' + airplane.airplaneModel.name +
         ' - ' + airplane.subscriptionNumber;
-        return <Option key={index} value={airplane} label={airplaneText} />
+        const airplaneStringJSONValue = JSON.stringify(airplane);
+        return <Option key={index} value={airplaneStringJSONValue} label={airplaneText} />
       })
     } else {
       return <MissoesLoading />
@@ -207,13 +209,13 @@ export class MissionForm extends React.Component {
     const { dispatch } = this.props;
     const { file } = this.props.fileUpload;
     //Sometimes the user is not present in the Redux Store, so we get it from the sessionStorage variable ;), which is still valid
-    const currentUser = this.props.auth.currentUser || JSON.parse(sessionStorage.getItem('currentUser'));
+    const currentUser = this.props.auth.currentUser;
     const mission = {
       mission: {
         dateTime: event.target.date.value + ' ' + event.target.time.value,
         missionTo: this.state.selectedTo,
         missionFrom: this.state.selectedFrom,
-        airplane: this.state.selectedAirplane,
+        airplane: JSON.parse(event.target.airplane.value),
         reason: event.target.reason.value,
         //Will have to have it null and then pass it as a MultiPartFile..
         attachedFile: null,
@@ -222,7 +224,20 @@ export class MissionForm extends React.Component {
       passengers: this.state.selectedPassengers,
       pilots: this.state.selectedPilots,
     }
-    dispatch(insertUpdateMission(mission, currentUser, dispatch))
+    dispatch(insertMission(mission, currentUser, dispatch))
+    //cleaning all fields
+    event.target.date.value = '';
+    event.target.time.value = '';
+    event.target.airplane.value = '';
+    event.target.reason.value = '';
+    this.setState({
+      selectedPassengers: [],
+      selectedPilots: [],
+      pilotsSearchInput: ' ',
+      passengersSearchInput: ' ',
+      selectedTo: null,
+      selectedFrom: null,
+    })
   }
 
 
@@ -250,7 +265,7 @@ export class MissionForm extends React.Component {
       actualSelectedPassengers.push(selectedPassengerFromState)
       this.setState({
         selectedPassengers: actualSelectedPassengers,
-        passengersSearchInput: '',
+        passengersSearchInput: ' ',
       })
     }
   }
@@ -265,7 +280,7 @@ export class MissionForm extends React.Component {
       actualSelectedPilots.push(selectedPilotFromState)
       this.setState({
         selectedPilots: actualSelectedPilots,
-        pilotsSearchInput: '',
+        pilotsSearchInput: ' ',
       })
     }
   }
@@ -298,74 +313,84 @@ export class MissionForm extends React.Component {
     return new Date(dateTime)
   }
 
+  parseAirplaneForSelect(airplane) {
+    return airplane.airplaneModel.manufacturer.name + ' - ' +
+      airplane.airplaneModel.name + ' - ' + airplane.subscriptionNumber;
+  }
+
   render() {
-    const submitInput = {
-      cursor: 'pointer',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      width: '100%',
-      opacity: 0,
-    }
     const chipsWrapper = { display: 'flex', flexWrap: 'wrap'}
-    const { mission } = this.props;
+    const { params } = this.props;
+    const { mission, newMission, inserting, updating, updatedMission } = this.props.missions;
+    let isLoading = params.id && !mission;
+    if (isLoading) {
+      return <MissoesLoading />
+    }
     return (
       <Container>
+        <h1>Missões</h1>
         <Form onSubmit={this.submitData}>
               <DatePicker
                 hintText="Data"
+                floatingLabelText="Data*"
                 fullWidth={true}
                 name="date"
                 />
               <TimePicker
                 hintText="Hora"
+                floatingLabelText="Hora*"
                 format="24hr"
                 fullWidth={true}
                 name="time"
                 />
-              <TextField
-                hintText="Objetivo"
-                type="text"
-                fullWidth={true}
-                multiLine={true}
+              <Input
+                label="Objetivo*"
+                floatingLabel={true}
+                required={true}
                 name="reason"
-                defaultValue={ mission ? mission.reason : null }
+                defaultValue={ mission ? mission.reason : '' }
                 />
-              <Select>
+              <Select name="airplane">
+                {mission ? <Option label={this.parseAirplaneForSelect(mission.airplane)} value={JSON.stringify(mission.airplane)} /> : null }
                 {this.airplaneOptionsRender() }
               </Select>
                 <AutoComplete
                   hintText="Origem"
+                  floatingLabelText="Origem*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateFrom}
                   fullWidth={true}
+                  errorText={!this.state.selectedFrom ? 'Escolha a origem' : null}
                   />
                 <AutoComplete
                   hintText="Destino"
+                  floatingLabelText="Destino*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateTo}
                   fullWidth={true}
+                  errorText={!this.state.selectedTo ? 'Escolha o destino' :  null}
                   />
                 <AutoComplete
                   hintText="Passageiro"
+                  floatingLabelText="Passageiro*"
                   searchText={this.state.passengersSearchInput}
                   dataSource={this.mappedPassengers()}
                   onNewRequest={this.handleUpdatePassenger}
                   fullWidth={true}
+                  errorText={this.state.selectedPilots.length < 0 ? 'Escolha ao menos um passageiro' : null}
                 />
               <div style={chipsWrapper}>
                   { this.renderSelectedPassengers() }
                 </div>
               <AutoComplete
-                hintText="Pilotos"
+                hintText="Piloto"
+                floatingLabelText="Piloto*"
                 searchText={this.state.pilotsSearchInput}
                 dataSource={this.mappedPilots()}
                 onNewRequest={this.handleUpdatePilot}
                 fullWidth={true}
               />
-            <div style={chipsWrapper}>
+              <div style={chipsWrapper}>
                 { this.renderSelectedPilots() }
               </div>
               <Files
@@ -378,10 +403,18 @@ export class MissionForm extends React.Component {
                 >
                 <FlatButton label="Anexar.." />
               </Files>
-              <FlatButton label="Salvar" labelPosition="before">
-                <input type="submit" style={submitInput} />
-              </FlatButton>
+              <Button variant="raised">Salvar</Button>
         </Form>
+        { inserting ?
+          <Formfeedback
+            message={"Inserindo nova missão.."}
+            duration={3000}
+          /> : null}
+        { newMission ?
+          <Formfeedback
+          message={"Nova missão agendada com sucesso"}
+          duration={3000}
+        />: null}
       </Container>
     )
   }

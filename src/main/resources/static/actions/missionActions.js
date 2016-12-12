@@ -27,8 +27,36 @@ export function missionsError(error) {
   }
 }
 
+export function findMissionById(missionId, dispatch) {
+  axios.get('/missoes/missions/' + missionId)
+    .then((missionResponse) => {
+      dispatch(findMissionByIdDone(missionResponse.data))
+    })
+    .catch((error) => {
+      dispatch(findMissionByIdError(error))
+    })
+  return {
+    type: 'REQUEST_MISSION_BY_ID_PENDING',
+  }
+}
+
+export function findMissionByIdDone(mission) {
+  return {
+    type: 'REQUEST_MISSION_BY_ID_FULFILLED',
+    payload: mission,
+  }
+}
+
+export function findMissionByIdError(error) {
+  return {
+    type: 'REQUEST_MISSION_BY_ID_ERROR',
+    payload: error,
+  }
+}
+
+
 //In this function our special dispatcher is propagated everywhere, so all the async actions can be performed
-export function insertUpdateMission(mission, missionPlanner, dispatch) {
+export function insertMission(mission, missionPlanner, dispatch) {
   if (missionPlanner){
     /*
     * We have splitted the mission data into
@@ -41,31 +69,31 @@ export function insertUpdateMission(mission, missionPlanner, dispatch) {
     */
     axios.post('/missoes/missions/insert', mission.mission)
     .then((missionResponse) => {
-      dispatch(insertUpdateMissionDone(missionResponse.data, mission, dispatch))
+      dispatch(insertMissionDone(missionResponse.data, mission, dispatch))
     })
     .catch((error) => {
-      dispatch(insertUpdateMissionError(error))
+      dispatch(insertMissionError(error))
     })
   } else {
-    dispatch(insertUpdateMissionError("Um usuário é necessário para associar à missão"))
+    dispatch(insertMissionError("Um usuário é necessário para associar à missão"))
   }
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PENDING'
+    type: 'REQUEST_INSERT_MISSION_PENDING'
   }
 }
 
-export function insertUpdateMissionDone(newMission, mission, dispatch) {
+export function insertMissionDone(newMission, mission, dispatch) {
   //with the mission data, we can associate with everything and dispatch other actions as well
-  dispatch(insertUpdateMissionPlanner(newMission, mission, dispatch));
-  dispatch(insertUpdateMissionPassengers(newMission, mission, dispatch))
-  dispatch(insertUpdateMissionPilots(newMission, mission, dispatch))
+  dispatch(insertMissionPlanner(newMission, mission, dispatch));
+  dispatch(insertMissionPassengers(newMission, mission, dispatch))
+  dispatch(insertMissionPilots(newMission, mission, dispatch))
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_FULFILLED',
+    type: 'REQUEST_INSERT_MISSION_FULFILLED',
     payload: mission
   }
 }
 
-export function insertUpdateMissionError(error) {
+export function insertMissionError(error) {
 
   return {
     type: 'REQUEST_INSERT_UPDATE_MISSION_ERROR',
@@ -106,33 +134,33 @@ export function removeMissionError(error) {
 // Mission Planner
 /*****************************************************************************************/
 
-export function insertUpdateMissionPlanner(newMission, mission, dispatch){
+export function insertMissionPlanner(newMission, mission, dispatch){
   const missionPlanner = {
     mission: newMission,
     planner: mission.planner
   }
   axios.post('/missoes/missions/planner/insert', missionPlanner)
     .then((missionPlannerResult) => {
-      dispatch(insertUpdatemissionPlannerDone(missionPlanner))
+      dispatch(insertMissionPlannerDone(missionPlanner))
     })
     .catch((error) => {
-      dispatch(insertUpdateMissionPlannerError(error))
+      dispatch(insertMissionPlannerError(error))
     })
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_PENDING',
+    type: 'REQUEST_INSERT_MISSION_PLANNER_PENDING',
   }
 }
 
-export function insertUpdatemissionPlannerDone(missionPlanner) {
+export function insertMissionPlannerDone(missionPlanner) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_FULFILLED',
+    type: 'REQUEST_INSERT_MISSION_PLANNER_FULFILLED',
     payload: missionPlanner,
   }
 }
 
 export function insertUpdateMissionPlannerError(error) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_ERROR',
+    type: 'REQUEST_INSERT_MISSION_PLANNER_ERROR',
     payload: error,
   }
 }
@@ -195,7 +223,7 @@ export function findMissionPlannerByMissionError(error) {
 /*****************************************************************************************/
 // Mission Passengers
 /*****************************************************************************************/
-export function insertUpdateMissionPassengers(newMission, mission, dispatch){
+export function insertMissionPassengers(newMission, mission, dispatch){
   //send multiple requests to grant consistent async concurrency (as Promises)
   const allinsertPassengersRequest = mission.passengers.map((passenger) => {
     const missionPassenger = {
@@ -206,26 +234,26 @@ export function insertUpdateMissionPassengers(newMission, mission, dispatch){
   })
   axios.all(allinsertPassengersRequest)
     .then(axios.spread((spreadResult) => {
-      dispatch(insertupdateMissionPassengersDone())
+      dispatch(insertMissionPassengersDone())
     }))
     .catch((error) => {
-      dispatch(insertUpdateMissionPassengersError(error))
+      dispatch(insertMissionPassengersError(error))
     })
 
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_PENDING'
+    type: 'REQUEST_INSERT_MISSION_PASSENGERS_PENDING'
   }
 }
 
-export function insertupdateMissionPassengersDone(){
+export function insertMissionPassengersDone(){
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_FULFILLED'
+    type: 'REQUEST_INSERT_MISSION_PASSENGERS_FULFILLED'
   }
 }
 
-export function insertUpdateMissionPassengersError(error) {
+export function insertMissionPassengersError(error) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_ERROR',
+    type: 'REQUEST_INSERT_MISSION_PASSENGERS_ERROR',
     payload: error,
   }
 }
@@ -282,7 +310,7 @@ export function findMissionPassengersByMissionError(error) {
 /*****************************************************************************************/
 
 //TODO(andredeloliveira): add to reducer as well
-export function insertUpdateMissionPilots(newMission, mission, dispatch){
+export function insertMissionPilots(newMission, mission, dispatch){
   const allinsertPilotsRequest = mission.pilots.map((pilot) => {
     const missionPilot = {
       mission: newMission,
@@ -299,18 +327,18 @@ export function insertUpdateMissionPilots(newMission, mission, dispatch){
   })
 
   return {
-    type: 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_PENDING',
+    type: 'REQUEST_INSERT_MISSION_PILOTS_PENDING',
   }
 }
- export function insertupdateMissionPilotsDone() {
+ export function insertMissionPilotsDone() {
    return {
-     type: 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_FULFILLED',
+     type: 'REQUEST_INSERT_MISSION_PILOTS_FULFILLED',
    }
  }
 
-export function insertUpdateMissionPilotsError(error) {
+export function insertMissionPilotsError(error) {
  return {
-   type: 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_ERROR',
+   type: 'REQUEST_INSERT_MISSION_PILOTS_ERROR',
    payload: error,
  }
 }

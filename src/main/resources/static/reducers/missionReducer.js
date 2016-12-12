@@ -4,6 +4,7 @@ const initialState = {
   inserting: false,
   inserted: false,
   newMission: null,
+  mission: null,
   missionPlanner: null,
   missions: null,
   missionPassengers: null,
@@ -41,6 +42,29 @@ export default function missionReducer(state = initialState, action) {
         fetching: false,
         error: action.payload,
       }
+    case 'REQUEST_MISSION_BY_ID_PENDING': {
+      return {
+        ...state,
+        fetching: true,
+        fetched: false,
+      }
+    }
+    case 'REQUEST_MISSION_BY_ID_FULFILLED': {
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        mission: action.payload,
+      }
+    }
+    case 'REQUEST_MISSION_BY_ID_ERROR': {
+      return {
+        ...state,
+        fetching: false,
+        fetched: false,
+        error: action.payload,
+      }
+    }
     case 'REQUEST_MISSION_PLANNER_BY_MISSION_PENDING':
       return {
         ...state,
@@ -101,73 +125,73 @@ export default function missionReducer(state = initialState, action) {
         fetched: false,
         error: action.payload,
       }
-    case 'REQUEST_INSERT_UPDATE_MISSION_PENDING':
+    case 'REQUEST_INSERT_MISSION_PENDING':
       return {
         ...state,
         inserting: true,
       }
-    case 'REQUEST_INSERT_UPDATE_MISSION_FULFILLED':
+    case 'REQUEST_INSERT_MISSION_FULFILLED':
       return {
         ...state,
         inserting: false,
         inserted: true,
         newMission: action.payload,
       }
-      case 'REQUEST_INSERT_UPDATE_MISSION_ERROR':
+      case 'REQUEST_INSERT_MISSION_ERROR':
         return {
           ...state,
           inserting: false,
           inserted: false,
           error: action.payload,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_PENDING':
+      case 'REQUEST_INSERT_MISSION_PASSENGERS_PENDING':
         return {
           ...state,
           insertingPassengers: true,
           insertedPassengers: false,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_FULFILLED':
+      case 'REQUEST_INSERT_MISSION_PASSENGERS_FULFILLED':
         return {
           ...state,
           insertingPassengers: false,
           insertedPassengers: true,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PASSENGERS_ERROR':
+      case 'REQUEST_INSERT_MISSION_PASSENGERS_ERROR':
         return {
           ...state,
           error: action.payload
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_PENDING':
+      case 'REQUEST_INSERT_MISSION_PILOTS_PENDING':
         return {
           ...state,
           insertingPilots: true,
           insertedPilots: false,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_FULFILLED':
+      case 'REQUEST_INSERT_MISSION_PILOTS_FULFILLED':
         return {
           ...state,
           insertingPilots: false,
           insertedPilots: true,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PILOTS_ERROR':
+      case 'REQUEST_INSERT_MISSION_PILOTS_ERROR':
         return {
           ...state,
           error: action.payload,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_PENDING':
+      case 'REQUEST_INSERT_MISSION_PLANNER_PENDING':
         return {
           ...state,
           insertingPlanner: true,
           insertedPlanner: false,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_FULFILLED':
+      case 'REQUEST_INSERT_MISSION_PLANNER_FULFILLED':
         return {
           ...state,
           insertingPlanner: false,
           insertedPlanner: true,
           missionPlanner: action.payload,
         }
-      case 'REQUEST_INSERT_UPDATE_MISSION_PLANNER_ERROR':
+      case 'REQUEST_INSERT_MISSION_PLANNER_ERROR':
         return {
           ...state,
           error: action.payload,

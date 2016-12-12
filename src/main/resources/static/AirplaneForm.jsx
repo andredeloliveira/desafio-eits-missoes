@@ -53,7 +53,6 @@ export class AirplaneForm extends React.Component {
     }
     if (updatingCondition) {
       newAirplane.id = airplane.id
-      console.log(newAirplane)
       dispatch(updateAirplane(newAirplane, dispatch))
     }
     dispatch(insertAirplane(newAirplane, dispatch))
