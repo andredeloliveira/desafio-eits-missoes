@@ -69,10 +69,13 @@ export class UserForm extends React.Component {
 
   render() {
     const { params } = this.props;
-    const { user, newUser, inserting, updating, updatedUser } = this.props.users;
+    let { user } = this.props.users;
+    const {  newUser, inserting, updating, updatedUser } = this.props.users;
     const isLoading = params.id && !user;
-    console.log(isLoading)
     const showFeedBackUpdate = params.id && updatedUser;
+    if (!params.id) {
+      user = null;
+    }
     if (params.id && !user) {
       return <MissoesLoading />
     }
