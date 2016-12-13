@@ -101,7 +101,7 @@ export function insertMissionError(error) {
   }
 }
 
-//WE MUST remove everything that is tied to this especific mission. (ALL associative data)
+//WE MUST remove everything that is tied to this especific mission. (ALL associative data removed in the back-end)
 export function removeMission(mission, dispatch) {
   //axios.delete... please remember to add inside then() callback..
   axios.post('/missoes/missions/remove/', mission)
@@ -113,6 +113,40 @@ export function removeMission(mission, dispatch) {
     })
   return {
     type: 'REQUEST_DELETE_MISSION_PENDING'
+  }
+}
+
+export function updateMission(mission, missionPlanner, dispatch) {
+  if (missionPlanner){
+    axios.post('/missoes/missions/insert', mission.mission)
+    .then((missionResponse) => {
+      dispatch(updateMissionDone(missionResponse.data, mission, dispatch))
+    })
+    .catch((error) => {
+      dispatch(updateMissionError(error))
+    })
+  } else {
+    dispatch(updateMissionError("Um usuário é necessário para associar à missão"))
+  }
+  return {
+    type: 'REQUEST_UPDATE_MISSION_PENDING'
+  }
+}
+
+export function updateMissionDone(updatedMission, mission, dispatch) {
+  dispatch(insertMissionPlanner(updatedMission, mission, dispatch));
+  dispatch(insertMissionPassengers(updatedMission, mission, dispatch))
+  dispatch(insertMissionPilots(updatedMission, mission, dispatch))
+  return {
+    type: 'REQUEST_UPDATE_MISSION_FULFILLED',
+    payload: mission
+  }
+}
+
+export function updateMissionError(error) {
+  return {
+    type: 'REQUEST_UPDATE_MISSION_ERROR',
+    payload: error,
   }
 }
 
@@ -258,6 +292,13 @@ export function insertMissionPassengersError(error) {
   }
 }
 
+export function updateMissionPassengers() {
+  //axios.post
+  return {
+    
+  }
+}
+
 
 export function removeMissionPassengers(mission, dispatch) {
   return {
@@ -278,8 +319,8 @@ export function removeMissionPassengersError(error) {
   }
 }
 
-export function findMissionPassengersByMission(mission, dispatch) {
-  axios.post('/missoes/missions/missionPassengersByMission', mission)
+export function findMissionPassengersByMission(missionId, dispatch) {
+  axios.get('/missoes/missions/missionPassengersByMission/' + missionId)
     .then((missionPassengersResponse) => {
       dispatch(missionPassengers(missionPassengersResponse.data))
     })
@@ -349,8 +390,8 @@ export function removeMissionPilots(mission) {
  }
 }
 
-export function findMissionPilotsByMission(mission, dispatch) {
-  axios.post('/missoes/missions/missionPilotsByMission', mission)
+export function findMissionPilotsByMission(missionId, dispatch) {
+  axios.get('/missoes/missions/missionPilotsByMission/' + missionId)
     .then((missionPilotsResponse) => {
       dispatch(missionPilotsByMission(missionPilotsResponse.data))
     })

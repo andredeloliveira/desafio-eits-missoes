@@ -56,14 +56,14 @@ public class MissionController {
 		return missionPlannerService.findMissionPlannerByMission(mission);
 	}
 	
-	@RequestMapping(value = "/missions/missionPassengersByMission", method = RequestMethod.POST)
-	public List<MissionPassenger> findMissionPassengersByMission(@RequestBody Mission mission){
-		return missionPassengerService.findMissionPassengerByMission(mission);
+	@RequestMapping(value = "/missions/missionPassengersByMission/{id}", method = RequestMethod.GET)
+	public List<MissionPassenger> findMissionPassengersByMission(@PathVariable("id") Long missionId){
+		return missionPassengerService.findMissionPassengerByMission(missionId);
 	}
 	
-	@RequestMapping(value = "/missions/missionPilotsByMission", method = RequestMethod.POST)
-	public List<MissionPilot> findMissionPilotsByMission(@RequestBody Mission mission){
-		return missionPilotService.findMissionPilotByMission(mission);
+	@RequestMapping(value = "/missions/missionPilotsByMission/{id}", method = RequestMethod.GET)
+	public List<MissionPilot> findMissionPilotsByMission(@PathVariable("id") Long missionId){
+		return missionPilotService.findMissionPilotByMission(missionId);
 	}
 	
 	/**/

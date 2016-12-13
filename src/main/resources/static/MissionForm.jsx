@@ -21,7 +21,7 @@ import { MissionPilots } from './MissionPilots.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 import { findAllPilots, findAllPassengers } from './actions/userActions';
 import { findAllAirports } from './actions/airportActions';
-import { insertMission, findMissionById } from './actions/missionActions';
+import { insertMission, findMissionById, updateMission, findMissionPassengersByMission, findMissionPilotsByMission } from './actions/missionActions';
 import { uploadFile } from './actions/fileUploadActions';
 
 
@@ -70,22 +70,27 @@ export class MissionForm extends React.Component {
     this.renderSelectedPilots = this.renderSelectedPilots.bind(this);
     this.renderPassengersAutoComplete = this.renderPassengersAutoComplete.bind(this);
     this.renderPilotsAutoComplete = this.renderPilotsAutoComplete.bind(this);
+    this.renderCurrentPassengersForUpdate = this.renderCurrentPassengersForUpdate.bind(this);
+    this.renderCurrentPilotsForUpdate = this.renderCurrentPilotsForUpdate.bind(this);
     this.submitData = this.submitData.bind(this);
-    this.currentTime = this.currentTime.bind(this);
-    this.currentDate = this.currentDate.bind(this);
+    this.currentDateTime = this.currentDateTime.bind(this);
+    this.missionToErrorText = this.missionToErrorText.bind(this);
+    this.missionFromText = this.missionFromText.bind(this);
   }
 
   componentWillMount() {
     const { dispatch, params } = this.props;
+    //if we are updating all the data needed will be loaded, yaay!
     if (params.id) {
       dispatch(findMissionById(params.id, dispatch))
+      dispatch(findMissionPassengersByMission(params.id, dispatch))
+      dispatch(findMissionPilotsByMission(params.id, dispatch))
     }
     dispatch(findAllAirplanes(dispatch))
     dispatch(findAllPilots(dispatch))
     dispatch(findAllPassengers(dispatch))
     dispatch(findAllAirports(dispatch))
   }
-
 
   airplaneOptionsRender() {
     const { airplanes } = this.props.airplanes;
@@ -101,6 +106,7 @@ export class MissionForm extends React.Component {
       return <MissoesLoading />
     }
   }
+
 
   mappedPassengers() {
     const { passengers } = this.props.users;
@@ -161,8 +167,26 @@ export class MissionForm extends React.Component {
     this.setState({ selectedPilots })
   }
 
+  renderCurrentPassengersForUpdate() {
+    const chipStyle = { margin: 4}
+    const { missionPassengers } = this.props.missions;
+    if (missionPassengers) {
+      return missionPassengers.map((passenger) => {
+        return  <Chip
+                style={chipStyle}
+                key={passenger.passenger.id}
+                onRequestDelete={this.handleDeleteSelectedPassenger.bind(this, passenger.passenger)}
+                >
+                {passenger.passenger.name}
+               </Chip>
+      })
+    }
+  }
+
   renderSelectedPassengers() {
     const chipStyle = { margin: 4}
+    const { params, dispatch } = this.props;
+    const { mission, missionPassengers } = this.props.missions;
     return this.state.selectedPassengers.map((passenger) => {
       return <Chip
               style={chipStyle}
@@ -174,8 +198,26 @@ export class MissionForm extends React.Component {
     })
   }
 
+  renderCurrentPilotsForUpdate() {
+    const chipStyle = { margin: 4}
+    const { missionPilots } = this.props.missions;
+    if (missionPilots) {
+      return missionPilots.map((pilot) => {
+        return  <Chip
+          style={chipStyle}
+          key={pilot.pilot.id}
+          onRequestDelete={this.handleDeleteSelectedPilot.bind(this, pilot.pilot)}
+          >
+          {pilot.pilot.name}
+        </Chip>
+      })
+    }
+  }
+
   renderSelectedPilots() {
     const chipStyle = { margin: 4}
+    const { params, dispatch } = this.props;
+    const { mission } = this.props.missions;
     return this.state.selectedPilots.map((pilot) => {
       return <Chip
                 style={chipStyle}
@@ -206,38 +248,46 @@ export class MissionForm extends React.Component {
   }
   submitData(event) {
     event.preventDefault();
-    const { dispatch } = this.props;
+    const { dispatch, params } = this.props;
+    const { mission, missionPassengers, missionPilots } = this.props.missions;
     const { file } = this.props.fileUpload;
-    //Sometimes the user is not present in the Redux Store, so we get it from the sessionStorage variable ;), which is still valid
     const currentUser = this.props.auth.currentUser;
-    const mission = {
+    const updatingCondition = mission && params.id;
+    const newMission = {
       mission: {
         dateTime: event.target.date.value + ' ' + event.target.time.value,
-        missionTo: this.state.selectedTo,
-        missionFrom: this.state.selectedFrom,
+        missionTo: this.state.selectedTo || mission.missionTo,
+        missionFrom: this.state.selectedFrom || mission.missionTo,
         airplane: JSON.parse(event.target.airplane.value),
         reason: event.target.reason.value,
-        //Will have to have it null and then pass it as a MultiPartFile..
         attachedFile: null,
       },
       planner: currentUser,
       passengers: this.state.selectedPassengers,
       pilots: this.state.selectedPilots,
     }
-    dispatch(insertMission(mission, currentUser, dispatch))
-    //cleaning all fields
-    event.target.date.value = '';
-    event.target.time.value = '';
-    event.target.airplane.value = '';
-    event.target.reason.value = '';
-    this.setState({
-      selectedPassengers: [],
-      selectedPilots: [],
-      pilotsSearchInput: ' ',
-      passengersSearchInput: ' ',
-      selectedTo: null,
-      selectedFrom: null,
-    })
+    if (updatingCondition) {
+      newMission.id = mission.id;
+      
+      console.log(newMission)
+      //dispatch(updateMission(newMission, currentUser, dispatch))
+    } else {
+      dispatch(insertMission(newMission, currentUser, dispatch))
+      //cleaning all fields that I'm actually able to ;/
+      event.target.date.value = '';
+      event.target.time.value = '';
+      event.target.airplane.value = '';
+      event.target.reason.value = '';
+      this.setState({
+        selectedPassengers: [],
+        selectedPilots: [],
+        //TODO find a way to erase the value of the inputs here...
+        pilotsSearchInput: ' ',
+        passengersSearchInput: ' ',
+        selectedTo: null,
+        selectedFrom: null,
+      })
+    }
   }
 
 
@@ -302,15 +352,12 @@ export class MissionForm extends React.Component {
     })
   }
 
-  currentTime() {
-    const { dateTime } = this.props.mission;
-    return new Date(dateTime.split(' ')[1])
-  }
-
-  //There is a bug in the component :(
-  currentDate() {
-    const { dateTime } = this.props.mission;
-    return new Date(dateTime)
+  currentDateTime() {
+    const { params } = this.props;
+    if (params.id) {
+      const { dateTime } = this.props.missions.mission;
+      return new Date(dateTime)
+    } else return null;
   }
 
   parseAirplaneForSelect(airplane) {
@@ -318,10 +365,44 @@ export class MissionForm extends React.Component {
       airplane.airplaneModel.name + ' - ' + airplane.subscriptionNumber;
   }
 
+  missionToErrorText() {
+    const { params } = this.props;
+    if (! params.id && !this.state.selectedTo) {
+      return 'Escolha a o destino'
+    } else return null;
+  }
+
+  missionFromText() {
+    const { params } = this.props;
+    if(! params.id && !this.state.selectedFrom) {
+      return 'Escolha a origem'
+    } else return null;
+  }
+
+  editPilots() {
+    const { missionPilots } = this.props.missions;
+    const mappedMissionPilots = missionPilots.map((missionPilot) => {
+      return missionPilot.pilot
+    })
+    this.setState({
+      selectedPilots: mappedMissionPilots,
+    })
+  }
+
+  editPassengers() {
+    const { missionPassengers } = this.props.missions;
+    const mappedMissionPassengers = missionPassengers.map((missionPassenger) => {
+        return missionPassenger.passenger
+    })
+    this.setState({
+      selectedPassengers: mappedMissionPassengers,
+    })
+  }
+
   render() {
     const chipsWrapper = { display: 'flex', flexWrap: 'wrap'}
     const { params } = this.props;
-    const { mission, newMission, inserting, updating, updatedMission } = this.props.missions;
+    const { mission, newMission, inserting, updating, updatedMission, missionPassengers, missionPilots } = this.props.missions;
     let isLoading = params.id && !mission;
     if (isLoading) {
       return <MissoesLoading />
@@ -335,10 +416,12 @@ export class MissionForm extends React.Component {
                 floatingLabelText="Data*"
                 fullWidth={true}
                 name="date"
+                defaultDate={this.currentDateTime()}
                 />
               <TimePicker
                 hintText="Hora"
                 floatingLabelText="Hora*"
+                defaultTime={this.currentDateTime()}
                 format="24hr"
                 fullWidth={true}
                 name="time"
@@ -359,16 +442,18 @@ export class MissionForm extends React.Component {
                   floatingLabelText="Origem*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateFrom}
+                  searchText={ mission ?  mission.missionFrom.acronym + ' - ' + mission.missionFrom.name : ''}
                   fullWidth={true}
-                  errorText={!this.state.selectedFrom ? 'Escolha a origem' : null}
+                  errorText={mission ? null : this.missionFromText()}
                   />
                 <AutoComplete
                   hintText="Destino"
                   floatingLabelText="Destino*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateTo}
+                  searchText={ mission ?  mission.missionTo.acronym + ' - ' + mission.missionTo.name : ''}
                   fullWidth={true}
-                  errorText={!this.state.selectedTo ? 'Escolha o destino' :  null}
+                  errorText={mission ? null : this.missionToErrorText()}
                   />
                 <AutoComplete
                   hintText="Passageiro"
@@ -380,8 +465,13 @@ export class MissionForm extends React.Component {
                   errorText={this.state.selectedPilots.length < 0 ? 'Escolha ao menos um passageiro' : null}
                 />
               <div style={chipsWrapper}>
-                  { this.renderSelectedPassengers() }
-                </div>
+                    {this.renderCurrentPassengersForUpdate()}
+                    {missionPassengers ? <a className="mui-btn mui-btn--raised" onClick={this.editPassengers.bind(this)}>Editar Passageiros</a> : null}
+              </div>
+              <div style={chipsWrapper}>
+                { missionPassengers ? <span>Novos passageiros</span> : null}
+                { this.renderSelectedPassengers() }
+              </div>
               <AutoComplete
                 hintText="Piloto"
                 floatingLabelText="Piloto*"
@@ -391,7 +481,12 @@ export class MissionForm extends React.Component {
                 fullWidth={true}
               />
               <div style={chipsWrapper}>
-                { this.renderSelectedPilots() }
+                  { this.renderCurrentPilotsForUpdate() }
+                  { missionPilots ? <a className="mui-btn mui-btn--raised" onClick={this.editPilots.bind(this)}>Editar Pilotos</a> : null}
+              </div>
+              <div style={chipsWrapper}>
+                 { missionPilots ?  <span>Novos pilotos</span> : null}
+                 { this.renderSelectedPilots() }
               </div>
               <Files
                 className="files-dropzone"

@@ -45,7 +45,7 @@ export class AirplaneForm extends React.Component {
     event.preventDefault();
     const { dispatch, params } = this.props;
     const { airplane } = this.props.airplanes;
-    const updatingCondition = airplane && params.id
+    const updatingCondition = airplane && params.id;
     const newAirplane = {
       seatsNumber: event.target.seatsNumber.value,
       subscriptionNumber: event.target.subscriptionNumber.value,
@@ -54,8 +54,9 @@ export class AirplaneForm extends React.Component {
     if (updatingCondition) {
       newAirplane.id = airplane.id
       dispatch(updateAirplane(newAirplane, dispatch))
+    } else {
+      dispatch(insertAirplane(newAirplane, dispatch))
     }
-    dispatch(insertAirplane(newAirplane, dispatch))
   }
 
 

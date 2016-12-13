@@ -19,6 +19,9 @@ public class MissionPassengerService {
 	@Autowired(required = false)
 	IMissionPassengerRepository missionPassengerRepository;
 	
+	@Autowired(required = false)
+	MissionService missionService;
+	
 	@Transactional
 	public void removeMissionPassengerById(Long id) {
 		missionPassengerRepository.delete(id);
@@ -45,7 +48,8 @@ public class MissionPassengerService {
 	}
 	
 	@Transactional
-	public List<MissionPassenger> findMissionPassengerByMission(Mission mission) {
+	public List<MissionPassenger> findMissionPassengerByMission(Long missionId) {
+		Mission mission = missionService.findMissionById(missionId);
 		return missionPassengerRepository.findMissionPassengerByMission(mission);
 	}
 }
