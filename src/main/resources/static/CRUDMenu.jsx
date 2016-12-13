@@ -34,11 +34,11 @@ export class CRUDMenu extends React.Component {
   }
 
   render() {
-    const { remove, data, dispatch, name } = this.props;
+    const { remove, data, dispatch, name, find } = this.props;
     return (
       <div>
         {this.isAdmin() ? <UpdateButton name={name} data={data}/>: null}
-        {this.isAdmin() ? <RemoveButton action={remove} data={data} dispatch={dispatch} /> : null}
+        {this.isAdmin() ? <RemoveButton actions={{remove: remove, find: find}} data={data} dispatch={dispatch} /> : null}
         <DetailsButton name={name} data={data} />
         {this.renderCustomButtons()}
       </div>

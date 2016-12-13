@@ -83,10 +83,10 @@ export class RemoveButton extends React.Component {
   }
 
   remove() {
-    const { action, data, dispatch } = this.props;
+    const { actions, data, dispatch } = this.props;
     //execute the action passed with the data (if needed)
     if (data) {
-      action(data, dispatch);
+      actions.remove(data, dispatch);
     } else {
       action();
     }

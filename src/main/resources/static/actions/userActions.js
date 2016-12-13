@@ -106,7 +106,7 @@ export function removeUser(user, dispatch) {
   const _id = user.id;
   axios.delete('/missoes/users/remove/' + _id, user.id)
     .then((user) => {
-      dispatch(removeUserDone(user))
+      dispatch(removeUserDone(user, dispatch))
     })
     .catch((error) => {
       dispatch(removeUserError(error))
@@ -116,7 +116,8 @@ export function removeUser(user, dispatch) {
   }
 }
 
-export function removeUserDone(user) {
+export function removeUserDone(user, dispatch) {
+  dispatch(findAllUsers(dispatch))
   return {
     type: 'REQUEST_REMOVE_USER_FULFILLED',
     payload: user

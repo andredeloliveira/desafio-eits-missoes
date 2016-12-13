@@ -58,7 +58,7 @@ public class MissionService {
 		//YAEHYAAA.. one is gone!, now the rest... but will be a little bit trickier with the passengers
 		//now for all the passengers.. we might need a foreach..
 		//we will need them to delete... of course!
-		List<MissionPassenger> allMissionPassengersFromMissionToBeDeleted = missionPassengerService.findMissionPassengerByMission(missionToDelete);
+		List<MissionPassenger> allMissionPassengersFromMissionToBeDeleted = missionPassengerService.findMissionPassengerByMission(missionToDelete.getId());
 		//now we can delete them!
 		for(Iterator<MissionPassenger> i = allMissionPassengersFromMissionToBeDeleted.iterator(); i.hasNext();) {
 			//so, for each mother, just delete the person! EXCLUSIONNN
@@ -66,7 +66,7 @@ public class MissionService {
 			missionPassengerService.removeMissionPassengerById(passengerThatWillBeGone.getId());
 		}
 		//pheww! Now we can delete the Pilots as well!
-		List<MissionPilot> allMissionPilotsFromMissionToBeDeleted = missionPilotService.findMissionPilotByMission(missionToDelete);
+		List<MissionPilot> allMissionPilotsFromMissionToBeDeleted = missionPilotService.findMissionPilotByMission(missionToDelete.getId());
 		//got them, phew
 		for (Iterator<MissionPilot> j = allMissionPilotsFromMissionToBeDeleted.iterator(); j.hasNext();) {
 			MissionPilot pilotThatWillBeGone = j.next();
