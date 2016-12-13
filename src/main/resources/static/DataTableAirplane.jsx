@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MuiDataTable } from 'mui-data-table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { removeAirplane } from './actions/airplaneActions';
@@ -21,26 +21,24 @@ export class DataTableAirplane extends React.Component {
   formattedFetchedData() {
     const { dispatch, name } = this.props;
     const { airplanes } = this.props.data;
-    const { removedAirplane }  = this.props.airplanes;
-    if (removedAirplane) {
-      airplanes.splice(removedAirplane, 1);
-    }
     return airplanes.map((airplane) => {
-      return {
-        id: airplane.id,
-        totalFlightTime: airplane.totalFlightTime,
-        seatsNumber: airplane.seatsNumber,
-        totalFlightTime: airplane.totalFlightTime || '0',
-        subscriptionNumber: airplane.subscriptionNumber,
-        airplaneModel: airplane.airplaneModel.name,
-        options: <CRUDMenu
-                  data={airplane}
-                  customButtons={null}
-                  remove={removeAirplane}
-                  dispatch={dispatch}
-                  name={name}
-                />
-      }
+      return (
+        <TableRow>
+          <TableRowColumn>{airplane.subscriptionNumber}</TableRowColumn>
+          <TableRowColumn>{airplane.airplaneModel.name}</TableRowColumn>
+          <TableRowColumn>{airplane.totalFlightTime || '0'}</TableRowColumn>
+          <TableRowColumn>{airplane.seatsNumber}</TableRowColumn>
+          <TableRowColumn>
+            <CRUDMenu
+              data={airplane}
+              customButtons={null}
+              remove={removeAirplane}
+              dispatch={dispatch}
+              name={name}
+              />
+          </TableRowColumn>
+        </TableRow>
+      )
     });
   }
 
@@ -48,34 +46,21 @@ export class DataTableAirplane extends React.Component {
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
     }
-    let data = this.formattedFetchedData()
-    let config = {
-      paginated: true,
-      data: data,
-      search: 'subscriptionNumber|totalFlightTime|airplaneModel',
-      columns: [
-        {
-          property: 'subscriptionNumber',
-          title: 'Matrícula'
-        },
-        {
-          property: 'airplaneModel',
-          title: 'Modelo'
-        },
-        {
-          property: 'totalFlightTime',
-          title: 'Horas de Vôo'
-        },
-        {
-          property: 'options',
-          title: 'Opções'
-        }
-      ]
-    }
     return (
-      <div>
-        <MuiDataTable config={config} />
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Matrícula</TableHeaderColumn>
+            <TableHeaderColumn>Modelo</TableHeaderColumn>
+            <TableHeaderColumn>Horas de vôo</TableHeaderColumn>
+            <TableHeaderColumn>Número Assentos</TableHeaderColumn>
+            <TableHeaderColumn>Opções</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {this.formattedFetchedData()}
+        </TableBody>
+      </Table>
     )
   }
 

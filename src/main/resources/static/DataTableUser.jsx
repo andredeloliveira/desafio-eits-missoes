@@ -59,11 +59,6 @@ export class DataTableUser extends React.Component {
     })
   }
 
-  renderData() {
-    const { users } = this.props.data;
-    console.log(users);
-  }
-
   render() {
     if (!this.props.data.users) {
       return <MissoesLoading />

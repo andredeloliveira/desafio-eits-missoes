@@ -95,19 +95,19 @@ export class AirplaneForm extends React.Component {
                 required={true}
                 floatingLabel={true}
                 name="subscriptionNumber"
-                defaultValue={!isLoading ? airplane.subscriptionNumber : ''}
+                defaultValue={airplane ? airplane.subscriptionNumber : ''}
               />
               <TextField
                 hintText="Numero de Assentos*"
                 type="number"
                 fullWidth={true}
                 name="seatsNumber"
-                defaultValue={!isLoading ? airplane.seatsNumber : '' }
+                defaultValue={airplane ? airplane.seatsNumber : '' }
                 onChange={this.setSeatsNumber}
               />
             <div className="mui-select">
                 <select name="airplaneModel">
-                  {!isLoading ? <option label={this.parseAirplaneForSelect(airplane)} value={JSON.stringify(airplane.airplaneModel)}/>
+                  {airplane ? <option label={this.parseAirplaneForSelect(airplane)} value={JSON.stringify(airplane.airplaneModel)}/>
                   :null}
                   {this.airplaneModelsOptionsRender()}
                 </select>

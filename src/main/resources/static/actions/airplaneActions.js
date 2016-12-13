@@ -112,7 +112,7 @@ export function removeAirplane(airplane, dispatch) {
   const _id = airplane.id
   axios.delete('/missoes/airplanes/remove/' + _id, airplane.id)
     .then(() => {
-      dispatch(removeAirplaneDone(airplane))
+      dispatch(removeAirplaneDone(airplane, dispatch))
     })
     .catch((error) => {
       dispatch(removeAirplaneError(error))
@@ -122,7 +122,8 @@ export function removeAirplane(airplane, dispatch) {
   }
 }
 
-export function removeAirplaneDone(removedAirplane) {
+export function removeAirplaneDone(removedAirplane, dispatch) {
+  dispatch(findAllAirplanes(dispatch))
   return {
     type: 'REQUEST_REMOVE_AIRPLANE_FULFILLED',
     payload: removedAirplane
