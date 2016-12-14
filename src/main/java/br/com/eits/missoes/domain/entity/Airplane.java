@@ -45,6 +45,16 @@ public class Airplane {
 	private int seatsNumber;
 
 	
+	private String exception;
+	
+	public String getException() {
+		return exception;
+	}
+	
+	public void setException(String exception) {
+		this.exception = exception;
+	}
+	
 	public Airplane(Long id) {
 		this.id = id;
 	}

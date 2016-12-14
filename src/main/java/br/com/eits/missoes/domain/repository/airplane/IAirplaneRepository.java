@@ -13,5 +13,4 @@ public interface IAirplaneRepository extends JpaRepository<Airplane, Long>{
 	List<Airplane> findAirplaneByAirplaneModel(AirplaneModel airplaneModel);
 	Airplane findAirplaneBySubscriptionNumber(String subscriptionNumber);
 	Airplane findAirplaneBySeatsNumber(Integer seatsNumber);
-	
 }

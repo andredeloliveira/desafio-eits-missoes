@@ -65,7 +65,7 @@ export default function airplaneReducer(state = initialState, action) {
         inserted: true,
         newAirplane: action.payload
       }
-    case 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR':
+    case 'REQUEST_INSERT_AIRPLANE_ERROR':
       return {
         ...state,
         error: action.payload

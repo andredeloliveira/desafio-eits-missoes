@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +33,14 @@ public class AirplaneController {
 	}
 	
 	@RequestMapping(value="/airplanes/insert", method = RequestMethod.POST)
-	public Airplane insertAirplane(@Valid @RequestBody Airplane airplane, BindingResult result) {
-		if (result.hasErrors()) {
-			return null;
+	public ResponseEntity<Airplane> insertAirplane(@Valid @RequestBody Airplane airplane) {
+		Airplane hasSubscriptionNumber = airplaneService.findAirplaneBySubscriptionNumber(airplane.getSubscriptionNumber());
+		if (hasSubscriptionNumber != null) {
+			Airplane responseAirplane = new Airplane();
+			responseAirplane.setException("Matrícula já existente");
+			return ResponseEntity.ok(responseAirplane);
 		}
-		return airplaneService.insertAirplane(airplane);
+		return ResponseEntity.ok(airplaneService.insertAirplane(airplane));
 	}
 	
 	@RequestMapping(value="/airplanes/remove/{id}", method = RequestMethod.DELETE)

@@ -30,6 +30,7 @@ export class AirplaneForm extends React.Component {
       subscriptionNumber: null,
     }
     this.submitData = this.submitData.bind(this);
+    this.renderError = this.renderError.bind(this);
 
   }
 
@@ -79,6 +80,17 @@ export class AirplaneForm extends React.Component {
     return airplane.airplaneModel.manufacturer.name + ' - ' + airplane.airplaneModel.name;
   }
 
+  renderError() {
+    const { error } = this.props.airplanes;
+    const errorStyle = {
+      fontSize: "2em",
+      color: "#FF0000"
+    }
+    if (error) {
+      return ( <div><span style={errorStyle}>{error}</span></div> )
+    }
+  }
+
   render() {
 
     const { airplane, newAirplane, inserting, inserted, updating, updated, updatedAirplane } = this.props.airplanes;
@@ -115,6 +127,7 @@ export class AirplaneForm extends React.Component {
                   {this.airplaneModelsOptionsRender()}
                 </select>
               </div>
+              {this.renderError()}
               <Button variant="raised">Salvar</Button>
           </Form>
           {updating ?

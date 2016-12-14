@@ -337,11 +337,11 @@ export class MissionForm extends React.Component {
 
   handleUpdateFiles(files) {
     const { dispatch } = this.props;
-    const { file } = this.props.fileUpload;
-    dispatch(uploadFile(files[0], dispatch))
-    if (file) {
+    //dispatch(uploadFile(files[0], dispatch))
+    console.log(files)
+    if (files) {
       this.setState({
-        file: file
+        file: files[0]
       })
     }
   }
@@ -406,7 +406,6 @@ export class MissionForm extends React.Component {
     let isLoading = params.id && !mission;
     const showCurrentPassengers = params.id && missionPassengers;
     const showCurrentPilots = params.id && missionPilots;
-
     if (isLoading) {
       return <MissoesLoading />
     }
@@ -419,12 +418,12 @@ export class MissionForm extends React.Component {
                 floatingLabelText="Data*"
                 fullWidth={true}
                 name="date"
-                defaultDate={params.id ? this.currentDateTime() : null}
+                defaultDate={params.id ? this.currentDateTime() : new Date()}
                 />
               <TimePicker
                 hintText="Hora"
                 floatingLabelText="Hora*"
-                defaultTime={params.id ? this.currentDateTime() : null}
+                defaultTime={params.id ? this.currentDateTime() : new Date()}
                 format="24hr"
                 fullWidth={true}
                 name="time"
@@ -492,14 +491,15 @@ export class MissionForm extends React.Component {
                  { this.renderSelectedPilots() }
               </div>
               <Files
-                className="files-dropzone"
                 onChange={this.handleUpdateFiles}
                 onError={this.handleUpdateFilesError}
                 maxFileSize={10000000}
                 minFileSize={0}
+                maxFiles={1}
                 clickable
                 >
                 <FlatButton label="Anexar.." />
+                <span>{this.state.file ? this.state.file.name : '' }</span>
               </Files>
               <Button variant="raised">Salvar</Button>
         </Form>

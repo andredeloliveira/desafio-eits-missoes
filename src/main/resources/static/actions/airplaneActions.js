@@ -68,6 +68,12 @@ export function insertAirplane(airplane, dispatch) {
 }
 
 export function insertAirplaneDone(newAirplane) {
+  if (newAirplane.exception) {
+    return {
+      type: 'REQUEST_INSERT_AIRPLANE_ERROR',
+      payload: newAirplane.exception,
+    }
+  }
   return {
     type: 'REQUEST_INSERT_AIRPLANE_FULFILLED',
     payload: newAirplane
@@ -77,7 +83,7 @@ export function insertAirplaneDone(newAirplane) {
 export function insertAirplaneError(error) {
   return {
     type: 'REQUEST_INSERT_AIRPLANE_ERROR',
-    error: error
+    payload: error
   }
 }
 
