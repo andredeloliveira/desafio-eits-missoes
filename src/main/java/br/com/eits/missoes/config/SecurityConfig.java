@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login").permitAll()
 			.loginProcessingUrl("/login")
 			.permitAll()
-			.defaultSuccessUrl("/")
+			.defaultSuccessUrl("/currentUser")
 			.and().logout().logoutUrl("/logout")
 			.logoutSuccessUrl("/")
 			.and()
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-        	.antMatchers(HttpMethod.OPTIONS, "/**")
+        	.antMatchers(HttpMethod.POST, "/**")
         	.antMatchers("/login");
     }
 	

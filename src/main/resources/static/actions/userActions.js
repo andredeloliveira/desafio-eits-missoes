@@ -62,6 +62,12 @@ export function insertUser(user, dispatch) {
 }
 
 export function insertUserDone(newUser) {
+  if (newUser.exception) {
+    return {
+      type: 'REQUEST_INSERT_USER_ERROR',
+      payload: newUser.exception,
+    }
+  }
   return {
     type: 'REQUEST_INSERT_USER_FULFILLED',
     payload: newUser,

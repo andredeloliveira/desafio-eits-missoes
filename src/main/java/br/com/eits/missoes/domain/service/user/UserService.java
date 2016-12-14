@@ -49,8 +49,21 @@ public class UserService {
 	}
 	
 	@Transactional
+	public User findUserByEmail(User user) {
+		Optional<User> userOptionalFind = userRepository.findByEmailIgnoreCase(user.getEmail());
+		User userFindResponse = userOptionalFind.orElse(null);
+		return userFindResponse;
+	}
+	
+	
+	@Transactional
 	public List<User> findAllPilots() {
 		return userRepository.findUserByProfile(Profile.PILOTO);
+	}
+	
+	@Transactional
+	public Optional<User> findByEmailIgnoreCaseAndStatusTrue(String email) {
+		return userRepository.findByEmailIgnoreCase(email);
 	}
 	
 	@Transactional

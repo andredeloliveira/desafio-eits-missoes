@@ -68,9 +68,13 @@ export class UserForm extends React.Component {
   }
 
   render() {
+    const errorStyle = {
+      fontSize: "2em",
+      color: "#FF0000"
+    }
     const { params } = this.props;
     let { user } = this.props.users;
-    const {  newUser, inserting, updating, updatedUser } = this.props.users;
+    const {  newUser, inserting, updating, updatedUser, error } = this.props.users;
     const isLoading = params.id && !user;
     const showFeedBackUpdate = params.id && updatedUser;
     if (!params.id) {
@@ -97,6 +101,9 @@ export class UserForm extends React.Component {
               <select name="perfilAcesso" defaultValue={user ? user.perfilAcesso : ''}>
                 { this.userProfilesRender() }
               </select>
+            </div>
+            <div style={errorStyle}>
+              {error ? <span>{error}</span> : null}
             </div>
             <Button variant="raised">Salvar</Button>
           </Form>

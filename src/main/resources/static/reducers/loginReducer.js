@@ -1,7 +1,7 @@
 const initialState = {
   loggedIn: false,
   logging: false,
-  currentUser: null
+  currentUser: null,
 }
 
 export default function loginReducer(state = initialState, action){
@@ -29,6 +29,26 @@ export default function loginReducer(state = initialState, action){
         error: null,
         currentUser: null,
         loggedIn: false,
+      }
+    }
+    case 'REQUEST_CURRENT_USER_PENDING': {
+      return {
+        ...state,
+        logging: true,
+      }
+    }
+    case 'REQUEST_CURRENT_USER_FULFILLED': {
+      return {
+        ...state,
+        currentUser: action.payload,
+        loggedIn: true,
+      }
+    }
+    case 'REQUEST_CURRENT_USER_ERROR': {
+      return {
+        ...state,
+        loggedIn: false,
+        logging: false,
       }
     }
     default:

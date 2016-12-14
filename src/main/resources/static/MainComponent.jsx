@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
 import { Login } from './Login.jsx';
+import { getCurrentUser } from './actions/loginActions';
 
 @connect((Store) => {
   return {
@@ -15,19 +16,11 @@ export class MainComponent extends React.Component {
     super(props);
   }
 
-  handleCurrentUserState() {
-    const { currentUser } = sessionStorage.getItem('currentUser');
-    if (currentUser) {
-      this.setState({
-        currentUser: currentUser,
-      })
-    }
-  }
 
   render() {
     const { main } = this.props;
     const { currentUser } = this.props.login;
-    //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    console.log(currentUser);
     return (
     <div>
       <Header />

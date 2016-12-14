@@ -13,6 +13,33 @@ export function login(user,  dispatch) {
     }
 }
 
+export function getCurrentUser(dispatch) {
+  axios.get('/missoes/currentUser')
+    .then((currentUserResponse) => {
+      dispatch(currentUser(currentUserResponse.data))
+    })
+    .catch((error) => {
+      dispatch(getCurrentUserError(error))
+    })
+  return {
+    type: 'REQUEST_CURRENT_USER_PENDING',
+  }
+}
+
+export function currentUser(currentUserData) {
+  return {
+    type: 'REQUEST_CURRENT_USER_FULFILLED',
+    payload: currentUserData,
+  }
+}
+
+export function getCurrentUserError(error) {
+  return {
+    type: 'REQUEST_CURRENT_USER_ERROR',
+    payload: error,
+  }
+}
+
 export function activeSession(sessionData, dispatch) {
   if (sessionData.exception) {
     return {

@@ -1,13 +1,16 @@
 package br.com.eits.missoes.domain.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,11 +47,20 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/users/insert", method = RequestMethod.POST)
-	User insertUser(@RequestBody User user, BindingResult result) {
+	ResponseEntity<User> insertUser(@RequestBody User user, BindingResult result) {
+		// in case that we are updating... 
 		if (user.getId() == null) {
+			User hasUser = userService.findUserByEmail(user);
+			if (hasUser != null) {
+				User responseUser = new User();
+				responseUser.setException("E-mail já existente");
+				return ResponseEntity.ok(responseUser);
+			}
 			mailer.sendEmail(user);
 		}
-		return userService.insertUser(user);
+		
+		
+		return ResponseEntity.ok(userService.insertUser(user));
 	}
 
 	@RequestMapping(value= "/users/remove/{id}", method = RequestMethod.DELETE)
@@ -66,6 +78,14 @@ public class UserController {
 			userErrorObject.setException("Usuário e/ou senha Incorretos");
 			return ResponseEntity.ok().body(userErrorObject);
 		}
+	}
+	
+	@RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+	public ResponseEntity<User> currentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+		System.out.println(user);
+		Optional<User> optionalCurrentUser = userService.findByEmailIgnoreCaseAndStatusTrue(user.getUsername());
+		optionalCurrentUser.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+		return ResponseEntity.ok(optionalCurrentUser.get());
 	}
 	
 	@RequestMapping(value = "/users/profile/pilots", method = RequestMethod.GET)
