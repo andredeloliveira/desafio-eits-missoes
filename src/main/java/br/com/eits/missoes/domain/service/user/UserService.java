@@ -63,13 +63,12 @@ public class UserService {
 		return userRepository.findUserById(userId);
 	}
 	
-	//TODO find a better way of showing an error. 500 seems too abstract to the user
 	@Transactional
 	public User login(User user) {
 		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
-		Optional<User> userOpt = userRepository.findByEmailIgnoreCaseAndPassword(user.getEmail(), user.getPassword());
-		User nuser = userOpt.orElse(null);
-		return nuser;
+		Optional<User> userOptional = userRepository.findByEmailIgnoreCaseAndPassword(user.getEmail(), user.getPassword());
+		User userOptionalResponse = userOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha não encontrados"));
+		return userOptionalResponse;
 	}
 	
 }

@@ -14,12 +14,10 @@ export function login(user,  dispatch) {
 }
 
 export function activeSession(sessionData, dispatch) {
-  sessionStorage.setItem('currentUser', JSON.stringify(sessionData));
-  sessionStorage.setItem('loggedIn', true);
-  if (sessionData === "") {
+  if (sessionData.exception) {
     return {
       type: 'REQUEST_LOGIN_ERROR',
-      payload: 'E-mail e/ou senha inválidos'
+      payload: sessionData.exception,
     }
   }
   return {
@@ -31,7 +29,7 @@ export function activeSession(sessionData, dispatch) {
 export function loginError(error) {
   return {
     type: 'REQUEST_LOGIN_ERROR',
-    payload: error
+    payload: error,
   }
 }
 

@@ -1,5 +1,7 @@
 package br.com.eits.missoes.domain.entity;
 
+import java.beans.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,6 +46,16 @@ public class User {
 	//TODO(andre): Define a initial value for status (Activated -> Then we can activate it afterwards)
 	@Column(name = "status")
 	private Boolean status;
+	
+	private String exception;
+	
+	public String getException() {
+		return exception;
+	}
+	
+	public void setException(String exception) {
+		this.exception = exception;
+	}
 
 	public Long getId() {
 		return id;

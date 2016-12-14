@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
@@ -56,8 +57,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	User login(@RequestBody User user, BindingResult result){
-		return userService.login(user);
+	ResponseEntity<User>  login(@RequestBody User user, BindingResult result){
+		try {
+			User userTobeLogged = userService.login(user);
+			return ResponseEntity.ok(userTobeLogged);
+		} catch (Exception e) {
+			User userErrorObject = new User();
+			userErrorObject.setException("Usuário e/ou senha Incorretos");
+			return ResponseEntity.ok().body(userErrorObject);
+		}
 	}
 	
 	@RequestMapping(value = "/users/profile/pilots", method = RequestMethod.GET)
