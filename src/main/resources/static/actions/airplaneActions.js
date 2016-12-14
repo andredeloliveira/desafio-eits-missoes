@@ -63,20 +63,20 @@ export function insertAirplane(airplane, dispatch) {
       dispatch(insertUAirplaneError(error))
     })
     return {
-      type: 'REQUEST_INSERT_UPDATE_AIRPLANE_PENDING'
+      type: 'REQUEST_INSERT_AIRPLANE_PENDING'
     }
 }
 
 export function insertAirplaneDone(newAirplane) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_AIRPLANE_FULFILLED',
+    type: 'REQUEST_INSERT_AIRPLANE_FULFILLED',
     payload: newAirplane
   }
 }
 
 export function insertAirplaneError(error) {
   return {
-    type: 'REQUEST_INSERT_UPDATE_AIRPLANE_ERROR',
+    type: 'REQUEST_INSERT_AIRPLANE_ERROR',
     error: error
   }
 }

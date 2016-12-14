@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 import { connect } from 'react-redux';
-import { MuiDataTable } from 'mui-data-table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
@@ -48,21 +48,25 @@ export class DataTableMission extends React.Component {
   formattedFetchedData() {
     const { dispatch, name } = this.props;
     return this.props.missions.missions.map((mission) => {
-      return {
-        id: mission.mission.id,
-        dateTime: moment(mission.mission.dateTime).format('lll'),
-        airplane: mission.mission.airplane.subscriptionNumber + ' - ' + mission.mission.airplane.airplaneModel.name,
-        missionTo: mission.mission.missionTo.acronym + ' - ' + mission.mission.missionTo.name,
-        missionFrom: mission.mission.missionFrom.acronym + ' - ' + mission.mission.missionFrom.name,
-        planner: mission.planner.name,
-        options: <CRUDMenu
-                  data={mission.mission}
-                  dispatch={dispatch}
-                  remove={removeMission}
-                  name={name}
-                  customButtons={this.isPiloto() ? [<FinishFlightButton
-                  key={'finishFlightButton'} mission={mission.mission}/>]: []} />,
-      }
+      return (
+        <TableRow>
+          <TableRowColumn>{moment(mission.mission.dateTime).format('lll')}</TableRowColumn>
+          <TableRowColumn>{mission.mission.airplane.subscriptionNumber + ' - ' + mission.mission.airplane.airplaneModel.name}</TableRowColumn>
+          <TableRowColumn>{mission.mission.missionTo.acronym + ' - ' + mission.mission.missionTo.name}</TableRowColumn>
+          <TableRowColumn>{mission.mission.missionFrom.acronym + ' - ' + mission.mission.missionFrom.name}</TableRowColumn>
+          <TableRowColumn>{mission.planner.name}</TableRowColumn>
+          <TableRowColumn>
+            <CRUDMenu
+              data={mission.mission}
+              dispatch={dispatch}
+              remove={removeMission}
+              name={name}
+              customButtons={this.isPiloto() ? [<FinishFlightButton
+              key={'finishFlightButton'} mission={mission.mission}/>]: []}
+            />
+          </TableRowColumn>
+        </TableRow>
+      )
     })
   }
 
@@ -70,41 +74,23 @@ export class DataTableMission extends React.Component {
     if (!this.props.data.missions) {
       return <MissoesLoading />
     }
-    let config = {
-      paginated: true,
-      data: this.formattedFetchedData(),
-      search: 'planner|missionTo|missionFrom|dateTime',
-      columns: [
-        {
-          property: 'dateTime',
-          title: 'Data/Hora'
-        },
-        {
-          property: 'airplane',
-          title: 'Aeronave'
-        },
-        {
-          property: 'missionFrom',
-          title: 'Origem'
-        },
-        {
-          property: 'missionTo',
-          title: 'Destino'
-        },
-        {
-          property: 'planner',
-          title: 'Planejado Por'
-        },
-        {
-          property: 'options',
-          title: 'Opções'
-        }
-      ]
-    }
+
     return (
-      <div>
-        <MuiDataTable config={config} />
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Data/Hora</TableHeaderColumn>
+            <TableHeaderColumn>Aeronave</TableHeaderColumn>
+            <TableHeaderColumn>Origem</TableHeaderColumn>
+            <TableHeaderColumn>Destino</TableHeaderColumn>
+            <TableHeaderColumn>Planejado Por</TableHeaderColumn>
+            <TableHeaderColumn>Opções</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {this.formattedFetchedData()}
+        </TableBody>
+      </Table>
     )
   }
 }

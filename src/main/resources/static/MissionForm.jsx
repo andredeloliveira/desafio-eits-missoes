@@ -268,7 +268,7 @@ export class MissionForm extends React.Component {
     }
     if (updatingCondition) {
       newMission.id = mission.id;
-      
+
       console.log(newMission)
       //dispatch(updateMission(newMission, currentUser, dispatch))
     } else {
@@ -404,6 +404,9 @@ export class MissionForm extends React.Component {
     const { params } = this.props;
     const { mission, newMission, inserting, updating, updatedMission, missionPassengers, missionPilots } = this.props.missions;
     let isLoading = params.id && !mission;
+    const showCurrentPassengers = params.id && missionPassengers;
+    const showCurrentPilots = params.id && missionPilots;
+
     if (isLoading) {
       return <MissoesLoading />
     }
@@ -416,12 +419,12 @@ export class MissionForm extends React.Component {
                 floatingLabelText="Data*"
                 fullWidth={true}
                 name="date"
-                defaultDate={this.currentDateTime()}
+                defaultDate={params.id ? this.currentDateTime() : null}
                 />
               <TimePicker
                 hintText="Hora"
                 floatingLabelText="Hora*"
-                defaultTime={this.currentDateTime()}
+                defaultTime={params.id ? this.currentDateTime() : null}
                 format="24hr"
                 fullWidth={true}
                 name="time"
@@ -431,10 +434,10 @@ export class MissionForm extends React.Component {
                 floatingLabel={true}
                 required={true}
                 name="reason"
-                defaultValue={ mission ? mission.reason : '' }
+                defaultValue={ params.id ? mission.reason : '' }
                 />
               <Select name="airplane">
-                {mission ? <Option label={this.parseAirplaneForSelect(mission.airplane)} value={JSON.stringify(mission.airplane)} /> : null }
+                {params.id ? <Option label={this.parseAirplaneForSelect(mission.airplane)} value={JSON.stringify(mission.airplane)} /> : null }
                 {this.airplaneOptionsRender() }
               </Select>
                 <AutoComplete
@@ -442,18 +445,18 @@ export class MissionForm extends React.Component {
                   floatingLabelText="Origem*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateFrom}
-                  searchText={ mission ?  mission.missionFrom.acronym + ' - ' + mission.missionFrom.name : ''}
+                  searchText={ params.id ?  mission.missionFrom.acronym + ' - ' + mission.missionFrom.name : ''}
                   fullWidth={true}
-                  errorText={mission ? null : this.missionFromText()}
+                  errorText={params.id ? null : this.missionFromText()}
                   />
                 <AutoComplete
                   hintText="Destino"
                   floatingLabelText="Destino*"
                   dataSource={this.mappedAirports()}
                   onNewRequest={this.handleUpdateTo}
-                  searchText={ mission ?  mission.missionTo.acronym + ' - ' + mission.missionTo.name : ''}
+                  searchText={ params.id ?  mission.missionTo.acronym + ' - ' + mission.missionTo.name : ''}
                   fullWidth={true}
-                  errorText={mission ? null : this.missionToErrorText()}
+                  errorText={params.id ? null : this.missionToErrorText()}
                   />
                 <AutoComplete
                   hintText="Passageiro"
@@ -465,11 +468,11 @@ export class MissionForm extends React.Component {
                   errorText={this.state.selectedPilots.length < 0 ? 'Escolha ao menos um passageiro' : null}
                 />
               <div style={chipsWrapper}>
-                    {this.renderCurrentPassengersForUpdate()}
-                    {missionPassengers ? <a className="mui-btn mui-btn--raised" onClick={this.editPassengers.bind(this)}>Editar Passageiros</a> : null}
+                    {showCurrentPassengers ? this.renderCurrentPassengersForUpdate() :  null}
+                    {showCurrentPassengers ? <a className="mui-btn mui-btn--raised" onClick={this.editPassengers.bind(this)}>Editar Passageiros</a> : null}
               </div>
               <div style={chipsWrapper}>
-                { missionPassengers ? <span>Novos passageiros</span> : null}
+                { showCurrentPassengers ? <span>Novos passageiros</span> : null}
                 { this.renderSelectedPassengers() }
               </div>
               <AutoComplete
@@ -481,11 +484,11 @@ export class MissionForm extends React.Component {
                 fullWidth={true}
               />
               <div style={chipsWrapper}>
-                  { this.renderCurrentPilotsForUpdate() }
-                  { missionPilots ? <a className="mui-btn mui-btn--raised" onClick={this.editPilots.bind(this)}>Editar Pilotos</a> : null}
+                  {showCurrentPilots ? this.renderCurrentPilotsForUpdate() : null}
+                  { showCurrentPilots ? <a className="mui-btn mui-btn--raised" onClick={this.editPilots.bind(this)}>Editar Pilotos</a> : null}
               </div>
               <div style={chipsWrapper}>
-                 { missionPilots ?  <span>Novos pilotos</span> : null}
+                 { showCurrentPilots ?  <span>Novos pilotos</span> : null}
                  { this.renderSelectedPilots() }
               </div>
               <Files

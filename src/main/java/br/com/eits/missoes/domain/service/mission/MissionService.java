@@ -47,34 +47,20 @@ public class MissionService {
 	
 	@Transactional
 	public void removeMission(Mission mission) {
-		//not just thiss!!!
-		// first we have to find all Mission Passengers, Pilots and Planner by Mission!
-		//So, first get the damn mission
 		Mission missionToDelete = findMissionById(mission.getId());
-		//we have the object, so now we have to find the other parts involved.. lets begin with planner
 		MissionPlanner planner = missionPlannerService.findMissionPlannerByMission(missionToDelete);
-		//we have the object! Now we have to remove it!
 		missionPlannerService.removeMissionPlannerById(planner.getId());
-		//YAEHYAAA.. one is gone!, now the rest... but will be a little bit trickier with the passengers
-		//now for all the passengers.. we might need a foreach..
-		//we will need them to delete... of course!
 		List<MissionPassenger> allMissionPassengersFromMissionToBeDeleted = missionPassengerService.findMissionPassengerByMission(missionToDelete.getId());
-		//now we can delete them!
 		for(Iterator<MissionPassenger> i = allMissionPassengersFromMissionToBeDeleted.iterator(); i.hasNext();) {
-			//so, for each mother, just delete the person! EXCLUSIONNN
 			MissionPassenger passengerThatWillBeGone = i.next();
 			missionPassengerService.removeMissionPassengerById(passengerThatWillBeGone.getId());
 		}
-		//pheww! Now we can delete the Pilots as well!
 		List<MissionPilot> allMissionPilotsFromMissionToBeDeleted = missionPilotService.findMissionPilotByMission(missionToDelete.getId());
-		//got them, phew
 		for (Iterator<MissionPilot> j = allMissionPilotsFromMissionToBeDeleted.iterator(); j.hasNext();) {
 			MissionPilot pilotThatWillBeGone = j.next();
 			missionPilotService.removeMissionPilotById(pilotThatWillBeGone.getId());
 		}
-		//wow, that was intense... With all that done and no async operations we can just go on and delete the mission..
 		missionRepository.delete(mission);
-		//I really hope it worksss!
 	}
 	
 	@Transactional
@@ -113,7 +99,7 @@ public class MissionService {
 		return returnedFile;
 	}
 	
-	// It finished the flight updating the total flight hours of the related airplane as well as the status of the mission
+	// It finishes the flight updating the total flight hours of the related airplane as well as the status of the mission
 	@Transactional
 	public Boolean finishFlight(Mission mission) {
 		Long rightNow = Calendar.getInstance().getTimeInMillis();

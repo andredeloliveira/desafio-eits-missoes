@@ -6,6 +6,7 @@ const initialState = {
   removing: false,
   removed: false,
   updating: false,
+  updated: false,
   updatedAirplane: null,
   airplanes: null,
   newAirplane: null,
@@ -73,11 +74,13 @@ export default function airplaneReducer(state = initialState, action) {
       return {
         ...state,
         updating: true,
+        updated: false,
       }
     case 'REQUEST_UPDATE_AIRPLANE_FULFILLED':
       return {
         ...state,
         updating: false,
+        updated: true,
         updatedAirplane: action.payload,
       }
     case 'REQUEST_UPDATE_AIRPLANE_ERROR':

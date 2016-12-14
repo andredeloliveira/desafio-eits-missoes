@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 import Form from 'muicss/lib/react/form';
 import Input from 'muicss/lib/react/input';
 import Button from 'muicss/lib/react/button';
@@ -32,7 +33,7 @@ export class AirplaneForm extends React.Component {
 
   }
 
-  //Dispatching everything before the component is mounted so it will avoid trouble loading the async call
+  //Initializing component, to be ready for insertion and update
   componentWillMount() {
     const { dispatch, params } = this.props;
     if (params.id) {
@@ -56,6 +57,8 @@ export class AirplaneForm extends React.Component {
       dispatch(updateAirplane(newAirplane, dispatch))
     } else {
       dispatch(insertAirplane(newAirplane, dispatch))
+      event.target.seatsNumber.value = ''
+      event.target.subscriptionNumber.value = ''
     }
   }
 
@@ -78,9 +81,9 @@ export class AirplaneForm extends React.Component {
 
   render() {
 
-    const { airplane, newAirplane, inserting, updating, updatedAirplane } = this.props.airplanes;
+    const { airplane, newAirplane, inserting, inserted, updating, updated, updatedAirplane } = this.props.airplanes;
     const { dispatch, params } = this.props;
-    const isLoading = params.id && !airplane;
+    let isLoading = params.id && !airplane;
     const showFeedBackUpdate = params.id && updatedAirplane;
     if (isLoading) {
       return <MissoesLoading />
@@ -95,43 +98,38 @@ export class AirplaneForm extends React.Component {
                 required={true}
                 floatingLabel={true}
                 name="subscriptionNumber"
-                defaultValue={airplane ? airplane.subscriptionNumber : ''}
+                defaultValue={params.id ? airplane.subscriptionNumber : ''}
               />
               <TextField
                 hintText="Numero de Assentos*"
                 type="number"
                 fullWidth={true}
                 name="seatsNumber"
-                defaultValue={airplane ? airplane.seatsNumber : '' }
+                defaultValue={params.id ? airplane.seatsNumber : '' }
                 onChange={this.setSeatsNumber}
               />
             <div className="mui-select">
                 <select name="airplaneModel">
-                  {airplane ? <option label={this.parseAirplaneForSelect(airplane)} value={JSON.stringify(airplane.airplaneModel)}/>
+                  {params.id ? <option label={this.parseAirplaneForSelect(airplane)} value={JSON.stringify(airplane.airplaneModel)}/>
                   :null}
                   {this.airplaneModelsOptionsRender()}
                 </select>
               </div>
               <Button variant="raised">Salvar</Button>
           </Form>
-          {inserting ?
-          <Formfeedback
-            message={"Inserindo nova aeronave.."}
-            duration={3000}
-          /> :null}
           {updating ?
           <Formfeedback
             message={"Atualizando nova aeronave.."}
             duration={3000}
           /> :null}
-          {newAirplane ?
+          {inserted ?
           <Formfeedback
-            message={"Aeronave" + newAirplane.subscriptionNumber + "inserida com sucesso"}
+            message={"Aeronave " + newAirplane.subscriptionNumber + " inserida com sucesso"}
             duration={3000}
           /> :null}
-          {updatedAirplane ?
+          {updated ?
           <Formfeedback
-            message={"Aeronave" + updatedAirplane.subscriptionNumber + "atualizada com sucesso"}
+            message={"Aeronave " + updatedAirplane.subscriptionNumber + " atualizada com sucesso"}
             duration={3000}
           /> :null}
         </Container>

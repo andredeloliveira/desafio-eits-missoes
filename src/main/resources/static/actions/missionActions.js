@@ -106,7 +106,7 @@ export function removeMission(mission, dispatch) {
   //axios.delete... please remember to add inside then() callback..
   axios.post('/missoes/missions/remove/', mission)
     .then(() => {
-      dispatch(removeMissionDone())
+      dispatch(removeMissionDone(dispatch))
     })
     .catch((error) => {
       dispatch(removeMissionError(error))
@@ -150,7 +150,8 @@ export function updateMissionError(error) {
   }
 }
 
-export function removeMissionDone() {
+export function removeMissionDone(dispatch) {
+  dispatch(findAllMissions(dispatch))
   return {
     type: 'REQUEST_DELETE_MISSION_FULFILLED'
   }
@@ -295,7 +296,7 @@ export function insertMissionPassengersError(error) {
 export function updateMissionPassengers() {
   //axios.post
   return {
-    
+
   }
 }
 

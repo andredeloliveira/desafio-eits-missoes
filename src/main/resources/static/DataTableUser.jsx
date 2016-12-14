@@ -17,7 +17,6 @@ export class DataTableUser extends React.Component {
   constructor(props) {
     super(props)
     this.formattedFetchedData = this.formattedFetchedData.bind(this);
-    this.renderData = this.renderData.bind(this)
   }
 
   isAdmin() {

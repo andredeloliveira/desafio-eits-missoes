@@ -1,9 +1,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: ['./src/main/resources/static/app.jsx', 
-    	'./src/main/resources/static/Header.jsx',
-    	'./src/main/resources/static/Footer.jsx'
+    entry: ['./src/main/resources/static/app.jsx',
     ],
     devtool: 'sourcemaps',
     cache: true,
