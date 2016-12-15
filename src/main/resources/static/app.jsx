@@ -27,9 +27,9 @@ export default class App extends React.Component {
 
   	return (
   		<MuiThemeProvider>
-        <Provider store={Store}>
+
   		      <MainComponent main={main} />
-        </Provider>
+
   		</MuiThemeProvider>
   	)
   }
@@ -37,20 +37,22 @@ export default class App extends React.Component {
 
 
 ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route components={App}>
-      <Route path="/" components={{ main: Dashboard}} />
-      <Route path="/aeronaves" components={{main: Airplanes}} />
-      <Route path="/missoes" components={{main: Missions}} />
-      <Route path="/usuarios" components={{main: Users}} />
-      <Route path="/aeronaves/novo" components={{main: AirplaneForm }} />
-      <Route path="/aeronaves/update/:id" components={{main: AirplaneForm}} />
-      <Route path="/usuarios/update/:id" components={{main: UserForm}} />
-      <Route path="/missoes/update/:id" components={{main: MissionForm}} />
-      <Route path="/usuarios/novo" components={{main: UserForm }} />
-      <Route path="/missoes/novo" components={{main: MissionForm }} />
+  <Provider store={Store}>
+    <Router history={hashHistory}>
+      <Route components={App}>
+        <Route path="/" components={{ main: Dashboard}} />
+        <Route path="/aeronaves" components={{main: Airplanes}} />
+        <Route path="/missoes" components={{main: Missions}} />
+        <Route path="/usuarios" components={{main: Users}} />
+        <Route path="/aeronaves/novo" components={{main: AirplaneForm }} />
+        <Route path="/aeronaves/update/:id" components={{main: AirplaneForm}} />
+        <Route path="/usuarios/update/:id" components={{main: UserForm}} />
+        <Route path="/missoes/update/:id" components={{main: MissionForm}} />
+        <Route path="/usuarios/novo" components={{main: UserForm }} />
+        <Route path="/missoes/novo" components={{main: MissionForm }} />
 
-    </Route>
-  </Router>,
+      </Route>
+    </Router>
+  </Provider>,
   document.getElementById('react')
 )

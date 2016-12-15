@@ -140,6 +140,13 @@ export default function userReducer(state = {}, action) {
         fetched: false,
         error: action.payload,
       }
+    case 'SET_INITIAL_STATE':
+      return {
+        ...state,
+        user: null,
+        newUser: null,
+        updatedUser: null,
+      }
     default:
       return state;
   }

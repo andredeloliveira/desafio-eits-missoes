@@ -15,7 +15,6 @@ export class CRUDBaseComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.canCreate = this.canCreate.bind(this);
     this.redirectPage = this.redirectPage.bind(this)
   }
 
@@ -44,15 +43,6 @@ export class CRUDBaseComponent extends React.Component {
 
   }
 
-  canCreate() {
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
-    if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   render() {
     const { label, name } = this.props;
     const dialogContainer = {
@@ -72,11 +62,9 @@ export class CRUDBaseComponent extends React.Component {
           </div>
         </div>
         <div className="dialog-container" style={dialogContainer}>
-          { this.canCreate() ?
             <FloatingActionButton secondary={false} style={fabStyle} onTouchTap={this.redirectPage}>
               <ContentAdd />
             </FloatingActionButton>
-          : null}
         </div>
       </div>
     )

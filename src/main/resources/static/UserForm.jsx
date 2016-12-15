@@ -32,6 +32,11 @@ export class UserForm extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch({ type: 'SET_INITIAL_STATE' })
+  }
+
   submitData(event) {
     const { dispatch, params } = this.props;
     const { user } = this.props.users;

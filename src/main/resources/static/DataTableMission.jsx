@@ -10,6 +10,7 @@ import { removeMission, findAllMissions } from './actions/missionActions';
 @connect((Store) => {
   return {
     missions: Store.missionReducer,
+    login: Store.loginReducer,
   }
 })
 export class DataTableMission extends React.Component {
@@ -25,7 +26,7 @@ export class DataTableMission extends React.Component {
 
 
   isPiloto() {
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
+    const { currentUser } =  this.props.login ;
     if (currentUser.perfilAcesso === 'PILOTO') {
       return true;
     } else {

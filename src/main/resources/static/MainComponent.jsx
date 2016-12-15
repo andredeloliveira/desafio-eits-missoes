@@ -20,7 +20,6 @@ export class MainComponent extends React.Component {
   render() {
     const { main } = this.props;
     const { currentUser } = this.props.login;
-    console.log(currentUser);
     return (
     <div>
       <Header />

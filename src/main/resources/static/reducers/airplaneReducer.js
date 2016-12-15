@@ -109,6 +109,13 @@ export default function airplaneReducer(state = initialState, action) {
         removing: false,
         error: action.payload
       }
+    case 'SET_INITIAL_STATE':
+      return {
+        ...state,
+        newAirplane: null,
+        airplane: null,
+        updatedAirplane: null,
+      }
     default:
       return state;
   }

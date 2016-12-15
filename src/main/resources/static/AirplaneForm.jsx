@@ -43,6 +43,11 @@ export class AirplaneForm extends React.Component {
     dispatch(findAllAirplaneModels(dispatch));
   }
 
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch({ type: 'SET_INITIAL_STATE'})
+  }
+
   submitData(event) {
     event.preventDefault();
     const { dispatch, params } = this.props;
@@ -100,6 +105,7 @@ export class AirplaneForm extends React.Component {
     if (isLoading) {
       return <MissoesLoading />
     }
+    console.log('actual airplane..', airplane)
     return (
       <div>
         <Container>

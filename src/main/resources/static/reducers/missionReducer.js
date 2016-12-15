@@ -291,6 +291,13 @@ export default function missionReducer(state = initialState, action) {
           finishingFlight: false,
           error: action.payload,
         }
+      case 'SET_INITIAL_STATE':
+        return {
+          ...state,
+          mission: null,
+          newMission: null,
+          updatedMission: null,
+        }
     default:
       return state;
   }

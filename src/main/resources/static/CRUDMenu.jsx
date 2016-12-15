@@ -11,14 +11,6 @@ export class CRUDMenu extends React.Component {
     super(props)
   }
 
-  isAdmin() {
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
-    if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   renderCustomButtons() {
     const { customButtons } = this.props;
@@ -37,8 +29,8 @@ export class CRUDMenu extends React.Component {
     const { remove, data, dispatch, name, find } = this.props;
     return (
       <div>
-        {this.isAdmin() ? <UpdateButton name={name} data={data}/>: null}
-        {this.isAdmin() ? <RemoveButton actions={{remove: remove, find: find}} data={data} dispatch={dispatch} /> : null}
+        <UpdateButton name={name} data={data}/>
+        <RemoveButton actions={{remove: remove, find: find}} data={data} dispatch={dispatch} />
         <DetailsButton name={name} data={data} />
         {this.renderCustomButtons()}
       </div>

@@ -23,7 +23,7 @@ export class DataTableAirplane extends React.Component {
     const { airplanes } = this.props.data;
     return airplanes.map((airplane) => {
       return (
-        <TableRow>
+        <TableRow key={airplane.id}>
           <TableRowColumn>{airplane.subscriptionNumber}</TableRowColumn>
           <TableRowColumn>{airplane.airplaneModel.name}</TableRowColumn>
           <TableRowColumn>{airplane.totalFlightTime || '0'}</TableRowColumn>
