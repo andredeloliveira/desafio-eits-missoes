@@ -4,6 +4,7 @@ import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
 import { Login } from './Login.jsx';
 import { getCurrentUser } from './actions/loginActions';
+import cookie from 'react-cookie';
 
 @connect((Store) => {
   return {
@@ -16,10 +17,13 @@ export class MainComponent extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    console.log()
+  }
 
   render() {
     const { main } = this.props;
-    const { currentUser } = this.props.login;
+    const currentUser  = this.props.login.currentUser || cookie.load('currentUser');
     return (
     <div>
       <Header />

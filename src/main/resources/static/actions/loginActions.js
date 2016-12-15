@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import cookie from 'react-cookie';
 export function login(user,  dispatch) {
   axios.post('/missoes/login', user)
     .then((loginResult) => {
@@ -13,32 +13,6 @@ export function login(user,  dispatch) {
     }
 }
 
-export function getCurrentUser(dispatch) {
-  axios.get('/missoes/currentUser')
-    .then((currentUserResponse) => {
-      dispatch(currentUser(currentUserResponse.data))
-    })
-    .catch((error) => {
-      dispatch(getCurrentUserError(error))
-    })
-  return {
-    type: 'REQUEST_CURRENT_USER_PENDING',
-  }
-}
-
-export function currentUser(currentUserData) {
-  return {
-    type: 'REQUEST_CURRENT_USER_FULFILLED',
-    payload: currentUserData,
-  }
-}
-
-export function getCurrentUserError(error) {
-  return {
-    type: 'REQUEST_CURRENT_USER_ERROR',
-    payload: error,
-  }
-}
 
 export function activeSession(sessionData, dispatch) {
   if (sessionData.exception) {
@@ -47,6 +21,7 @@ export function activeSession(sessionData, dispatch) {
       payload: sessionData.exception,
     }
   }
+  cookie.save('currentUser', sessionData, { path: '/'})
   return {
     type: 'REQUEST_LOGIN_FULFILLED',
     payload: sessionData
@@ -61,6 +36,7 @@ export function loginError(error) {
 }
 
 export function logout() {
+  cookie.remove('currentUser', { path: '/' })
   return {
     type: 'REQUEST_LOGOUT',
   }

@@ -27,9 +27,7 @@ export default class App extends React.Component {
 
   	return (
   		<MuiThemeProvider>
-
-  		      <MainComponent main={main} />
-
+  		  <MainComponent main={main} />
   		</MuiThemeProvider>
   	)
   }

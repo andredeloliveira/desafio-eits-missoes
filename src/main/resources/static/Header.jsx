@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
+import cookie from 'react-cookie';
 import { LoginForm } from './LoginForm.jsx';
 import { UserInfo } from './UserInfo.jsx';
 import { connect } from 'react-redux';
@@ -51,7 +52,7 @@ export class Header extends React.Component {
     }
 
     //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const { currentUser } = this.props.login;
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
     return (
       <div>
         <AppBar title="gAviator"

@@ -96,6 +96,7 @@ export class MissionForm extends React.Component {
     const { dispatch } = this.props;
     dispatch({ type: 'SET_INITIAL_STATE' })
   }
+
   airplaneOptionsRender() {
     const { airplanes } = this.props.airplanes;
     if (airplanes) {
