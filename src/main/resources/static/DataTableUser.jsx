@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Input from 'muicss/lib/react/input';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
@@ -38,7 +39,7 @@ export class DataTableUser extends React.Component {
         user.status = 'INATIVO'
       }
       return (
-          <TableRow>
+          <TableRow key={user.id}>
             <TableRowColumn>{user.name}</TableRowColumn>
             <TableRowColumn>{user.email}</TableRowColumn>
             <TableRowColumn>{user.perfilAcesso}</TableRowColumn>
@@ -58,25 +59,32 @@ export class DataTableUser extends React.Component {
     })
   }
 
+  searchUser(event) {
+    console.log(event.target.value)
+  }
+
   render() {
     if (!this.props.data.users) {
       return <MissoesLoading />
     }
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Nome</TableHeaderColumn>
-            <TableHeaderColumn>E-mail</TableHeaderColumn>
-            <TableHeaderColumn>Perfil Acesso</TableHeaderColumn>
-            <TableHeaderColumn>Status</TableHeaderColumn>
-            <TableHeaderColumn>Opções</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {this.formattedFetchedData()}
-        </TableBody>
-      </Table>
+      <div>
+        <Input type="text" label="Buscar" onChange={this.searchUser.bind(this)} />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Nome</TableHeaderColumn>
+              <TableHeaderColumn>E-mail</TableHeaderColumn>
+              <TableHeaderColumn>Perfil Acesso</TableHeaderColumn>
+              <TableHeaderColumn>Status</TableHeaderColumn>
+              <TableHeaderColumn>Opções</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {this.formattedFetchedData()}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 

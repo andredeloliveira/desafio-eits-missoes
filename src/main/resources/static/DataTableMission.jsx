@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment'
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
+import Input from 'muicss/lib/react/input';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
@@ -26,7 +28,7 @@ export class DataTableMission extends React.Component {
 
 
   isPiloto() {
-    const { currentUser } =  this.props.login ;
+    const currentUser =  this.props.login.currentUser || cookie.load('currentUser') ;
     if (currentUser.perfilAcesso === 'PILOTO') {
       return true;
     } else {
@@ -50,7 +52,7 @@ export class DataTableMission extends React.Component {
     const { dispatch, name } = this.props;
     return this.props.missions.missions.map((mission) => {
       return (
-        <TableRow>
+        <TableRow key={mission.id}>
           <TableRowColumn>{moment(mission.mission.dateTime).format('lll')}</TableRowColumn>
           <TableRowColumn>{mission.mission.airplane.subscriptionNumber + ' - ' + mission.mission.airplane.airplaneModel.name}</TableRowColumn>
           <TableRowColumn>{mission.mission.missionTo.acronym + ' - ' + mission.mission.missionTo.name}</TableRowColumn>
@@ -71,27 +73,34 @@ export class DataTableMission extends React.Component {
     })
   }
 
+  searchMission(event) {
+    console.log(event.target.value)
+  }
+
   render() {
     if (!this.props.data.missions) {
       return <MissoesLoading />
     }
 
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Data/Hora</TableHeaderColumn>
-            <TableHeaderColumn>Aeronave</TableHeaderColumn>
-            <TableHeaderColumn>Origem</TableHeaderColumn>
-            <TableHeaderColumn>Destino</TableHeaderColumn>
-            <TableHeaderColumn>Planejado Por</TableHeaderColumn>
-            <TableHeaderColumn>Opções</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {this.formattedFetchedData()}
-        </TableBody>
-      </Table>
+      <div>
+        <Input type="text" label="Buscar" onChange={this.searchMission.bind(this)} />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Data/Hora</TableHeaderColumn>
+              <TableHeaderColumn>Aeronave</TableHeaderColumn>
+              <TableHeaderColumn>Origem</TableHeaderColumn>
+              <TableHeaderColumn>Destino</TableHeaderColumn>
+              <TableHeaderColumn>Planejado Por</TableHeaderColumn>
+              <TableHeaderColumn>Opções</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {this.formattedFetchedData()}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 }

@@ -74985,6 +74985,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _input = __webpack_require__(571);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
 	var _Table = __webpack_require__(709);
 	
 	var _MissoesLoading = __webpack_require__(652);
@@ -75064,51 +75068,61 @@
 	      });
 	    }
 	  }, {
+	    key: 'searchAirplane',
+	    value: function searchAirplane(event) {
+	      console.log(event.target.value);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (!this.props.data.airplanes) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
 	      return _react2.default.createElement(
-	        _Table.Table,
+	        'div',
 	        null,
+	        _react2.default.createElement(_input2.default, { type: 'text', label: 'Buscar', onChange: this.searchAirplane.bind(this) }),
 	        _react2.default.createElement(
-	          _Table.TableHeader,
+	          _Table.Table,
 	          null,
 	          _react2.default.createElement(
-	            _Table.TableRow,
+	            _Table.TableHeader,
 	            null,
 	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
+	              _Table.TableRow,
 	              null,
-	              'Matr\xEDcula'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Modelo'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Horas de v\xF4o'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'N\xFAmero Assentos'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Op\xE7\xF5es'
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Matr\xEDcula'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Modelo'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Horas de v\xF4o'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'N\xFAmero Assentos'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Op\xE7\xF5es'
+	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableBody,
+	            null,
+	            this.formattedFetchedData()
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableBody,
-	          null,
-	          this.formattedFetchedData()
 	        )
 	      );
 	    }
@@ -93384,6 +93398,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _input = __webpack_require__(571);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
 	var _Table = __webpack_require__(709);
 	
 	var _MissoesLoading = __webpack_require__(652);
@@ -93447,7 +93465,7 @@
 	        }
 	        return _react2.default.createElement(
 	          _Table.TableRow,
-	          null,
+	          { key: user.id },
 	          _react2.default.createElement(
 	            _Table.TableRowColumn,
 	            null,
@@ -93484,51 +93502,61 @@
 	      });
 	    }
 	  }, {
+	    key: 'searchUser',
+	    value: function searchUser(event) {
+	      console.log(event.target.value);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (!this.props.data.users) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
 	      return _react2.default.createElement(
-	        _Table.Table,
+	        'div',
 	        null,
+	        _react2.default.createElement(_input2.default, { type: 'text', label: 'Buscar', onChange: this.searchUser.bind(this) }),
 	        _react2.default.createElement(
-	          _Table.TableHeader,
+	          _Table.Table,
 	          null,
 	          _react2.default.createElement(
-	            _Table.TableRow,
+	            _Table.TableHeader,
 	            null,
 	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
+	              _Table.TableRow,
 	              null,
-	              'Nome'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'E-mail'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Perfil Acesso'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Status'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Op\xE7\xF5es'
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Nome'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'E-mail'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Perfil Acesso'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Status'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Op\xE7\xF5es'
+	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableBody,
+	            null,
+	            this.formattedFetchedData()
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableBody,
-	          null,
-	          this.formattedFetchedData()
 	        )
 	      );
 	    }
@@ -93660,6 +93688,14 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _reactCookie = __webpack_require__(535);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
+	var _input = __webpack_require__(571);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
 	var _Table = __webpack_require__(709);
 	
 	var _MissoesLoading = __webpack_require__(652);
@@ -93703,8 +93739,7 @@
 	  }, {
 	    key: 'isPiloto',
 	    value: function isPiloto() {
-	      var currentUser = this.props.login.currentUser;
-	
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
 	      if (currentUser.perfilAcesso === 'PILOTO') {
 	        return true;
 	      } else {
@@ -93738,7 +93773,7 @@
 	      return this.props.missions.missions.map(function (mission) {
 	        return _react2.default.createElement(
 	          _Table.TableRow,
-	          null,
+	          { key: mission.id },
 	          _react2.default.createElement(
 	            _Table.TableRowColumn,
 	            null,
@@ -93780,6 +93815,11 @@
 	      });
 	    }
 	  }, {
+	    key: 'searchMission',
+	    value: function searchMission(event) {
+	      console.log(event.target.value);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (!this.props.data.missions) {
@@ -93787,50 +93827,55 @@
 	      }
 	
 	      return _react2.default.createElement(
-	        _Table.Table,
+	        'div',
 	        null,
+	        _react2.default.createElement(_input2.default, { type: 'text', label: 'Buscar', onChange: this.searchMission.bind(this) }),
 	        _react2.default.createElement(
-	          _Table.TableHeader,
+	          _Table.Table,
 	          null,
 	          _react2.default.createElement(
-	            _Table.TableRow,
+	            _Table.TableHeader,
 	            null,
 	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
+	              _Table.TableRow,
 	              null,
-	              'Data/Hora'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Aeronave'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Origem'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Destino'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Planejado Por'
-	            ),
-	            _react2.default.createElement(
-	              _Table.TableHeaderColumn,
-	              null,
-	              'Op\xE7\xF5es'
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Data/Hora'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Aeronave'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Origem'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Destino'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Planejado Por'
+	              ),
+	              _react2.default.createElement(
+	                _Table.TableHeaderColumn,
+	                null,
+	                'Op\xE7\xF5es'
+	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableBody,
+	            null,
+	            this.formattedFetchedData()
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableBody,
-	          null,
-	          this.formattedFetchedData()
 	        )
 	      );
 	    }

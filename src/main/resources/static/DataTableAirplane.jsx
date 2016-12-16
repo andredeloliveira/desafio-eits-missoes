@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Input from 'muicss/lib/react/input';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
@@ -42,25 +43,32 @@ export class DataTableAirplane extends React.Component {
     });
   }
 
+  searchAirplane(event) {
+    console.log(event.target.value)
+  }
+
   render() {
     if (!this.props.data.airplanes) {
       return <MissoesLoading />
     }
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Matrícula</TableHeaderColumn>
-            <TableHeaderColumn>Modelo</TableHeaderColumn>
-            <TableHeaderColumn>Horas de vôo</TableHeaderColumn>
-            <TableHeaderColumn>Número Assentos</TableHeaderColumn>
-            <TableHeaderColumn>Opções</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {this.formattedFetchedData()}
-        </TableBody>
-      </Table>
+      <div>
+        <Input type="text" label="Buscar" onChange={this.searchAirplane.bind(this)} />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Matrícula</TableHeaderColumn>
+              <TableHeaderColumn>Modelo</TableHeaderColumn>
+              <TableHeaderColumn>Horas de vôo</TableHeaderColumn>
+              <TableHeaderColumn>Número Assentos</TableHeaderColumn>
+              <TableHeaderColumn>Opções</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {this.formattedFetchedData()}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 
