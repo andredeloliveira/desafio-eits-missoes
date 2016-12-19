@@ -21,9 +21,14 @@ export class DataTableAirplane extends React.Component {
     this.formattedFetchedData = this.formattedFetchedData.bind(this);
   }
 
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(searchAirplanes('', dispatch));
+  }
+
   formattedFetchedData() {
     const { dispatch, name } = this.props;
-    const { airplanes } = this.props.data;
+    const { airplanes } = this.props.search;
     return airplanes.map((airplane) => {
       return (
         <TableRow key={airplane.id}>
@@ -52,7 +57,8 @@ export class DataTableAirplane extends React.Component {
   }
 
   render() {
-    if (!this.props.data.airplanes) {
+    const { airplanes } = this.props.search;
+    if (!airplanes) {
       return <MissoesLoading />
     }
     return (

@@ -21,6 +21,11 @@ export class DataTableUser extends React.Component {
     this.formattedFetchedData = this.formattedFetchedData.bind(this);
   }
 
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(searchUser('', dispatch))
+  }
+
   isAdmin() {
     const { currentUser } = this.props.users;
     // if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
@@ -33,7 +38,8 @@ export class DataTableUser extends React.Component {
 
   formattedFetchedData() {
     const { dispatch, name } = this.props;
-    return this.props.data.users.map( (user) => {
+    const { users } = this.props.search;
+    return users.map( (user) => {
       if (user.status) {
         user.status = 'ATIVO'
       } else {
@@ -67,7 +73,8 @@ export class DataTableUser extends React.Component {
   }
 
   render() {
-    if (!this.props.data.users) {
+    const { users } = this.props.search;
+    if (!users) {
       return <MissoesLoading />
     }
     return (

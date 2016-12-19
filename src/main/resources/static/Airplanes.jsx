@@ -5,20 +5,11 @@ import { Formfeedback } from './Formfeedback.jsx';
 import { findAllAirplanes } from './actions/airplaneActions';
 
 
-@connect((Store) => {
-  return {
-    airplanes: Store.airplaneReducer
-  }
-})
+
 export class Airplanes extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(findAllAirplanes(dispatch))
   }
 
   render() {

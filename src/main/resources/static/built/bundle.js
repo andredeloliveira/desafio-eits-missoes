@@ -56065,8 +56065,6 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _dec, _class;
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -56087,11 +56085,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Airplanes = exports.Airplanes = (_dec = (0, _reactRedux.connect)(function (Store) {
-	  return {
-	    airplanes: Store.airplaneReducer
-	  };
-	}), _dec(_class = function (_React$Component) {
+	var Airplanes = exports.Airplanes = function (_React$Component) {
 	  _inherits(Airplanes, _React$Component);
 	
 	  function Airplanes(props) {
@@ -56101,13 +56095,6 @@
 	  }
 	
 	  _createClass(Airplanes, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var dispatch = this.props.dispatch;
-	
-	      dispatch((0, _airplaneActions.findAllAirplanes)(dispatch));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var airplanes = this.props.airplanes;
@@ -56121,7 +56108,7 @@
 	  }]);
 	
 	  return Airplanes;
-	}(_react2.default.Component)) || _class);
+	}(_react2.default.Component);
 
 /***/ },
 /* 585 */
@@ -75117,12 +75104,19 @@
 	  }
 	
 	  _createClass(DataTableAirplane, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var dispatch = this.props.dispatch;
+	
+	      dispatch((0, _searchActions.searchAirplanes)('', dispatch));
+	    }
+	  }, {
 	    key: 'formattedFetchedData',
 	    value: function formattedFetchedData() {
 	      var _props = this.props,
 	          dispatch = _props.dispatch,
 	          name = _props.name;
-	      var airplanes = this.props.data.airplanes;
+	      var airplanes = this.props.search.airplanes;
 	
 	      return airplanes.map(function (airplane) {
 	        return _react2.default.createElement(
@@ -75173,7 +75167,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.props.data.airplanes) {
+	      var airplanes = this.props.search.airplanes;
+	
+	      if (!airplanes) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
 	      return _react2.default.createElement(
@@ -93638,6 +93634,13 @@
 	  }
 	
 	  _createClass(DataTableUser, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var dispatch = this.props.dispatch;
+	
+	      dispatch((0, _searchActions.searchUser)('', dispatch));
+	    }
+	  }, {
 	    key: 'isAdmin',
 	    value: function isAdmin() {
 	      var currentUser = this.props.users.currentUser;
@@ -93657,8 +93660,9 @@
 	      var _props = this.props,
 	          dispatch = _props.dispatch,
 	          name = _props.name;
+	      var users = this.props.search.users;
 	
-	      return this.props.data.users.map(function (user) {
+	      return users.map(function (user) {
 	        if (user.status) {
 	          user.status = 'ATIVO';
 	        } else {
@@ -93713,7 +93717,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.props.data.users) {
+	      var users = this.props.search.users;
+	
+	      if (!users) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
 	      return _react2.default.createElement(
@@ -94234,8 +94240,6 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _dec, _class;
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -94256,11 +94260,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Users = exports.Users = (_dec = (0, _reactRedux.connect)(function (Store) {
-	  return {
-	    users: Store.userReducer
-	  };
-	}), _dec(_class = function (_React$Component) {
+	var Users = exports.Users = function (_React$Component) {
 	  _inherits(Users, _React$Component);
 	
 	  function Users(props) {
@@ -94270,13 +94270,6 @@
 	  }
 	
 	  _createClass(Users, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var dispatch = this.props.dispatch;
-	
-	      dispatch((0, _userActions.findAllUsers)(dispatch));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var users = this.props.users;
@@ -94290,7 +94283,7 @@
 	  }]);
 	
 	  return Users;
-	}(_react2.default.Component)) || _class);
+	}(_react2.default.Component);
 
 /***/ },
 /* 848 */
