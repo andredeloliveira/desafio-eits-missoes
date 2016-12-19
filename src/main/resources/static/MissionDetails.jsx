@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Container from 'muicss/lib/react/container';
 import moment from 'moment'
-import { findMissionPlannerByMission, findMissionPassengersByMission, findMissionPilotsByMission } from './actions/missionActions';
+import { findMissionPlannerByMission, findMissionPassengersByMission, findMissionPilotsByMission, findMissionById } from './actions/missionActions';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import Divider from 'material-ui/Divider';
 
@@ -20,12 +21,12 @@ export class MissionDetails extends React.Component {
 
   componentWillMount() {
     moment.locale('pt-br');
-    const { mission, dispatch } = this.props;
-    if (mission) {
-      dispatch(findMissionPlannerByMission(mission, dispatch))
-      dispatch(findMissionPassengersByMission(mission, dispatch))
-      dispatch(findMissionPilotsByMission(mission, dispatch))
-    }
+    const { dispatch, params } = this.props;
+    const missionId = params.id;
+    dispatch(findMissionById(missionId, dispatch))
+    dispatch(findMissionPlannerByMission(missionId, dispatch))
+    dispatch(findMissionPassengersByMission(missionId, dispatch))
+    dispatch(findMissionPilotsByMission(missionId, dispatch))
   }
 
   passengersRender() {
@@ -49,20 +50,25 @@ export class MissionDetails extends React.Component {
   }
 
   render() {
-    const { mission } = this.props;
-    const { missionPlanner } = this.props.missions;
+
+    const { mission, missionPlanner } = this.props.missions;
+
     const labelStyle = {
       fontSize: "1.2em",
     }
     const spanStyle = {
-      fontSize: "2.2em",
+      fontSize: "1.7em",
       paddingLeft: "40px"
     }
     const elementContainer = {
       padding: "10px",
     }
+    if (!mission || !missionPlanner) {
+      return <MissoesLoading />
+    }
     return (
-      <div>
+      <Container>
+        <h1>Detalhes da missão</h1>
         <div style={elementContainer}>
           <label style={labelStyle}>Data/Hora:</label><span style={spanStyle}>{moment(mission.dateTime).format('lll')}</span>
         </div>
@@ -92,7 +98,7 @@ export class MissionDetails extends React.Component {
           <label style={labelStyle}>Pilotos:</label>
           <ul>{ this.pilotsRender() }</ul>
         </div>
-      </div>
+      </Container>
     )
   }
 }

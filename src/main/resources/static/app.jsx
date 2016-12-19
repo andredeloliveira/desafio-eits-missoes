@@ -14,6 +14,9 @@ import { Login } from './Login.jsx';
 import { AirplaneForm } from './AirplaneForm.jsx';
 import { UserForm } from './UserForm.jsx';
 import { MissionForm } from './MissionForm.jsx';
+import { MissionDetails } from './MissionDetails.jsx';
+import { AirplaneDetails } from './AirplaneDetails.jsx';
+import { UserDetails } from './UserDetails.jsx';
 
 export default class App extends React.Component {
 
@@ -46,6 +49,9 @@ ReactDOM.render(
         <Route path="/aeronaves/update/:id" components={{main: AirplaneForm}} />
         <Route path="/usuarios/update/:id" components={{main: UserForm}} />
         <Route path="/missoes/update/:id" components={{main: MissionForm}} />
+        <Route path="/aeronaves/detalhes/:id" components={{main: AirplaneDetails}} />
+        <Route path="/usuarios/detalhes/:id" components={{main: UserDetails}} />
+        <Route path="/missoes/detalhes/:id" components={{main: MissionDetails}} />
         <Route path="/usuarios/novo" components={{main: UserForm }} />
         <Route path="/missoes/novo" components={{main: MissionForm }} />
 

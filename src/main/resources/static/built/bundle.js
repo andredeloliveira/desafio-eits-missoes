@@ -102,6 +102,12 @@
 	
 	var _MissionForm = __webpack_require__(660);
 	
+	var _MissionDetails = __webpack_require__(729);
+	
+	var _AirplaneDetails = __webpack_require__(728);
+	
+	var _UserDetails = __webpack_require__(840);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -159,6 +165,9 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: '/aeronaves/update/:id', components: { main: _AirplaneForm.AirplaneForm } }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/usuarios/update/:id', components: { main: _UserForm.UserForm } }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/missoes/update/:id', components: { main: _MissionForm.MissionForm } }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/aeronaves/detalhes/:id', components: { main: _AirplaneDetails.AirplaneDetails } }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/usuarios/detalhes/:id', components: { main: _UserDetails.UserDetails } }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/missoes/detalhes/:id', components: { main: _MissionDetails.MissionDetails } }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/usuarios/novo', components: { main: _UserForm.UserForm } }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/missoes/novo', components: { main: _MissionForm.MissionForm } })
 	    )
@@ -74794,8 +74803,8 @@
 	  };
 	}
 	
-	function findMissionPlannerByMission(mission, dispatch) {
-	  _axios2.default.post('/missoes/missions/missionPlannerByMission', mission).then(function (missionPlannerResponse) {
+	function findMissionPlannerByMission(missionId, dispatch) {
+	  _axios2.default.get('/missoes/missions/missionPlannerByMission/' + missionId).then(function (missionPlannerResponse) {
 	    dispatch(missionPlannerByMission(missionPlannerResponse.data));
 	  }).catch(function (error) {
 	    dispatch(findMissionPlannerByMissionError(error));
@@ -77952,75 +77961,25 @@
 	  function DetailsButton(props) {
 	    _classCallCheck(this, DetailsButton);
 	
-	    var _this3 = _possibleConstructorReturn(this, (DetailsButton.__proto__ || Object.getPrototypeOf(DetailsButton)).call(this, props));
-	
-	    _this3.state = {
-	      open: false
-	    };
-	    _this3.handleClose = _this3.handleClose.bind(_this3);
-	    _this3.showDetails = _this3.showDetails.bind(_this3);
-	    _this3.renderDetailsPage = _this3.renderDetailsPage.bind(_this3);
-	    return _this3;
+	    return _possibleConstructorReturn(this, (DetailsButton.__proto__ || Object.getPrototypeOf(DetailsButton)).call(this, props));
 	  }
 	
 	  _createClass(DetailsButton, [{
-	    key: 'showDetails',
-	    value: function showDetails() {
-	      this.setState({
-	        open: true
-	      });
-	    }
-	  }, {
-	    key: 'handleClose',
-	    value: function handleClose() {
-	      this.setState({
-	        open: false
-	      });
-	    }
-	  }, {
-	    key: 'renderDetailsPage',
-	    value: function renderDetailsPage() {
+	    key: 'redirectToDetailsPage',
+	    value: function redirectToDetailsPage() {
 	      var _props4 = this.props,
 	          name = _props4.name,
 	          data = _props4.data;
 	
-	      if (name === 'airplane') {
-	        return _react2.default.createElement(_AirplaneDetails.AirplaneDetails, { airplane: data });
-	      } else if (name === 'mission') {
-	        return _react2.default.createElement(_MissionDetails.MissionDetails, { mission: data });
-	      } else if (name === 'user') {
-	        return _react2.default.createElement(_UserDetails.UserDetails, { user: data });
-	      } else {
-	        return null;
-	      }
+	      _reactRouter.hashHistory.push('/' + name + '/detalhes/' + data.id);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var dialogStyle = {
-	        overflow: "hidden"
-	      };
-	      var actions = [_react2.default.createElement(_FlatButton2.default, {
-	        label: 'Cancel',
-	        primary: true,
-	        onTouchTap: this.handleClose
-	      })];
 	      return _react2.default.createElement(
 	        _IconButton2.default,
-	        { onTouchTap: this.showDetails },
-	        _react2.default.createElement(_visibility2.default, null),
-	        _react2.default.createElement(
-	          _Dialog2.default,
-	          {
-	            modal: true,
-	            open: this.state.open,
-	            onRequestClose: this.handleClose,
-	            autoScrollBodyContent: true,
-	            style: dialogStyle,
-	            actions: actions
-	          },
-	          this.renderDetailsPage()
-	        )
+	        { onTouchTap: this.redirectToDetailsPage.bind(this) },
+	        _react2.default.createElement(_visibility2.default, null)
 	      );
 	    }
 	  }]);
@@ -78143,7 +78102,7 @@
 /* 728 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -78152,9 +78111,21 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _dec, _class;
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(388);
+	
+	var _container = __webpack_require__(646);
+	
+	var _container2 = _interopRequireDefault(_container);
+	
+	var _MissoesLoading = __webpack_require__(653);
+	
+	var _airplaneActions = __webpack_require__(657);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -78164,7 +78135,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AirplaneDetails = exports.AirplaneDetails = function (_React$Component) {
+	var AirplaneDetails = exports.AirplaneDetails = (_dec = (0, _reactRedux.connect)(function (Store) {
+	  return {
+	    airplanes: Store.airplaneReducer
+	  };
+	}), _dec(_class = function (_React$Component) {
 	  _inherits(AirplaneDetails, _React$Component);
 	
 	  function AirplaneDetails(props) {
@@ -78174,60 +78149,78 @@
 	  }
 	
 	  _createClass(AirplaneDetails, [{
-	    key: "render",
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          params = _props.params;
+	
+	      var airplaneId = params.id;
+	      dispatch((0, _airplaneActions.findAirplaneById)(airplaneId, dispatch));
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
-	      var airplane = this.props.airplane;
+	      var airplane = this.props.airplanes.airplane;
 	
 	      var labelStyle = {
 	        fontSize: "1.2em"
 	      };
 	      var spanStyle = {
-	        fontSize: "2.2em",
+	        fontSize: "1.7em",
 	        paddingLeft: "40px"
 	      };
+	      if (!airplane) {
+	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
+	      }
 	      return _react2.default.createElement(
-	        "div",
+	        _container2.default,
 	        null,
 	        _react2.default.createElement(
-	          "label",
-	          { style: labelStyle },
-	          "Matr\xEDcula"
+	          'h1',
+	          null,
+	          'Detalhes da aeronave'
 	        ),
 	        _react2.default.createElement(
-	          "span",
+	          'label',
+	          { style: labelStyle },
+	          'Matr\xEDcula'
+	        ),
+	        _react2.default.createElement(
+	          'span',
 	          { style: spanStyle },
 	          airplane.subscriptionNumber
 	        ),
-	        _react2.default.createElement("br", null),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
-	          "label",
+	          'label',
 	          { style: labelStyle },
-	          "N\xFAmero de Assentos"
+	          'N\xFAmero de Assentos'
 	        ),
 	        _react2.default.createElement(
-	          "span",
+	          'span',
 	          { style: spanStyle },
 	          airplane.seatsNumber
 	        ),
-	        _react2.default.createElement("br", null),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
-	          "label",
+	          'label',
 	          { style: labelStyle },
-	          "Modelo"
+	          'Modelo'
 	        ),
 	        _react2.default.createElement(
-	          "span",
+	          'span',
 	          { style: spanStyle },
 	          airplane.airplaneModel.manufacturer.name + ' - ' + airplane.airplaneModel.name
 	        ),
-	        _react2.default.createElement("br", null),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
-	          "label",
+	          'label',
 	          { style: labelStyle },
-	          "Horas de V\xF4o"
+	          'Horas de V\xF4o'
 	        ),
 	        _react2.default.createElement(
-	          "span",
+	          'span',
 	          { style: spanStyle },
 	          airplane.totalFlightTime || 0
 	        )
@@ -78236,7 +78229,7 @@
 	  }]);
 	
 	  return AirplaneDetails;
-	}(_react2.default.Component);
+	}(_react2.default.Component)) || _class);
 
 /***/ },
 /* 729 */
@@ -78258,6 +78251,10 @@
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactRedux = __webpack_require__(388);
+	
+	var _container = __webpack_require__(646);
+	
+	var _container2 = _interopRequireDefault(_container);
 	
 	var _moment = __webpack_require__(730);
 	
@@ -78301,14 +78298,14 @@
 	    value: function componentWillMount() {
 	      _moment2.default.locale('pt-br');
 	      var _props = this.props,
-	          mission = _props.mission,
-	          dispatch = _props.dispatch;
+	          dispatch = _props.dispatch,
+	          params = _props.params;
 	
-	      if (mission) {
-	        dispatch((0, _missionActions.findMissionPlannerByMission)(mission, dispatch));
-	        dispatch((0, _missionActions.findMissionPassengersByMission)(mission, dispatch));
-	        dispatch((0, _missionActions.findMissionPilotsByMission)(mission, dispatch));
-	      }
+	      var missionId = params.id;
+	      dispatch((0, _missionActions.findMissionById)(missionId, dispatch));
+	      dispatch((0, _missionActions.findMissionPlannerByMission)(missionId, dispatch));
+	      dispatch((0, _missionActions.findMissionPassengersByMission)(missionId, dispatch));
+	      dispatch((0, _missionActions.findMissionPilotsByMission)(missionId, dispatch));
 	    }
 	  }, {
 	    key: 'passengersRender',
@@ -78345,22 +78342,32 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var mission = this.props.mission;
-	      var missionPlanner = this.props.missions.missionPlanner;
+	      var _props$missions = this.props.missions,
+	          mission = _props$missions.mission,
+	          missionPlanner = _props$missions.missionPlanner;
+	
 	
 	      var labelStyle = {
 	        fontSize: "1.2em"
 	      };
 	      var spanStyle = {
-	        fontSize: "2.2em",
+	        fontSize: "1.7em",
 	        paddingLeft: "40px"
 	      };
 	      var elementContainer = {
 	        padding: "10px"
 	      };
+	      if (!mission || !missionPlanner) {
+	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
+	      }
 	      return _react2.default.createElement(
-	        'div',
+	        _container2.default,
 	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Detalhes da miss\xE3o'
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
@@ -93360,7 +93367,7 @@
 /* 840 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -93369,9 +93376,21 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _dec, _class;
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(388);
+	
+	var _container = __webpack_require__(646);
+	
+	var _container2 = _interopRequireDefault(_container);
+	
+	var _MissoesLoading = __webpack_require__(653);
+	
+	var _userActions = __webpack_require__(659);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -93381,7 +93400,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var UserDetails = exports.UserDetails = function (_React$Component) {
+	var UserDetails = exports.UserDetails = (_dec = (0, _reactRedux.connect)(function (Store) {
+	  return {
+	    users: Store.userReducer
+	  };
+	}), _dec(_class = function (_React$Component) {
 	  _inherits(UserDetails, _React$Component);
 	
 	  function UserDetails(props) {
@@ -93391,75 +93414,93 @@
 	  }
 	
 	  _createClass(UserDetails, [{
-	    key: "render",
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          params = _props.params;
+	
+	      var userId = params.id;
+	      dispatch((0, _userActions.findUserById)(userId, dispatch));
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
-	      var user = this.props.user;
+	      var user = this.props.users.user;
 	
 	      var labelStyle = {
 	        fontSize: "1.2em"
 	      };
 	      var spanStyle = {
-	        fontSize: "2.2em",
+	        fontSize: "1.7em",
 	        paddingLeft: "40px"
 	      };
 	      var elementContainer = {
 	        paddingBottom: "10px"
 	      };
+	      if (!user) {
+	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
+	      }
 	      return _react2.default.createElement(
-	        "div",
+	        _container2.default,
 	        null,
 	        _react2.default.createElement(
-	          "div",
+	          'h1',
+	          null,
+	          'Detalhes do usu\xE1rio'
+	        ),
+	        _react2.default.createElement(
+	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
-	            "label",
+	            'label',
 	            { style: labelStyle },
-	            "Nome"
+	            'Nome'
 	          ),
 	          _react2.default.createElement(
-	            "span",
+	            'span',
 	            { style: spanStyle },
 	            user.name
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
+	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
-	            "label",
+	            'label',
 	            { style: labelStyle },
-	            "E-mail"
+	            'E-mail'
 	          ),
 	          _react2.default.createElement(
-	            "span",
+	            'span',
 	            { style: spanStyle },
 	            user.email
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
+	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
-	            "label",
+	            'label',
 	            { style: labelStyle },
-	            "Perfil"
+	            'Perfil'
 	          ),
 	          _react2.default.createElement(
-	            "span",
+	            'span',
 	            { style: spanStyle },
 	            user.perfilAcesso
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
+	          'div',
 	          { style: elementContainer },
 	          _react2.default.createElement(
-	            "label",
+	            'label',
 	            { style: labelStyle },
-	            "Status"
+	            'Status'
 	          ),
 	          _react2.default.createElement(
-	            "span",
+	            'span',
 	            { style: spanStyle },
 	            user.status ? 'ATIVO' : 'INATIVO'
 	          )
@@ -93469,7 +93510,7 @@
 	  }]);
 	
 	  return UserDetails;
-	}(_react2.default.Component);
+	}(_react2.default.Component)) || _class);
 
 /***/ },
 /* 841 */

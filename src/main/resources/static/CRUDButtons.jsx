@@ -105,63 +105,17 @@ export class RemoveButton extends React.Component {
 export class DetailsButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    }
-    this.handleClose = this.handleClose.bind(this);
-    this.showDetails = this.showDetails.bind(this);
-    this.renderDetailsPage = this.renderDetailsPage.bind(this);
   }
 
-  showDetails() {
-    this.setState({
-      open: true,
-    })
-  }
-
-  handleClose() {
-    this.setState({
-      open: false,
-    })
-  }
-
-  renderDetailsPage() {
+  redirectToDetailsPage() {
     const { name, data } = this.props;
-    if (name === 'airplane') {
-      return <AirplaneDetails airplane={data}/>
-    } else if (name === 'mission') {
-      return <MissionDetails mission={data} />
-    } else if (name === 'user') {
-      return <UserDetails user={data} />
-    } else {
-      return null;
-    }
+    hashHistory.push('/'+ name +'/detalhes/'+ data.id);
   }
 
   render() {
-    const dialogStyle = {
-      overflow: "hidden",
-    }
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-    ]
     return (
-      <IconButton  onTouchTap={this.showDetails}>
+      <IconButton  onTouchTap={this.redirectToDetailsPage.bind(this)}>
         <ActionVisibility />
-        <Dialog
-          modal={true}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
-          style={dialogStyle}
-          actions={actions}
-        >
-          { this.renderDetailsPage() }
-        </Dialog>
       </IconButton>
     )
   }

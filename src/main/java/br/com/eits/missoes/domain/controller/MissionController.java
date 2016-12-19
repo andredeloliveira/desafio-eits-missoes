@@ -51,9 +51,9 @@ public class MissionController {
 		return missionPlannerService.findAllMissionPlanner();
 	}
 	
-	@RequestMapping(value = "/missions/missionPlannerByMission", method = RequestMethod.POST)
-	public MissionPlanner findMissionPlannerByMission(@RequestBody Mission mission) {
-		return missionPlannerService.findMissionPlannerByMission(mission);
+	@RequestMapping(value = "/missions/missionPlannerByMission/{id}", method = RequestMethod.GET)
+	public MissionPlanner findMissionPlannerByMission(@PathVariable("id") Long missionId) {
+		return missionPlannerService.findMissionPlannerByMission(missionId);
 	}
 	
 	@RequestMapping(value = "/missions/missionPassengersByMission/{id}", method = RequestMethod.GET)

@@ -227,8 +227,8 @@ export function removeMissionPlannerError(error) {
   }
 }
 
-export function findMissionPlannerByMission(mission, dispatch) {
-   axios.post('/missoes/missions/missionPlannerByMission', mission)
+export function findMissionPlannerByMission(missionId, dispatch) {
+   axios.get('/missoes/missions/missionPlannerByMission/' + missionId)
     .then((missionPlannerResponse) => {
       dispatch(missionPlannerByMission(missionPlannerResponse.data))
     })
