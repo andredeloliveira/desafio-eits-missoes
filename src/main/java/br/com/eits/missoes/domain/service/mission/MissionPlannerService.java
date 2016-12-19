@@ -38,4 +38,8 @@ public class MissionPlannerService {
 		return missionPlannerRepository.findMissionPlannerByMission(mission);
 	}
 
+	@Transactional
+	public List<MissionPlanner> searchMissions(String searchQuery) {
+		return missionPlannerRepository.searchMission(searchQuery);
+	}
 }

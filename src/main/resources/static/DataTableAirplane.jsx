@@ -5,10 +5,12 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { removeAirplane } from './actions/airplaneActions';
+import { searchAirplanes } from './actions/searchActions';
 
 @connect((Store) => {
   return {
-    airplanes: Store.airplaneReducer
+    airplanes: Store.airplaneReducer,
+    search: Store.searchReducer,
   }
 })
 export class DataTableAirplane extends React.Component {
@@ -44,7 +46,9 @@ export class DataTableAirplane extends React.Component {
   }
 
   searchAirplane(event) {
-    console.log(event.target.value)
+    const query = event.target.value;
+    const { dispatch } = this.props;
+    dispatch(searchAirplanes(query, dispatch))
   }
 
   render() {

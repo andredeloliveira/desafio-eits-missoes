@@ -59,4 +59,9 @@ public class AirplaneService {
 	public Airplane findAirplaneBySeatsNumber(Integer seatsNumber) {
 		return airplaneRepository.findAirplaneBySeatsNumber(seatsNumber);
 	}
+	
+	@Transactional
+	public List<Airplane> searchAirplane(String searchQuery) {
+		return airplaneRepository.searchAirplane(searchQuery);
+	}
 }

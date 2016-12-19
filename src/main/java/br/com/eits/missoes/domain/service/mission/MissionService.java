@@ -99,6 +99,11 @@ public class MissionService {
 		return returnedFile;
 	}
 	
+	@Transactional
+	public List<Mission> searchMission(String searchQuery) {
+		return missionRepository.searchMission(searchQuery);
+	}
+	
 	// It finishes the flight updating the total flight hours of the related airplane as well as the status of the mission
 	@Transactional
 	public Boolean finishFlight(Mission mission) {

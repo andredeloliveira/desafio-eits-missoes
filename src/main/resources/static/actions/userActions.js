@@ -2,7 +2,8 @@ import axios from 'axios';
 
 //NOTE all async dispatched actions need a dispatch as param to fulfill the request
 export function findAllUsers(dispatch) {
-  axios.get('/missoes/users')
+
+  axios.get('/missoes/users/')
     .then( (usersResponse) => {
       dispatch(allUsers(usersResponse.data))
     })

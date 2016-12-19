@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -48,6 +51,7 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
+	
 	@Transactional
 	public User findUserByEmail(User user) {
 		Optional<User> userOptionalFind = userRepository.findByEmailIgnoreCase(user.getEmail());
@@ -76,6 +80,11 @@ public class UserService {
 		return userRepository.findUserById(userId);
 	}
 	
+	@Transactional 
+	public List<User> searchUser(String seachQuery) {
+		return userRepository.searchUser(seachQuery);
+	}
+	
 	@Transactional
 	public User login(User user) {
 		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
@@ -83,5 +92,7 @@ public class UserService {
 		User userOptionalResponse = userOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha não encontrados"));
 		return userOptionalResponse;
 	}
-	
+
 }
+	
+	

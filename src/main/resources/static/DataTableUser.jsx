@@ -6,11 +6,12 @@ import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { DeactivateUserButton } from './DeactivateUserButton.jsx';
 import { removeUser, findAllUsers } from './actions/userActions';
-
+import { searchUser } from './actions/searchActions';
 
 @connect((Store) => {
   return {
     users: Store.userReducer,
+    search: Store.searchReducer,
   }
 })
 export class DataTableUser extends React.Component {
@@ -60,7 +61,9 @@ export class DataTableUser extends React.Component {
   }
 
   searchUser(event) {
-    console.log(event.target.value)
+    const query = event.target.value;
+    const { dispatch } = this.props;
+    dispatch(searchUser(query, dispatch))
   }
 
   render() {

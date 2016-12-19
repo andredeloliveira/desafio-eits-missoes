@@ -8,11 +8,13 @@ import { MissoesLoading } from './MissoesLoading.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
 import { removeMission, findAllMissions } from './actions/missionActions';
+import { searchMissions } from './actions/searchActions'
 
 @connect((Store) => {
   return {
     missions: Store.missionReducer,
     login: Store.loginReducer,
+    search: Store.searchReducer
   }
 })
 export class DataTableMission extends React.Component {
@@ -23,7 +25,9 @@ export class DataTableMission extends React.Component {
   }
 
   componentWillMount() {
+    const { dispatch } = this.props;
     moment.locale('pt-br');
+    dispatch(searchMissions('', dispatch))
   }
 
 
@@ -45,12 +49,12 @@ export class DataTableMission extends React.Component {
   updateMissions() {
     console.log('it entered here')
     const { dispatch } = this.props;
-    dispatch(findAllMissions(dispatch))
   }
 
   formattedFetchedData() {
     const { dispatch, name } = this.props;
-    return this.props.missions.missions.map((mission) => {
+    const { missions } = this.props.search;
+    return missions.map((mission) => {
       return (
         <TableRow key={mission.id}>
           <TableRowColumn>{moment(mission.mission.dateTime).format('lll')}</TableRowColumn>
@@ -74,11 +78,14 @@ export class DataTableMission extends React.Component {
   }
 
   searchMission(event) {
-    console.log(event.target.value)
+    const query = event.target.value;
+    const { dispatch } = this.props;
+    dispatch(searchMissions(query, dispatch))
   }
 
   render() {
-    if (!this.props.data.missions) {
+    const { missions } = this.props.search;
+    if (!missions) {
       return <MissoesLoading />
     }
 

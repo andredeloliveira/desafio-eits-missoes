@@ -114,6 +114,11 @@ public class MissionController {
 		return missionService.uploadFile(file);
 	}
 	
+	@RequestMapping(value = "/missions/search", params={"query"}, method = RequestMethod.GET)
+	public List<MissionPlanner> searchMission(@RequestParam("query") String searchQuery) {
+		return missionPlannerService.searchMissions(searchQuery);
+	}
+	
 	@RequestMapping( value = "/missions/finishFlight", method = RequestMethod.POST)
 	public Boolean finishFlight(@RequestBody Mission mission) {
 		return missionService.finishFlight(mission);

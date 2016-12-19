@@ -6,6 +6,7 @@ import missionReducer from './missionReducer';
 import loginReducer from './loginReducer';
 import airportReducer from './airportReducer';
 import fileUploadReducer from './fileUploadReducer';
+import searchReducer from './searchReducer';
 //import all other reducers here
 
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   loginReducer,
   airportReducer,
   fileUploadReducer,
+  searchReducer,
 });
 
 export default rootReducer;

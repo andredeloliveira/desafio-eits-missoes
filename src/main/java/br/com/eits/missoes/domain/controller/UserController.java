@@ -6,6 +6,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import br.com.eits.missoes.domain.entity.Profile;
 import br.com.eits.missoes.domain.entity.User;
@@ -87,6 +92,13 @@ public class UserController {
 		optionalCurrentUser.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 		return ResponseEntity.ok(optionalCurrentUser.get());
 	}
+	
+	@RequestMapping(value = "/users/search", params={"query"}, method= RequestMethod.GET)
+	public List<User> searchUser(@RequestParam("query") String searchQuery) {
+		return userService.searchUser(searchQuery);
+	}
+	
+	
 	
 	@RequestMapping(value = "/users/profile/pilots", method = RequestMethod.GET)
 	List<User> findPilots() {
