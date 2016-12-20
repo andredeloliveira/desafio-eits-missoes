@@ -100,7 +100,7 @@ public class UserController {
 	@RequestMapping(value = "/currentUser", method = RequestMethod.GET)
 	public ResponseEntity<User> currentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
 		System.out.println(user);
-		Optional<User> optionalCurrentUser = userService.findByEmailIgnoreCaseAndStatusTrue(user.getUsername());
+		Optional<User> optionalCurrentUser = userService.findUserByUserName(user.getUsername());
 		optionalCurrentUser.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 		return ResponseEntity.ok(optionalCurrentUser.get());
 	}

@@ -30,7 +30,7 @@ export class CRUDMenu extends React.Component {
     return (
       <div>
         <UpdateButton name={name} data={data}/>
-        <RemoveButton actions={{remove: remove, find: find}} data={data} dispatch={dispatch} />
+        {name === 'usuarios' ? null : <RemoveButton actions={{remove: remove, find: find}} data={data} dispatch={dispatch} />}
         <DetailsButton name={name} data={data} />
         {this.renderCustomButtons()}
       </div>

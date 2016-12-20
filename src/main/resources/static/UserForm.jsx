@@ -41,10 +41,11 @@ export class UserForm extends React.Component {
     const { dispatch, params } = this.props;
     const { user } = this.props.users;
     event.preventDefault();
+    const passwordValue = event.target.password.value;
     const newUser = {
       email: event.target.email.value,
       name: event.target.name.value,
-      password: event.target.password.value,
+      password: passwordValue === 'anyvalue' ? user.password : passwordValue,
       perfilAcesso: event.target.perfilAcesso.value,
     }
     if (user) {

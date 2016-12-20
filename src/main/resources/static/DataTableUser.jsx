@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 import Input from 'muicss/lib/react/input';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
@@ -10,7 +11,7 @@ import { searchUser } from './actions/searchActions';
 
 @connect((Store) => {
   return {
-    users: Store.userReducer,
+    login: Store.loginReducer,
     search: Store.searchReducer,
   }
 })
@@ -19,6 +20,7 @@ export class DataTableUser extends React.Component {
   constructor(props) {
     super(props)
     this.formattedFetchedData = this.formattedFetchedData.bind(this);
+    this.isAdmin = this.isAdmin.bind(this);
   }
 
   componentWillMount() {
@@ -27,30 +29,21 @@ export class DataTableUser extends React.Component {
   }
 
   isAdmin() {
-    const { currentUser } = this.props.users;
-    // if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return false;
+    const currentUser  = this.props.login.currentUser || cookie.load('currentUser');
+    return currentUser.perfilAcesso === 'ADMINISTRADOR'
   }
 
   formattedFetchedData() {
     const { dispatch, name } = this.props;
     const { users } = this.props.search;
     return users.map( (user) => {
-      if (user.status) {
-        user.status = 'ATIVO'
-      } else {
-        user.status = 'INATIVO'
-      }
+      const userStatus = user.status ? 'ATIVO' : 'INATIVO';
       return (
           <TableRow key={user.id}>
             <TableRowColumn>{user.name}</TableRowColumn>
             <TableRowColumn>{user.email}</TableRowColumn>
             <TableRowColumn>{user.perfilAcesso}</TableRowColumn>
-            <TableRowColumn>{user.status}</TableRowColumn>
+            <TableRowColumn>{userStatus}</TableRowColumn>
             <TableRowColumn>
               <CRUDMenu
                 data={user}

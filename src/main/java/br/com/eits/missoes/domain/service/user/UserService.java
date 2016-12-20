@@ -31,7 +31,18 @@ public class UserService {
 	
 	@Transactional
 	public User insertUser(User user) {
-		if (user.getId() == null) {
+		User hasUser = userRepository.findOne(user.getId());
+		if (hasUser != null) {
+			String encodedPassword = hasUser.getPassword();
+			//if the password is the same... we do not encode it again
+			if (encoder.isPasswordValid(encodedPassword, user.getPassword(), "saltOregon")) {
+				return userRepository.saveAndFlush(user);
+			} else {
+				String notEncodedPassword = user.getPassword();
+				user.setPassword(encoder.encodePassword(notEncodedPassword, "saltOregon"));
+				return userRepository.saveAndFlush(user);
+			}
+		} else {
 		  user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
 		}
 		
@@ -66,16 +77,19 @@ public class UserService {
 		return userFindResponse;
 	}
 	
+	@Transactional 
+	public Optional<User> findUserByUserName(String userName) {
+		return userRepository.findByEmailIgnoreCase(userName);
+		
+		
+	}
+	
 	
 	@Transactional
 	public List<User> findAllPilots() {
 		return userRepository.findUserByProfile(Profile.PILOTO);
 	}
 	
-	@Transactional
-	public Optional<User> findByEmailIgnoreCaseAndStatusTrue(String email) {
-		return userRepository.findByEmailIgnoreCase(email);
-	}
 	
 	@Transactional
 	public List<User> findAllPassengers() {
@@ -95,7 +109,7 @@ public class UserService {
 	@Transactional
 	public User login(User user) {
 		user.setPassword(encoder.encodePassword(user.getPassword(), "saltOregon"));
-		Optional<User> userOptional = userRepository.findByEmailIgnoreCaseAndPassword(user.getEmail(), user.getPassword());
+		Optional<User> userOptional = userRepository.findByEmailIgnoreCaseAndPasswordAndStatusTrue(user.getEmail(), user.getPassword());
 		User userOptionalResponse = userOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha não encontrados"));
 		return userOptionalResponse;
 	}

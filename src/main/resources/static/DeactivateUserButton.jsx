@@ -3,11 +3,14 @@ import IconButton from 'material-ui/IconButton';
 import Toggle from 'material-ui/Toggle';
 import { connect } from 'react-redux';
 import { updateUser } from './actions/userActions';
-
+import { searchUser } from './actions/searchActions';
+import { logout } from './actions/loginActions';
+import cookie from 'react-cookie';
 
 @connect((Store) => {
   return {
     users: Store.userReducer,
+    login: Store.loginReducer,
   }
 })
 export class DeactivateUserButton extends React.Component {
@@ -18,7 +21,8 @@ export class DeactivateUserButton extends React.Component {
   }
 
   deactivateUser() {
-    const {  dispatch } = this.props;
+    const {  dispatch, params } = this.props;
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
     let user = this.props.user;
     let newUser = {
       id: user.id,
@@ -28,7 +32,12 @@ export class DeactivateUserButton extends React.Component {
       password: user.password,
       status: ! user.status
     }
-    dispatch(updateUser(newUser, dispatch))
+    if (currentUser.id === user.id) {
+      dispatch(updateUser(newUser, dispatch))
+      dispatch(logout())
+    } else {
+      dispatch(updateUser(newUser, dispatch))
+    }
   }
 
   isUserActive() {
@@ -38,7 +47,6 @@ export class DeactivateUserButton extends React.Component {
 
   render() {
     const { user } = this.props;
-    console.log(user)
     return (
       <Toggle
        defaultToggled={this.isUserActive()}

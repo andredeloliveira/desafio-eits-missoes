@@ -24,7 +24,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByEmailIgnoreCase(String email);
 	
-	Optional<User> findByEmailIgnoreCaseAndPassword(String email, String password);
+	Optional<User> findByEmailIgnoreCaseAndPasswordAndStatusTrue(String email, String password);
 	
 	@Query("FROM users u WHERE u.name like %:searchQuery% or u.email like %:searchQuery%")
 	List<User> searchUser(@Param("searchQuery")String searchQuery);

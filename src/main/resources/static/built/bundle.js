@@ -67091,10 +67091,11 @@
 	      var user = this.props.users.user;
 	
 	      event.preventDefault();
+	      var passwordValue = event.target.password.value;
 	      var newUser = {
 	        email: event.target.email.value,
 	        name: event.target.name.value,
-	        password: event.target.password.value,
+	        password: passwordValue === 'anyvalue' ? user.password : passwordValue,
 	        perfilAcesso: event.target.perfilAcesso.value
 	      };
 	      if (user) {
@@ -77837,7 +77838,7 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }),
-	        _react2.default.createElement(_CRUDButtons.RemoveButton, { actions: { remove: remove, find: find }, data: data, dispatch: dispatch }),
+	        name === 'usuarios' ? null : _react2.default.createElement(_CRUDButtons.RemoveButton, { actions: { remove: remove, find: find }, data: data, dispatch: dispatch }),
 	        _react2.default.createElement(_CRUDButtons.DetailsButton, { name: name, data: data }),
 	        this.renderCustomButtons()
 	      );
@@ -94382,6 +94383,14 @@
 	
 	var _userActions = __webpack_require__(660);
 	
+	var _searchActions = __webpack_require__(658);
+	
+	var _loginActions = __webpack_require__(539);
+	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -94392,7 +94401,8 @@
 	
 	var DeactivateUserButton = exports.DeactivateUserButton = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
-	    users: Store.userReducer
+	    users: Store.userReducer,
+	    login: Store.loginReducer
 	  };
 	}), _dec(_class = function (_React$Component) {
 	  _inherits(DeactivateUserButton, _React$Component);
@@ -94409,8 +94419,11 @@
 	  _createClass(DeactivateUserButton, [{
 	    key: 'deactivateUser',
 	    value: function deactivateUser() {
-	      var dispatch = this.props.dispatch;
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          params = _props.params;
 	
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
 	      var user = this.props.user;
 	      var newUser = {
 	        id: user.id,
@@ -94420,7 +94433,12 @@
 	        password: user.password,
 	        status: !user.status
 	      };
-	      dispatch((0, _userActions.updateUser)(newUser, dispatch));
+	      if (currentUser.id === user.id) {
+	        dispatch((0, _userActions.updateUser)(newUser, dispatch));
+	        dispatch((0, _loginActions.logout)());
+	      } else {
+	        dispatch((0, _userActions.updateUser)(newUser, dispatch));
+	      }
 	    }
 	  }, {
 	    key: 'isUserActive',
@@ -94434,7 +94452,6 @@
 	    value: function render() {
 	      var user = this.props.user;
 	
-	      console.log(user);
 	      return _react2.default.createElement(_Toggle2.default, {
 	        defaultToggled: this.isUserActive(),
 	        onToggle: this.deactivateUser
@@ -94466,6 +94483,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	var _input = __webpack_require__(572);
 	
 	var _input2 = _interopRequireDefault(_input);
@@ -94492,7 +94513,7 @@
 	
 	var DataTableUser = exports.DataTableUser = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
-	    users: Store.userReducer,
+	    login: Store.loginReducer,
 	    search: Store.searchReducer
 	  };
 	}), _dec(_class = function (_React$Component) {
@@ -94504,6 +94525,7 @@
 	    var _this = _possibleConstructorReturn(this, (DataTableUser.__proto__ || Object.getPrototypeOf(DataTableUser)).call(this, props));
 	
 	    _this.formattedFetchedData = _this.formattedFetchedData.bind(_this);
+	    _this.isAdmin = _this.isAdmin.bind(_this);
 	    return _this;
 	  }
 	
@@ -94517,14 +94539,8 @@
 	  }, {
 	    key: 'isAdmin',
 	    value: function isAdmin() {
-	      var currentUser = this.props.users.currentUser;
-	      // if (currentUser.perfilAcesso === 'ADMINISTRADOR') {
-	      //   return true;
-	      // } else {
-	      //   return false;
-	      // }
-	
-	      return false;
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
 	    }
 	  }, {
 	    key: 'formattedFetchedData',
@@ -94537,11 +94553,7 @@
 	      var users = this.props.search.users;
 	
 	      return users.map(function (user) {
-	        if (user.status) {
-	          user.status = 'ATIVO';
-	        } else {
-	          user.status = 'INATIVO';
-	        }
+	        var userStatus = user.status ? 'ATIVO' : 'INATIVO';
 	        return _react2.default.createElement(
 	          _Table.TableRow,
 	          { key: user.id },
@@ -94563,7 +94575,7 @@
 	          _react2.default.createElement(
 	            _Table.TableRowColumn,
 	            null,
-	            user.status
+	            userStatus
 	          ),
 	          _react2.default.createElement(
 	            _Table.TableRowColumn,
