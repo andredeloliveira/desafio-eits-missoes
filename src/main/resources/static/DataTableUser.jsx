@@ -47,7 +47,7 @@ export class DataTableUser extends React.Component {
             <TableRowColumn>
               <CRUDMenu
                 data={user}
-                customButtons={ this.isAdmin() ? [<DeactivateUserButton key={'deactivateUserButton'} user={user}/>] : []}
+                customButtons={ this.isAdmin() ? [<DeactivateUserButton key={'deactivateUserButton'} user={user} isAdmin={this.isAdmin()} />] : []}
                 name={name}
                 remove={removeUser}
                 find={findAllUsers}

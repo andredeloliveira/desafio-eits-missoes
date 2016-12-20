@@ -77772,9 +77772,17 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _dec, _class;
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(388);
+	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
 	
 	var _IconButton = __webpack_require__(462);
 	
@@ -77802,7 +77810,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var CRUDMenu = exports.CRUDMenu = function (_React$Component) {
+	var CRUDMenu = exports.CRUDMenu = (_dec = (0, _reactRedux.connect)(function (Store) {
+	  return {
+	    login: Store.loginReducer
+	  };
+	}), _dec(_class = function (_React$Component) {
 	  _inherits(CRUDMenu, _React$Component);
 	
 	  function CRUDMenu(props) {
@@ -77825,6 +77837,12 @@
 	      }
 	    }
 	  }, {
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -77837,8 +77855,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }),
-	        name === 'usuarios' ? null : _react2.default.createElement(_CRUDButtons.RemoveButton, { actions: { remove: remove, find: find }, data: data, dispatch: dispatch }),
+	        this.isAdmin() ? _react2.default.createElement(_CRUDButtons.UpdateButton, { name: name, data: data }) : null,
+	        name === 'usuarios' || !this.isAdmin() ? null : _react2.default.createElement(_CRUDButtons.RemoveButton, { actions: { remove: remove, find: find }, data: data, dispatch: dispatch }),
 	        _react2.default.createElement(_CRUDButtons.DetailsButton, { name: name, data: data }),
 	        this.renderCustomButtons()
 	      );
@@ -77846,7 +77864,7 @@
 	  }]);
 	
 	  return CRUDMenu;
-	}(_react2.default.Component);
+	}(_react2.default.Component)) || _class);
 
 /***/ },
 /* 724 */
@@ -78229,6 +78247,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	var _container = __webpack_require__(646);
 	
 	var _container2 = _interopRequireDefault(_container);
@@ -78259,7 +78281,8 @@
 	
 	var AirplaneDetails = exports.AirplaneDetails = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
-	    airplanes: Store.airplaneReducer
+	    airplanes: Store.airplaneReducer,
+	    login: Store.loginReducer
 	  };
 	}), _dec(_class = function (_React$Component) {
 	  _inherits(AirplaneDetails, _React$Component);
@@ -78291,6 +78314,12 @@
 	    key: 'goBack',
 	    value: function goBack() {
 	      _reactRouter.hashHistory.goBack();
+	    }
+	  }, {
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
 	    }
 	  }, {
 	    key: 'render',
@@ -78369,7 +78398,7 @@
 	          { style: buttonStyle },
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'primary', onClick: this.goToUpdatePage.bind(this) },
+	            { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
 	            'Atualizar'
 	          ),
 	          _react2.default.createElement(_ConfirmActionDialog.ConfirmActionDialog, {
@@ -78378,11 +78407,12 @@
 	            message: 'Tem certeza que deseja remover a aeronave ?',
 	            itemId: airplaneId,
 	            dispatch: dispatch,
-	            shouldGoBack: true
+	            shouldGoBack: true,
+	            isAdmin: this.isAdmin()
 	          }),
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'accent', onClick: this.goBack.bind(this) },
+	            { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
 	            'Cancelar'
 	          )
 	        )
@@ -78488,7 +78518,8 @@
 	          itemName = _props2.itemName,
 	          message = _props2.message,
 	          actionLabel = _props2.actionLabel,
-	          customButton = _props2.customButton;
+	          customButton = _props2.customButton,
+	          isAdmin = _props2.isAdmin;
 	
 	      var actions = [_react2.default.createElement(_FlatButton2.default, {
 	        label: 'Cancelar',
@@ -78504,7 +78535,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _button2.default,
-	          { variant: 'flat', color: 'danger', onClick: this.handleOpen },
+	          { variant: 'flat', color: 'danger', disabled: !isAdmin, onClick: this.handleOpen },
 	          actionLabel
 	        ),
 	        _react2.default.createElement(_Dialog2.default, {
@@ -79042,13 +79073,23 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _moment = __webpack_require__(734);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	var _container = __webpack_require__(646);
 	
 	var _container2 = _interopRequireDefault(_container);
 	
-	var _moment = __webpack_require__(734);
+	var _button = __webpack_require__(579);
 	
-	var _moment2 = _interopRequireDefault(_moment);
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _ConfirmActionDialog = __webpack_require__(730);
 	
 	var _missionActions = __webpack_require__(708);
 	
@@ -79068,7 +79109,8 @@
 	
 	var MissionDetails = exports.MissionDetails = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
-	    missions: Store.missionReducer
+	    missions: Store.missionReducer,
+	    login: Store.loginReducer
 	  };
 	}), _dec(_class = function (_React$Component) {
 	  _inherits(MissionDetails, _React$Component);
@@ -79080,6 +79122,9 @@
 	
 	    _this.passengersRender = _this.passengersRender.bind(_this);
 	    _this.pilotsRender = _this.pilotsRender.bind(_this);
+	    _this.goToUpdatePage = _this.goToUpdatePage.bind(_this);
+	    _this.isAdmin = _this.isAdmin.bind(_this);
+	    _this.isPilot = _this.isPilot.bind(_this);
 	    return _this;
 	  }
 	
@@ -79130,13 +79175,47 @@
 	      }
 	    }
 	  }, {
+	    key: 'goBack',
+	    value: function goBack() {
+	      hashHistory.goBack();
+	    }
+	  }, {
+	    key: 'goToUpdatePage',
+	    value: function goToUpdatePage() {
+	      var id = this.props.params.id;
+	
+	      hashHistory.push('/usuarios/update/' + id);
+	    }
+	  }, {
+	    key: 'finishFlight',
+	    value: function finishFlight() {
+	      console.log('finishing it..');
+	    }
+	  }, {
+	    key: 'isPilot',
+	    value: function isPilot() {
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'PILOTO';
+	    }
+	  }, {
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props$missions = this.props.missions,
 	          mission = _props$missions.mission,
 	          missionPlanner = _props$missions.missionPlanner;
+	      var dispatch = this.props.dispatch;
 	
-	
+	      var missionId = this.props.params.id;
+	      var buttonStyle = {
+	        float: "right",
+	        marginTop: "20px"
+	      };
 	      var labelStyle = {
 	        fontSize: "1.2em"
 	      };
@@ -79260,6 +79339,34 @@
 	            'ul',
 	            null,
 	            this.pilotsRender()
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: buttonStyle },
+	          _react2.default.createElement(
+	            _button2.default,
+	            { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
+	            'Atualizar'
+	          ),
+	          _react2.default.createElement(_ConfirmActionDialog.ConfirmActionDialog, {
+	            actionLabel: 'Remover',
+	            action: _missionActions.removeMission,
+	            message: 'Tem certeza que deseja remover a Miss\xE3o?',
+	            itemId: missionId,
+	            dispatch: dispatch,
+	            shouldGoBack: true,
+	            isAdmin: this.isAdmin()
+	          }),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { variant: 'flat', color: 'primary', disabled: !this.isPilot(), onClick: this.finishFlight.bind(this) },
+	            'Finalizar V\xF4o'
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
+	            'Cancelar'
 	          )
 	        )
 	      );
@@ -94174,6 +94281,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _reactCookie = __webpack_require__(536);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	var _reactRouter = __webpack_require__(2);
 	
 	var _container = __webpack_require__(646);
@@ -94204,7 +94315,8 @@
 	
 	var UserDetails = exports.UserDetails = (_dec = (0, _reactRedux.connect)(function (Store) {
 	  return {
-	    users: Store.userReducer
+	    users: Store.userReducer,
+	    login: Store.loginReducer
 	  };
 	}), _dec(_class = function (_React$Component) {
 	  _inherits(UserDetails, _React$Component);
@@ -94238,6 +94350,12 @@
 	      _reactRouter.hashHistory.goBack();
 	    }
 	  }, {
+	    key: 'isAdmin',
+	    value: function isAdmin() {
+	      var currentUser = this.props.login.currentUser || _reactCookie2.default.load('currentUser');
+	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var user = this.props.users.user;
@@ -94261,7 +94379,6 @@
 	      if (!user) {
 	        return _react2.default.createElement(_MissoesLoading.MissoesLoading, null);
 	      }
-	      console.log();
 	      return _react2.default.createElement(
 	        _container2.default,
 	        null,
@@ -94335,13 +94452,13 @@
 	          { style: buttonStyle },
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'primary', onClick: this.goToUpdatePage.bind(this) },
+	            { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
 	            'Atualizar'
 	          ),
-	          _react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { user: user }),
+	          _react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { user: user, isAdmin: this.isAdmin() }),
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'accent', onClick: this.goBack.bind(this) },
+	            { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
 	            'Cancelar'
 	          )
 	        )
@@ -94450,11 +94567,14 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var user = this.props.user;
+	      var _props2 = this.props,
+	          user = _props2.user,
+	          isAdmin = _props2.isAdmin;
 	
 	      return _react2.default.createElement(_Toggle2.default, {
 	        defaultToggled: this.isUserActive(),
-	        onToggle: this.deactivateUser
+	        onToggle: this.deactivateUser,
+	        disabled: !isAdmin
 	      });
 	    }
 	  }]);
@@ -94582,7 +94702,7 @@
 	            null,
 	            _react2.default.createElement(_CRUDMenu.CRUDMenu, {
 	              data: user,
-	              customButtons: _this2.isAdmin() ? [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton', user: user })] : [],
+	              customButtons: _this2.isAdmin() ? [_react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { key: 'deactivateUserButton', user: user, isAdmin: _this2.isAdmin() })] : [],
 	              name: name,
 	              remove: _userActions.removeUser,
 	              find: _userActions.findAllUsers,

@@ -1,14 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Container from 'muicss/lib/react/container';
 import moment from 'moment'
-import { findMissionPlannerByMission, findMissionPassengersByMission, findMissionPilotsByMission, findMissionById } from './actions/missionActions';
+import cookie from 'react-cookie';
+import Container from 'muicss/lib/react/container';
+import Button from 'muicss/lib/react/button';
+import { ConfirmActionDialog } from './dialogs/ConfirmActionDialog.jsx';
+import { findMissionPlannerByMission, findMissionPassengersByMission, findMissionPilotsByMission, findMissionById, removeMission } from './actions/missionActions';
 import { MissoesLoading } from './MissoesLoading.jsx';
 import Divider from 'material-ui/Divider';
 
 @connect((Store) => {
   return {
     missions: Store.missionReducer,
+    login: Store.loginReducer,
   }
 })
 export class MissionDetails extends React.Component {
@@ -17,6 +21,9 @@ export class MissionDetails extends React.Component {
     super(props);
     this.passengersRender = this.passengersRender.bind(this);
     this.pilotsRender = this.pilotsRender.bind(this);
+    this.goToUpdatePage = this.goToUpdatePage.bind(this);
+    this.isAdmin = this.isAdmin.bind(this);
+    this.isPilot = this.isPilot.bind(this);
   }
 
   componentWillMount() {
@@ -49,10 +56,37 @@ export class MissionDetails extends React.Component {
     }
   }
 
+  goBack() {
+    hashHistory.goBack();
+  }
+
+  goToUpdatePage() {
+    const { id } = this.props.params;
+    hashHistory.push('/usuarios/update/'+ id);
+  }
+
+  finishFlight() {
+    console.log('finishing it..')
+  }
+
+  isPilot() {
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
+    return currentUser.perfilAcesso === 'PILOTO';
+  }
+
+  isAdmin() {
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
+    return currentUser.perfilAcesso === 'ADMINISTRADOR';
+  }
+
   render() {
-
     const { mission, missionPlanner } = this.props.missions;
-
+    const { dispatch } = this.props;
+    const missionId = this.props.params.id;
+    const buttonStyle = {
+      float: "right",
+      marginTop: "20px",
+    }
     const labelStyle = {
       fontSize: "1.2em",
     }
@@ -97,6 +131,20 @@ export class MissionDetails extends React.Component {
         <div style={elementContainer}>
           <label style={labelStyle}>Pilotos:</label>
           <ul>{ this.pilotsRender() }</ul>
+        </div>
+        <div style={buttonStyle}>
+          <Button variant="flat" color="primary" disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
+          <ConfirmActionDialog
+                    actionLabel="Remover"
+                    action={removeMission}
+                    message="Tem certeza que deseja remover a Missão?"
+                    itemId={missionId}
+                    dispatch={dispatch}
+                    shouldGoBack={true}
+                    isAdmin={this.isAdmin()}
+            />
+          <Button variant="flat" color="primary" disabled={!this.isPilot()} onClick={this.finishFlight.bind(this)}>Finalizar Vôo</Button>
+          <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
         </div>
       </Container>
     )

@@ -46,11 +46,12 @@ export class DeactivateUserButton extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, isAdmin } = this.props;
     return (
       <Toggle
        defaultToggled={this.isUserActive()}
        onToggle={this.deactivateUser}
+       disabled={!isAdmin}
      />
     )
   }

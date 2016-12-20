@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 import { hashHistory } from 'react-router';
 import Container from 'muicss/lib/react/container';
 import Divider from 'material-ui/Divider';
@@ -8,11 +9,10 @@ import { MissoesLoading } from './MissoesLoading.jsx';
 import { DeactivateUserButton } from './DeactivateUserButton.jsx';
 import { findUserById } from './actions/userActions';
 
-
-
 @connect((Store) => {
   return {
     users: Store.userReducer,
+    login: Store.loginReducer,
   }
 })
 export class UserDetails extends React.Component {
@@ -35,6 +35,12 @@ export class UserDetails extends React.Component {
   goBack() {
     hashHistory.goBack();
   }
+
+  isAdmin() {
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
+    return currentUser.perfilAcesso === 'ADMINISTRADOR';
+  }
+
   render() {
     const { user } = this.props.users;
     const { dispatch } = this.props;
@@ -56,7 +62,6 @@ export class UserDetails extends React.Component {
     if (!user) {
       return <MissoesLoading />
     }
-    console.log()
     return (
       <Container>
         <h1>Detalhes do usuário</h1>
@@ -77,9 +82,9 @@ export class UserDetails extends React.Component {
         </div>
         <Divider />
           <div style={buttonStyle}>
-            <Button variant="flat" color="primary" onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
-              <DeactivateUserButton user={user} />
-            <Button variant="flat" color="accent" onClick={this.goBack.bind(this)}>Cancelar</Button>
+            <Button variant="flat" color="primary" disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
+            <DeactivateUserButton user={user} isAdmin={this.isAdmin()}/>
+            <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
           </div>
       </Container>
     )
