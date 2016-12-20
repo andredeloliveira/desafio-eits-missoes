@@ -109,31 +109,31 @@ export function updateUserError(error) {
   }
 }
 
-export function removeUser(user, dispatch) {
+export function deactivateActivateUser(user, dispatch) {
   const _id = user.id;
-  axios.delete('/missoes/users/remove/' + _id, user.id)
+  axios.put('/missoes/users/deactivate/' + _id)
     .then((user) => {
-      dispatch(removeUserDone(user, dispatch))
+      dispatch(deactivateUserDone(user, dispatch))
     })
     .catch((error) => {
-      dispatch(removeUserError(error))
+      dispatch(deactivateUserError(error))
     })
   return {
-    type: 'REQUEST_REMOVE_USER_PENDING',
+    type: 'REQUEST_DEACTIVATE_USER_PENDING',
   }
 }
 
-export function removeUserDone(user, dispatch) {
+export function deactivateUserDone(user, dispatch) {
   dispatch(findAllUsers(dispatch))
   return {
-    type: 'REQUEST_REMOVE_USER_FULFILLED',
+    type: 'REQUEST_DEACTIVATE_USER_FULFILLED',
     payload: user
   }
 }
 
-export function removeUserError(error) {
+export function deact(error) {
   return {
-    type: 'REQUEST_REMOVE_USER_ERROR',
+    type: 'REQUEST_DEACTIVATE_USER_ERROR',
     error: error,
   }
 }

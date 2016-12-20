@@ -98,7 +98,7 @@ export class AirplaneForm extends React.Component {
 
   render() {
 
-    const { airplane, newAirplane, inserting, inserted, updating, updated, updatedAirplane } = this.props.airplanes;
+    const { airplane, newAirplane, inserting, inserted, updating, updated, updatedAirplane, removedAirplane } = this.props.airplanes;
     const { dispatch, params } = this.props;
     let isLoading = params.id && !airplane;
     const showFeedBackUpdate = params.id && updatedAirplane;
@@ -141,12 +141,12 @@ export class AirplaneForm extends React.Component {
             message={"Atualizando nova aeronave.."}
             duration={3000}
           /> :null}
-          {inserted ?
+          {newAirplane ?
           <Formfeedback
             message={"Aeronave " + newAirplane.subscriptionNumber + " inserida com sucesso"}
             duration={3000}
           /> :null}
-          {updated ?
+          {updatedAirplane ?
           <Formfeedback
             message={"Aeronave " + updatedAirplane.subscriptionNumber + " atualizada com sucesso"}
             duration={3000}

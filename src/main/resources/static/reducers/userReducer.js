@@ -7,8 +7,11 @@ const initialState = {
   newUser: null,
   updating: false,
   updatedUser: null,
+  deactivatedUser: null,
   pilots: null,
   passengers: null,
+  deactivating: false,
+  deactivated: false,
 }
 
 export default function userReducer(state = {}, action) {
@@ -73,6 +76,7 @@ export default function userReducer(state = {}, action) {
       return {
         ...state,
         updating: false,
+        user: action.payload,
         updatedUser: action.payload,
       }
     case 'REQUEST_UPDATE_USER_ERROR':
@@ -81,24 +85,25 @@ export default function userReducer(state = {}, action) {
         updating: false,
         error: action.payload,
       }
-    case 'REQUEST_REMOVE_USER_PENDING':
+    case 'REQUEST_DEACTIVATE_USER_PENDING':
       return {
         ...state,
-        removing: true,
-        removed: false,
+        deactivating: true,
+        deactivated: false,
       }
 
-    case 'REQUEST_REMOVE_USER_FULFILLED':
+    case 'REQUEST_DEACTIVATE_USER_FULFILLED':
       return {
         ...state,
-        removed: true,
-        removing: false,
+        deactivated: true,
+        deactivating: false,
+        deactivatedUser: action.payload,
       }
-    case 'REQUEST_REMOVE_USER_ERROR':
+    case 'REQUEST_DEACTIVATE_USER_ERROR':
       return {
         ...state,
-        removed: false,
-        removing: false,
+        deactivated: false,
+        deactivating: false,
         error: action.payload,
       }
     case 'REQUEST_ALL_PILOTS_PENDING':
@@ -146,6 +151,7 @@ export default function userReducer(state = {}, action) {
         user: null,
         newUser: null,
         updatedUser: null,
+        deactivatedUser: null,
       }
     default:
       return state;

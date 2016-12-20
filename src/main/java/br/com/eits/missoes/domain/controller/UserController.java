@@ -67,6 +67,18 @@ public class UserController {
 		
 		return ResponseEntity.ok(userService.insertUser(user));
 	}
+	
+	@RequestMapping(value = "/users/deactivate/{id}",method = RequestMethod.PUT)
+	ResponseEntity<User> deactivateUser(@PathVariable("id") Long userId) {
+		try {
+			User userTobeDeactivated = userService.deactivateUser(userId);
+			return ResponseEntity.ok(userTobeDeactivated);
+		} catch (Exception e) {
+			User userErrorObject = new User();
+			userErrorObject.setException("Ocorreu um erro desativando o usuário");
+			return ResponseEntity.ok(userErrorObject);
+		}
+	}
 
 	@RequestMapping(value= "/users/remove/{id}", method = RequestMethod.DELETE)
 	public void removeUser(@PathVariable("id")Long id) {

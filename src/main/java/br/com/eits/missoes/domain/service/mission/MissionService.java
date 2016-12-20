@@ -48,7 +48,7 @@ public class MissionService {
 	@Transactional
 	public void removeMission(Mission mission) {
 		Mission missionToDelete = findMissionById(mission.getId());
-		MissionPlanner planner = missionPlannerService.findMissionPlannerByMission(missionToDelete);
+		MissionPlanner planner = missionPlannerService.findMissionPlannerByMission(missionToDelete.getId());
 		missionPlannerService.removeMissionPlannerById(planner.getId());
 		List<MissionPassenger> allMissionPassengersFromMissionToBeDeleted = missionPassengerService.findMissionPassengerByMission(missionToDelete.getId());
 		for(Iterator<MissionPassenger> i = allMissionPassengersFromMissionToBeDeleted.iterator(); i.hasNext();) {

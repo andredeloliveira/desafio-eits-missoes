@@ -43,6 +43,13 @@ public class UserService {
 		userRepository.delete(id);
 	}
 	
+	@Transactional
+	public User deactivateUser(Long userId) {
+		User userToDeactivate = userRepository.findOne(userId);
+		userToDeactivate.setStatus(false);
+		return this.insertUser(userToDeactivate);
+	}
+	
 	/**/
 	
 	/*Find based methods*/

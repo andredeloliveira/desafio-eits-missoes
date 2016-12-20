@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { searchAirplanes } from './searchActions';
 
 export function findAllAirplanes(dispatch) {
   axios.get('/missoes/airplanes')
@@ -115,8 +116,8 @@ export function updateAirplaneError(error) {
 }
 
 export function removeAirplane(airplane, dispatch) {
-  const _id = airplane.id
-  axios.delete('/missoes/airplanes/remove/' + _id, airplane.id)
+  const airplaneId = airplane.id
+  axios.delete('/missoes/airplanes/remove/' + airplaneId)
     .then(() => {
       dispatch(removeAirplaneDone(airplane, dispatch))
     })
@@ -129,7 +130,7 @@ export function removeAirplane(airplane, dispatch) {
 }
 
 export function removeAirplaneDone(removedAirplane, dispatch) {
-  dispatch(findAllAirplanes(dispatch))
+  dispatch(searchAirplanes('',dispatch))
   return {
     type: 'REQUEST_REMOVE_AIRPLANE_FULFILLED',
     payload: removedAirplane
