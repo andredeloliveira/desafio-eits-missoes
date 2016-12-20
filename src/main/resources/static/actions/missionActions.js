@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { searchMissions } from './searchActions';
 
 export function findAllMissions(dispatch){
   axios.get('/missoes/missions')
@@ -424,7 +425,7 @@ export function findMissionPilotsByMissionError(error) {
 export function finishFlight(mission, dispatch) {
   axios.post('/missoes/missions/finishFlight', mission)
     .then((finishFlightResult) => {
-      dispatch(finishFlightDone(finishFlightResult))
+      dispatch(finishFlightDone(finishFlightResult.data, dispatch))
     })
     .catch((error) => {
       dispatch(finishFlightError(error))
@@ -434,7 +435,8 @@ export function finishFlight(mission, dispatch) {
   }
 }
 
-export function finishFlightDone(finishFlightResult) {
+export function finishFlightDone(finishFlightResult, dispatch) {
+  dispatch(searchMissions('', dispatch))
   return {
     type: 'REQUEST_FINISH_FLIGHT_FULFILLED',
     payload: finishFlightResult,

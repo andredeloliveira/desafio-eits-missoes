@@ -65,10 +65,6 @@ export class MissionDetails extends React.Component {
     hashHistory.push('/usuarios/update/'+ id);
   }
 
-  finishFlight() {
-    console.log('finishing it..')
-  }
-
   isPilot() {
     const currentUser = this.props.login.currentUser || cookie.load('currentUser');
     return currentUser.perfilAcesso === 'PILOTO';
@@ -100,6 +96,7 @@ export class MissionDetails extends React.Component {
     if (!mission || !missionPlanner) {
       return <MissoesLoading />
     }
+    const missionStatus = mission.finished ? 'FINALIZADO' : 'EM ABERTO';
     return (
       <Container>
         <h1>Detalhes da missão</h1>
@@ -122,6 +119,9 @@ export class MissionDetails extends React.Component {
         <div style={elementContainer}>
           <label style={labelStyle}>Planejado por:</label><span style={spanStyle}>{missionPlanner ? missionPlanner.planner.name : 'Carregando..'}</span>
         </div>
+        <div style={elementContainer}>
+          <label style={labelStyle}>Status:</label><span style={spanStyle}>{missionPlanner ? missionStatus : 'Carregando..'}</span>
+        </div>
         <Divider />
         <div style={elementContainer}>
           <label style={labelStyle}>Passageiros:</label>
@@ -142,8 +142,7 @@ export class MissionDetails extends React.Component {
                     dispatch={dispatch}
                     shouldGoBack={true}
                     isAdmin={this.isAdmin()}
-            />
-          <Button variant="flat" color="primary" disabled={!this.isPilot()} onClick={this.finishFlight.bind(this)}>Finalizar Vôo</Button>
+          />
           <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
         </div>
       </Container>

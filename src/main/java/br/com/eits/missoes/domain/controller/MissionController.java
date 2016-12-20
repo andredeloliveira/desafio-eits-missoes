@@ -120,7 +120,7 @@ public class MissionController {
 	}
 	
 	@RequestMapping( value = "/missions/finishFlight", method = RequestMethod.POST)
-	public Boolean finishFlight(@RequestBody Mission mission) {
+	public Mission finishFlight(@RequestBody Mission mission) {
 		return missionService.finishFlight(mission);
 	}
 } 

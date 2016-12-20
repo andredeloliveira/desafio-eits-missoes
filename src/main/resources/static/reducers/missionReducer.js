@@ -160,6 +160,7 @@ export default function missionReducer(state = initialState, action) {
           updating: false,
           updated: true,
           updatedMission: action.payload,
+          mission: action.payload,
         }
       }
       case 'REQUEST_UPDATE_MISSION_ERROR': {
@@ -284,6 +285,7 @@ export default function missionReducer(state = initialState, action) {
           ...state,
           finishingFlight: false,
           finishedFlight: true,
+          updatedMission: action.payload
         }
       case 'REQUEST_FINISH_FLIGHT_ERROR':
         return {

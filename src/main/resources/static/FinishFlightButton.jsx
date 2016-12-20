@@ -25,7 +25,7 @@ export class FinishFlightButton extends React.Component {
     let disabled = false;
     const currentDate = new Date().getTime();
     const missionDate = new Date(mission.dateTime).getTime();
-    if (currentDate < missionDate) {
+    if (currentDate < missionDate || mission.finished) {
       disabled = true;
     }
     return (

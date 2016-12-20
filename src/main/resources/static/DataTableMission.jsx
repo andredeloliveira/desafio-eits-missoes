@@ -5,6 +5,7 @@ import cookie from 'react-cookie';
 import Input from 'muicss/lib/react/input';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { MissoesLoading } from './MissoesLoading.jsx';
+import { Formfeedback } from './Formfeedback.jsx';
 import { CRUDMenu } from './CRUDMenu.jsx';
 import { FinishFlightButton } from './FinishFlightButton.jsx';
 import { removeMission, findAllMissions } from './actions/missionActions';
@@ -85,6 +86,7 @@ export class DataTableMission extends React.Component {
 
   render() {
     const { missions } = this.props.search;
+    const { updatedMission } = this.props.missions;
     if (!missions) {
       return <MissoesLoading />
     }
@@ -107,6 +109,11 @@ export class DataTableMission extends React.Component {
             {this.formattedFetchedData()}
           </TableBody>
         </Table>
+        {updatedMission ?
+          <Formfeedback
+            message={"Missão finalizada com sucesso"}
+            duration={3000}
+          />: null}
       </div>
     )
   }

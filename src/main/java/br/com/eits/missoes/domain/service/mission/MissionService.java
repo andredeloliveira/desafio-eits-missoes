@@ -106,7 +106,7 @@ public class MissionService {
 	
 	// It finishes the flight updating the total flight hours of the related airplane as well as the status of the mission
 	@Transactional
-	public Boolean finishFlight(Mission mission) {
+	public Mission finishFlight(Mission mission) {
 		Long rightNow = Calendar.getInstance().getTimeInMillis();
 		Long initialTime = mission.getDateTime().getTimeInMillis();
 		Long timeDifference = TimeUnit.MILLISECONDS.toHours((rightNow - initialTime)); 
@@ -114,7 +114,6 @@ public class MissionService {
 		airplaneToUpdate.setTotalFlightTime(timeDifference + airplaneToUpdate.getTotalFlightTime());
 		airplaneService.insertAirplane(airplaneToUpdate);
 		mission.setFinished(true);
-		this.insertMission(mission);
-		return false;
+		return this.insertMission(mission);
 	}
 }
