@@ -21,6 +21,15 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import br.com.eits.missoes.domain.controller.MainController;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
+/**
+ * <p>
+ * 	Configures all the necessaries contexts for the web modules. It uses Java annotations
+ * 	to describe configure templates, encoding, assets and webjars
+ * </p>
+ * 
+ * @author andre
+ *
+ */
 @Configuration
 @ComponentScan(basePackageClasses = { MainController.class })
 @EnableWebMvc

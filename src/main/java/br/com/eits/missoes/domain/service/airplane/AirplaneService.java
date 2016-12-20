@@ -18,48 +18,89 @@ public class AirplaneService {
 	@Autowired(required = false)
 	private IAirplaneRepository airplaneRepository;
 	
-	/*Insertion related methods*/
+	/**
+	 * Inserts or update a new Airplane
+	 * @param airplane
+	 * @return Successfully inserted/updated Airplane
+	 */
 	@Transactional
 	public Airplane insertAirplane(Airplane airplane) {
 		return airplaneRepository.saveAndFlush(airplane);
 	}
 	
+	/**
+	 * Remove an Airplane
+	 * @param airplaneId
+	 */
 	@Transactional
-	public void removeAirplaneById(Long id) {
-		airplaneRepository.delete(id);
+	public void removeAirplaneById(Long airplaneId) {
+		airplaneRepository.delete(airplaneId);
 	}
 	
+	/**
+	 * Removes an Airplane
+	 * @param airplane
+	 */
 	@Transactional
 	public void removeAirplane(Airplane airplane) {
 		airplaneRepository.delete(airplane);
 	}
 	
-	/*Find related methods*/
+	/**
+	 * Finds all the Airplane objects in the DB
+	 * @return
+	 */
 	@Transactional 
 	public List<Airplane> findAllAirplane() {
 		return airplaneRepository.findAll();
 	}
 	
+	/**
+	 *  Find a single airplane by its id
+	 * @param airplaneId
+	 * @return Airplane
+	 */
 	@Transactional
 	public Airplane findAirplaneById(Long airplaneId){
 		return airplaneRepository.findAirplaneById(airplaneId);
 	}
 	
+	/**
+	 *  Finds  Airplanes by its model
+	 * @see AirplaneModel
+	 * @param airplaneModel
+	 * @return Collection of Airplane
+	 */
 	@Transactional
 	public List<Airplane> findAirplaneByAirplaneModel(AirplaneModel airplaneModel){
 		return airplaneRepository.findAirplaneByAirplaneModel(airplaneModel);
 	}
 	
+	/**
+	 * Finds an Airplane by its subscription number
+	 * @param subscriptionNumber
+	 * @return Airplane
+	 */
 	@Transactional 
 	public Airplane findAirplaneBySubscriptionNumber(String subscriptionNumber) {
 		return airplaneRepository.findAirplaneBySubscriptionNumber(subscriptionNumber);
 	}
 	
+	/**
+	 * Finds an Airplane by the number of seats
+	 * @param seatsNumber
+	 * @return Airplane
+	 */
 	@Transactional 
 	public Airplane findAirplaneBySeatsNumber(Integer seatsNumber) {
 		return airplaneRepository.findAirplaneBySeatsNumber(seatsNumber);
 	}
 	
+	/**
+	 *  Searches Airplanes by a search criteria
+	 * @param searchQuery
+	 * @return Collection of Airplane
+	 */
 	@Transactional
 	public List<Airplane> searchAirplane(String searchQuery) {
 		return airplaneRepository.searchAirplane(searchQuery);

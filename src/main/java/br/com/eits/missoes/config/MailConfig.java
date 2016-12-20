@@ -10,10 +10,21 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import br.com.eits.missoes.service.mailer.Mailer;
 
+/**
+ * It configures all the data for the e-mail sending functionality.
+ * @see JavaMailSender
+ * @author andre
+ * @version 1.0
+ */
 @Configuration
 @ComponentScan(basePackageClasses={Mailer.class})
 public class MailConfig {
 	
+	/**
+	 * Sends e-mail with the configuration that the method itself uses. All the data
+	 * comes from an env. file
+	 * @return An object that will be able to send any given message when evoked.
+	 */
 	@Bean
 	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

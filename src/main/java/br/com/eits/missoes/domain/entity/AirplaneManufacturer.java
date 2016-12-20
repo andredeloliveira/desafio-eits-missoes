@@ -8,6 +8,11 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * It represents an Airplane's manufacturer
+ * @author andre
+ *
+ */
 @Entity(name = "airplane_manufacturer")
 public class AirplaneManufacturer {
 	

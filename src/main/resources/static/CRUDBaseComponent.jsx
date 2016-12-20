@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { Table, Column, Cell } from 'fixed-data-table';
@@ -10,7 +12,11 @@ import { hashHistory } from 'react-router';
 
 
 
-
+@connect((Store) => {
+  return {
+    login: Store.loginReducer,
+  }
+})
 export class CRUDBaseComponent extends React.Component {
 
   constructor(props) {
@@ -33,16 +39,13 @@ export class CRUDBaseComponent extends React.Component {
   //Opens a new Entry dialog, that is a dependency of this component.
   redirectPage() {
     const { name, data } = this.props;
-    if (name === 'aeronaves') {
-      hashHistory.push('/aeronaves/novo')
-    } else if (name === 'usuarios') {
-      hashHistory.push('/usuarios/novo')
-    } else if (name === 'missoes') {
-      hashHistory.push('/missoes/novo')
-    }
-
+    hashHistory.push('/'+ name + '/novo')
   }
 
+  isAdmin() {
+    const currentUser = this.props.login.currentUser || cookie.load('currentUser');
+    return currentUser.perfilAcesso === 'ADMINISTRADOR';
+  }
   render() {
     const { label, name } = this.props;
     const dialogContainer = {
@@ -61,11 +64,13 @@ export class CRUDBaseComponent extends React.Component {
             { this.fetchedDataContainerRender() }
           </div>
         </div>
-        <div className="dialog-container" style={dialogContainer}>
+        {this.isAdmin() ?
+          <div className="dialog-container" style={dialogContainer}>
             <FloatingActionButton secondary={false} style={fabStyle} onTouchTap={this.redirectPage}>
               <ContentAdd />
             </FloatingActionButton>
-        </div>
+          </div>
+        : null}
       </div>
     )
   }

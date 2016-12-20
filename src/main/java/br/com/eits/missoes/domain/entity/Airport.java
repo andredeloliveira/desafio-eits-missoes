@@ -8,6 +8,11 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * It represents an Airport with single description and Acronym
+ * @author andre
+ *
+ */
 @Entity(name = "airport")
 public class Airport {
 	

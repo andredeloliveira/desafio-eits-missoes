@@ -16,7 +16,13 @@ public interface IAirplaneRepository extends JpaRepository<Airplane, Long>{
 	Airplane findAirplaneBySubscriptionNumber(String subscriptionNumber);
 	Airplane findAirplaneBySeatsNumber(Integer seatsNumber);
 	
+	/**
+	 * Searches an Airplane by its name, manufacturer name or subscription number
+	 * @param searchQuery
+	 * @return Collection of Airplane matching the search criteria
+	 */
 	@Query("FROM airplane a WHERE a.airplaneModel.name like %:searchQuery%"
-			+ " or a.airplaneModel.airplaneManufacturer.name like %:searchQuery%")
+			+ " or a.airplaneModel.airplaneManufacturer.name like %:searchQuery%"
+			+ " order by a.subscriptionNumber")
 	List<Airplane> searchAirplane(@Param("searchQuery") String searchQuery);
 }

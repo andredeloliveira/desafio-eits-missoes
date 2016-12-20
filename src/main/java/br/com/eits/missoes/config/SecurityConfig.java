@@ -20,6 +20,12 @@ import br.com.eits.missoes.domain.security.AppUserDetailService;
 import br.com.eits.missoes.domain.security.CustomBasicAuthenticationEntryPoint;
 import br.com.eits.missoes.domain.service.user.UserService;
 
+/**
+ * <p>It configures all the the Spring security needs for Forms and simple authentication</p>
+ * see at <a href="http://docs.spring.io/spring-security/site/docs/current/apidocs/">Spring Security</a>
+ * @author andre
+ * @version 1.0
+ */
 @EnableWebSecurity
 @ComponentScan(basePackageClasses= AppUserDetailService.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)

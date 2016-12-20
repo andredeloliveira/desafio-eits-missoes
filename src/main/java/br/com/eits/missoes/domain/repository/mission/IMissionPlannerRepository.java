@@ -13,8 +13,14 @@ public interface IMissionPlannerRepository extends JpaRepository<MissionPlanner,
 
 	MissionPlanner findMissionPlannerByMission(Mission mission);
 	
+	/**
+	 * Searches a Mission by its AirplaneModel name, missionTo acronym, missionFrom acronymn
+	 * ordering by the date/time that it is scheduled
+	 * @param searchQuery
+	 * @return Collection of Mission matching the search criteria
+	 */
 	@Query("FROM mission_planner m WHERE m.mission.airplane.airplaneModel.name like %:searchQuery%"
-			+ " or m.mission.missionTo.acronym like %:searchQuery%"
-			+ " or m.mission.missionFrom.acronym like %:searchQuery%")
+			+ " or m.mission.missionTo.acronym like UPPER(%:searchQuery%)"
+			+ " or m.mission.missionFrom.acronym like UPPER(%:searchQuery%) order by m.mission.dateTime")
 	List<MissionPlanner> searchMission(@Param("searchQuery") String searchQuery);
 }

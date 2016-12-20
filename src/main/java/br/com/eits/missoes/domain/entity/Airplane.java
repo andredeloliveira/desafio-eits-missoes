@@ -15,9 +15,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
+ * Represents a literal Airplane with a subscription number that identify which
+ * only a few attributes of an Airplane are being described
  * @author andre
  * @version 1.0
- * @created 04-Nov-2016 10:14:25 AM
  */
 
 @Entity(name = "airplane")

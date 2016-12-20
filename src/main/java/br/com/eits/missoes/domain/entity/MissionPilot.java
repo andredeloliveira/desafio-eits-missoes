@@ -10,9 +10,12 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+/**
+ * It represents a Pilot (User) that is tied to a Mission
+ * @author andre
+ * @version 1.0
+ */
 @Proxy(lazy = false)
-@JsonIgnoreProperties(ignoreUnknown = false)
 @Entity(name = "mission_pilot")
 public class MissionPilot {
 

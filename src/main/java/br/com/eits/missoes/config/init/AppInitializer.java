@@ -11,6 +11,11 @@ import br.com.eits.missoes.config.SecurityConfig;
 import br.com.eits.missoes.config.ServiceConfig;
 import br.com.eits.missoes.config.WebConfig;
 
+/**
+ * It initilizes all the necessary classes, especially those that need to be mapped before running the app
+ * @author andre
+ * @version 1.0
+ */
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override

@@ -15,9 +15,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
+ * Represents a User that can be Active or Not. Also, the User must have:
+ * <ul>
+ * 	<li>Password - For security</li>
+ * 	<li>Profile - Representing what type of User it is</li>
+ *  <li>Name</li>
+ *  <li>Email</li>
+ * </ul>
  * @author andre
  * @version 1.0
- * @created 04-Nov-2016 10:22:49 AM
+ *
  */
 
 @Entity(name = "users")

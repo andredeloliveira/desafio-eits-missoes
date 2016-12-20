@@ -28,6 +28,12 @@ import br.com.eits.missoes.domain.service.mission.MissionService;
 import br.com.eits.missoes.domain.service.user.UserService;
 import br.com.eits.missoes.service.mailer.Mailer;
 
+/**
+ * Class that is responsible to map all the classes that communicate with the JPA entities
+ * (Services and Repositories)
+ * @author andre
+ * @version 1.0
+ */
 @Configuration
 @ComponentScan(basePackageClasses = {
   IUserRepository.class,

@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * It represents a Planner (User) that is tied to a Mission
+ * @author andre
+ *
+ */
 @Entity(name = "mission_planner")
 public class MissionPlanner {
 

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 
 import br.com.eits.missoes.domain.entity.User;
 
+/**
+ * It describes how the body of the 'Welcome' e-mail will be
+ * @author andre
+ * @version 1.0
+ */
 @Component
 public class Mailer {
 	

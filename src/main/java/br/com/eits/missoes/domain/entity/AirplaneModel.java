@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * It represents an Airplane Model
+ * @author andre
+ *
+ */
 @Entity(name = "airplane_model")
 public class AirplaneModel {
 	

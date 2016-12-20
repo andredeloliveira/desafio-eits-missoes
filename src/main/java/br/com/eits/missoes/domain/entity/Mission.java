@@ -14,10 +14,17 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
-/**
+/** It represents a Mission.
+ * A Mission must have:
+ * <ul>
+ * 	<li>Airplane - As a Mission cannot be scheduled without it</li>
+ * <li>missionTo (Airport) - As a Mission has a destination</li>
+ * <li>missionFrom (Airport) - As a Mission has a origin</li>
+ * <li>dateTime (Calendar) - The date and time that a mission will begin</li>
+ * </ul>
  * @author andre
  * @version 1.0
- * @created 04-Nov-2016 10:34:02 AM
+ * 
  */
 
 @Entity(name = "mission")

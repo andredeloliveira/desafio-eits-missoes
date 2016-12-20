@@ -1,5 +1,10 @@
 package br.com.eits.missoes.domain.entity;
 
+/**
+ * @deprecated
+ * @author andre
+ *
+ */
 public class MissoesError {
 
 	private String description;
