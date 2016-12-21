@@ -5,7 +5,9 @@ All the actions that are related to file uploading are being declared here.
 import axios from 'axios';
 
 export function uploadFile(file, dispatch) {
-  axios.post('/missoes/missions/uploadFile', file)
+  let formData = new FormData();
+  formData.append('file', file);
+  axios.post('/missoes/uploadFile', formData)
     .then((fileResponse) => {
       dispatch(uploadFileDone(fileResponse.data))
     })

@@ -15,6 +15,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import br.com.eits.missoes.domain.repository.airplane.IAirplaneRepository;
 import br.com.eits.missoes.domain.repository.airport.IAirportRepository;
@@ -82,6 +84,11 @@ public class JPAConfig {
 	    em.setJpaProperties(additionalProperties());
 	    return em;
 	}
+	
+	@Bean
+    public MultipartResolver multipartResolver(){
+        return new StandardServletMultipartResolver();
+    }
 	
 	@Bean
 	public PlatformTransactionManager transactionManager() {

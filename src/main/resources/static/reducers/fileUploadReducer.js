@@ -23,6 +23,7 @@ export default function fileUploadReducer(state = initialState, action) {
         ...state,
         uploaded: true,
         uploading: false,
+        file: action.payload
       }
     case 'REQUEST_UPLOAD_FILE_ERROR':
       return {

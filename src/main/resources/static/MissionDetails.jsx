@@ -80,6 +80,10 @@ export class MissionDetails extends React.Component {
     return currentUser.perfilAcesso === 'ADMINISTRADOR';
   }
 
+  finishFlight() {
+    console.log('finish it')
+  }
+
   render() {
     const { mission, missionPlanner } = this.props.missions;
     const { dispatch } = this.props;
@@ -124,6 +128,12 @@ export class MissionDetails extends React.Component {
         <div style={elementContainer}>
           <label style={labelStyle}>Planejado por:</label><span style={spanStyle}>{missionPlanner ? missionPlanner.planner.name : 'Carregando..'}</span>
         </div>
+        <Divider />
+        <div style={elementContainer}>
+          <label style={labelStyle}>Objetivo:</label>
+          <span style={spanStyle}>{mission.reason}</span>
+        </div>
+        <Divider />
         <div style={elementContainer}>
           <label style={labelStyle}>Status:</label><span style={spanStyle}>{missionPlanner ? missionStatus : 'Carregando..'}</span>
         </div>
@@ -137,10 +147,17 @@ export class MissionDetails extends React.Component {
           <label style={labelStyle}>Pilotos:</label>
           <ul>{ this.pilotsRender() }</ul>
         </div>
-        <div style={buttonStyle}>
-          <Button variant="flat" color="primary" disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
+        <Divider />
+        <div style={elementContainer}>
+          <label style={labelStyle}>Anexo:</label>
+          <a style={spanStyle} href={mission.attachedFile} target="_blank">Arquivo</a>
+        </div>
+        <div>
+          <Button variant="flat" color="primary" style={buttonStyle} disabled={!this.isPilot()} onClick={this.finishFlight.bind(this)}> Finalizar Vôo</Button>
+          <Button variant="flat" color="primary" style={buttonStyle} disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
           <ConfirmActionDialog
                     actionLabel="Remover"
+                    style={buttonStyle}
                     action={removeMission}
                     message="Tem certeza que deseja remover a Missão?"
                     itemId={missionId}
@@ -148,7 +165,7 @@ export class MissionDetails extends React.Component {
                     shouldGoBack={true}
                     isAdmin={this.isAdmin()}
           />
-          <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
+          <Button variant="flat" color="accent" style={buttonStyle} disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
         </div>
       </Container>
     )

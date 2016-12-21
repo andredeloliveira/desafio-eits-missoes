@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import Input from 'muicss/lib/react/input';
@@ -260,7 +261,7 @@ export class MissionForm extends React.Component {
     const { dispatch, params } = this.props;
     const { mission, missionPassengers, missionPilots } = this.props.missions;
     const { file } = this.props.fileUpload;
-    const currentUser = this.props.auth.currentUser;
+    const currentUser = this.props.auth.currentUser || cookie.load('currentUser');
     const updatingCondition = mission && params.id;
     const newMission = {
       mission: {
@@ -269,7 +270,7 @@ export class MissionForm extends React.Component {
         missionFrom: this.state.selectedFrom || mission.missionTo,
         airplane: JSON.parse(event.target.airplane.value),
         reason: event.target.reason.value,
-        attachedFile: null,
+        attachedFile: file,
       },
       planner: currentUser,
       passengers: this.state.selectedPassengers,
@@ -346,12 +347,11 @@ export class MissionForm extends React.Component {
 
   handleUpdateFiles(files) {
     const { dispatch } = this.props;
-    //dispatch(uploadFile(files[0], dispatch))
-    console.log(files)
     if (files) {
       this.setState({
         file: files[0]
       })
+      dispatch(uploadFile(files[0], dispatch))
     }
   }
 
@@ -412,6 +412,7 @@ export class MissionForm extends React.Component {
     const chipsWrapper = { display: 'flex', flexWrap: 'wrap'}
     const { params } = this.props;
     const { mission, newMission, inserting, updating, updatedMission, missionPassengers, missionPilots } = this.props.missions;
+    const { uploading, uploaded } = this.props.fileUpload;
     let isLoading = params.id && !mission;
     const showCurrentPassengers = params.id && missionPassengers;
     const showCurrentPilots = params.id && missionPilots;
@@ -510,6 +511,7 @@ export class MissionForm extends React.Component {
                 <FlatButton label="Anexar.." />
                 <span>{this.state.file ? this.state.file.name : '' }</span>
               </Files>
+              { uploading ? <MissoesLoading /> : null}
               <Button variant="raised">Salvar</Button>
         </Form>
         { inserting ?
@@ -520,6 +522,11 @@ export class MissionForm extends React.Component {
         { newMission ?
           <Formfeedback
           message={"Nova missão agendada com sucesso"}
+          duration={3000}
+        />: null}
+        { uploaded ?
+          <Formfeedback
+          message={"Arquivo enviado com sucesso!"}
           duration={3000}
         />: null}
       </Container>

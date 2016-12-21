@@ -1,0 +1,245 @@
+ERROR  : 16:58:38: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 16:58:47: Error: Error connecting to the server: fe_sendauth: no password supplied
+
+ERROR  : 16:59:02: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 16:59:12: Error: Error connecting to the server: FATAL:  password authentication failed for user "andre"
+
+ERROR  : 16:59:36: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:00:06: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:01:03: Error: Error connecting to the server: fe_sendauth: no password supplied
+
+ERROR  : 17:02:53: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:03:03: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:03:08: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:03:14: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:03:19: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:09:39: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 17:10:08: Error: Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+ERROR  : 13:41:26: Error: ERROR:  database "missoes" is being accessed by other users
+DETAIL:  There are 5 other sessions using the database.
+ERROR  : 16:32:56: Error: ERROR:  database "missoes" is being accessed by other users
+DETAIL:  There are 5 other sessions using the database.
+ERROR  : 10:57:43: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 10:57:45: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 10:57:47: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 10:57:48: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 10:57:48: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 10:57:48: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:36: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:39: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:40: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:40: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:41: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 11:17:41: Error: Failed to get the working directory (error 2: No such file or directory)
+ERROR  : 09:26:44: Error: ERROR:  insert or update on table "airplane_model" violates foreign key constraint "airplane_model_id_airplane_manufacturer_fkey"
+DETAIL:  Key (id_airplane_manufacturer)=(1) is not present in table "airplane_manufacturer".
+ERROR  : 09:26:48: Error: ERROR:  insert or update on table "airplane_model" violates foreign key constraint "airplane_model_id_airplane_manufacturer_fkey"
+DETAIL:  Key (id_airplane_manufacturer)=(1) is not present in table "airplane_manufacturer".
+ERROR  : 15:56:06: Error: ERROR:  duplicate key value violates unique constraint "airplane_model_pkey"
+DETAIL:  Key (id_airplane_model)=(122) already exists.
+ERROR  : 19:27:52: Error: ERROR:  insert or update on table "mission_airplane" violates foreign key constraint "fk4mf7wn8lxya0j9u2v7cfcmdix"
+DETAIL:  Key (id_airplane)=(1) is not present in table "airplane".
+ERROR  : 09:50:49: Error: ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table schema_version depends on schema public
+table airplane_manufacturer depends on schema public
+table airplane_model depends on schema public
+table airplane depends on schema public
+table users depends on schema public
+table airport depends on schema public
+table mission depends on schema public
+table mission_planner depends on schema public
+table mission_airplane depends on schema public
+table mission_passenger depends on schema public
+table mission_pilot depends on schema public
+table accomplished_mission depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ERROR  : 09:56:26: ERROR:  syntax error at or near "bigint"
+LINE 2: ALTER COLUMN "id_mission_to" bigint NOT NULL,
+                                     ^
+ERROR  : 09:56:36: ERROR:  syntax error at or near "serial"
+LINE 2: ALTER COLUMN "id_mission_to" serial NOT NULL,
+                                     ^
+ERROR  : 09:57:54: ERROR:  syntax error at or near "serial"
+LINE 2: ALTER COLUMN "id_mission_to" serial NOT NULL,
+                                     ^
+ERROR  : 09:58:00: ERROR:  syntax error at or near "serial"
+LINE 2: ALTER COLUMN "id_mission_to" serial NOT NULL
+                                     ^
+ERROR  : 09:58:10: ERROR:  syntax error at or near "bigint"
+LINE 2: ALTER COLUMN "id_mission_to" bigint NOT NULL
+                                     ^
+ERROR  : 09:58:29: ERROR:  syntax error at or near "NOT"
+LINE 2: ALTER COLUMN "id_mission_to" TYPE bigint NOT NULL
+                                                 ^
+ERROR  : 09:58:43: ERROR:  syntax error at or near "ALTER"
+LINE 3: ALTER COLUMN "id_mission_from" TYPE bigint;
+        ^
+ERROR  : 18:19:38: Error: ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table schema_version depends on schema public
+table airplane_manufacturer depends on schema public
+table airplane_model depends on schema public
+table airplane depends on schema public
+table users depends on schema public
+table pilot depends on schema public
+table passenger depends on schema public
+table airport depends on schema public
+table mission depends on schema public
+table mission_passenger depends on schema public
+table mission_pilot depends on schema public
+table accomplished_mission depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ERROR  : 18:27:17: Error: ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table schema_version depends on schema public
+table airplane_manufacturer depends on schema public
+table airplane_model depends on schema public
+table airplane depends on schema public
+table users depends on schema public
+table pilot depends on schema public
+table passenger depends on schema public
+table airport depends on schema public
+table mission depends on schema public
+table mission_passenger depends on schema public
+table mission_pilot depends on schema public
+table accomplished_mission depends on schema public
+table mission_mission_passenger depends on schema public
+table mission_mission_pilot depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ERROR  : 19:09:09: Error: ERROR:  null value in column "total_flight_time" violates not-null constraint
+DETAIL:  Failing row contains (1, 200, fjdlas904, null, null).
+ERROR  : 19:10:44: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, coco, 2, 1, 1, 2, null).
+ERROR  : 19:10:49: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, coco, 3, 1, 1, 2, null).
+ERROR  : 19:11:11: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fkpcasve3wfuyuruyf7ltktf447"
+DETAIL:  Key (id_mission)=(1) is not present in table "mission".
+ERROR  : 19:11:15: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fkpcasve3wfuyuruyf7ltktf447"
+DETAIL:  Key (id_mission)=(1) is not present in table "mission".
+ERROR  : 19:12:14: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fkpcasve3wfuyuruyf7ltktf447"
+DETAIL:  Key (id_mission)=(1) is not present in table "mission".
+ERROR  : 19:12:28: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fkpcasve3wfuyuruyf7ltktf447"
+DETAIL:  Key (id_mission)=(2) is not present in table "mission".
+ERROR  : 19:13:00: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, fdf, 8, 2, 1, 2, null).
+ERROR  : 19:13:22: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, fdf, 9, 2, 1, 2, 1).
+ERROR  : 19:13:26: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, fdf, 10, 2, 1, 2, 1).
+ERROR  : 08:33:39: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, fdf, 11, 2, 1, 2, 1).
+ERROR  : 08:33:58: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fkpcasve3wfuyuruyf7ltktf447"
+DETAIL:  Key (id_mission)=(1) is not present in table "mission".
+ERROR  : 08:34:08: Error: ERROR:  null value in column "id_mission" violates not-null constraint
+DETAIL:  Failing row contains (null, null, 2016-11-16 19:06:39.138, coco, 13, 1, 1, 2, null).
+ERROR  : 08:37:30: Error: ERROR:  null value in column "reason" violates not-null constraint
+DETAIL:  Failing row contains (1, 2012-12-12 12:12:12+00, 1, 1, 1, null, null).
+ERROR  : 08:38:18: Error: ERROR:  time zone "gmt-020012/12/12" not recognized
+LINE 1: ...ssion(id_mission, date_time) VALUES ('1'::bigint, 'Thu Nov 1...
+                                                             ^
+ERROR  : 08:38:46: Error: ERROR:  null value in column "acronym" violates not-null constraint
+DETAIL:  Failing row contains (2, sp, null).
+ERROR  : 08:39:25: Error: ERROR:  time zone "gmt-0200thu" not recognized
+LINE 1: ...from, id_mission_to, id_airplane, reason) VALUES ('Thu Nov 1...
+                                                             ^
+ERROR  : 08:39:30: Error: ERROR:  time zone "gmt-0200thu" not recognized
+LINE 1: ...from, id_mission_to, id_airplane, reason) VALUES ('Thu Nov 1...
+                                                             ^
+ERROR  : 08:42:19: Error: ERROR:  time zone "gmt-0200thu" not recognized
+LINE 1: ...from, id_mission_to, id_airplane, reason) VALUES ('Thu Nov 1...
+                                                             ^
+ERROR  : 08:42:28: Error: ERROR:  time zone "z2016-11-17t10:41:56.154z" not recognized
+LINE 1: ...from, id_mission_to, id_airplane, reason) VALUES ('2016-11-1...
+                                                             ^
+ERROR  : 08:42:47: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (3, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, null, null, null).
+ERROR  : 08:43:11: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (1, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, 1212, null, null).
+ERROR  : 08:45:16: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (1, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, 1212, null, null).
+ERROR  : 08:45:26: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (1, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, 1212, null, null).
+ERROR  : 08:45:29: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (1, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, 1212, null, null).
+ERROR  : 08:45:32: Error: ERROR:  null value in column "id_mission_planner" violates not-null constraint
+DETAIL:  Failing row contains (1, 2016-11-17 10:41:56.154+00, 1, 2, 1, negocios, 1212, null, null).
+ERROR  : 09:03:40: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "mission_id_mission_to_fkey"
+DETAIL:  Key (id_mission_to)=(2) is not present in table "airport".
+ERROR  : 09:04:01: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "mission_id_mission_to_fkey"
+DETAIL:  Key (id_mission_to)=(2) is not present in table "airport".
+ERROR  : 09:04:24: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "mission_id_airplane_fkey"
+DETAIL:  Key (id_airplane)=(1) is not present in table "airplane".
+ERROR  : 14:34:43: Error: ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table airplane depends on schema public
+table airplane_manufacturer depends on schema public
+table airplane_model depends on schema public
+table airport depends on schema public
+table mission depends on schema public
+table mission_mission_passenger depends on schema public
+table mission_mission_pilot depends on schema public
+table mission_passenger depends on schema public
+table mission_pilot depends on schema public
+table users depends on schema public
+table mission_planner depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ERROR  : 14:46:25: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fk4byffx0ggwc6lqamo088dl30m"
+DETAIL:  Key (id_mission_from)=(1) is not present in table "airport".
+ERROR  : 14:46:32: Error: ERROR:  insert or update on table "mission" violates foreign key constraint "fk4byffx0ggwc6lqamo088dl30m"
+DETAIL:  Key (id_mission_from)=(1) is not present in table "airport".
+ERROR  : 11:34:41: Error: ERROR:  null value in column "name" violates not-null constraint
+DETAIL:  Failing row contains (1, null).
+ERROR  : 11:35:21: Error: ERROR:  duplicate key value violates unique constraint "airplane_model_pkey"
+DETAIL:  Key (id_airplane_model)=(1) already exists.
+ERROR  : 11:35:30: Error: ERROR:  duplicate key value violates unique constraint "airplane_model_pkey"
+DETAIL:  Key (id_airplane_model)=(1) already exists.
+ERROR  : 10:54:15: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(22) is still referenced from table "mission_passenger".
+ERROR  : 10:54:33: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(21) is still referenced from table "mission_passenger".
+ERROR  : 10:54:35: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(20) is still referenced from table "mission_passenger".
+ERROR  : 10:54:35: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(19) is still referenced from table "mission_passenger".
+ERROR  : 10:54:36: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(18) is still referenced from table "mission_passenger".
+ERROR  : 10:54:36: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(17) is still referenced from table "mission_passenger".
+ERROR  : 10:54:37: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(16) is still referenced from table "mission_passenger".
+ERROR  : 10:54:37: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(15) is still referenced from table "mission_passenger".
+ERROR  : 16:22:50: Error: ERROR:  update or delete on table "users" violates foreign key constraint "fk1qvnof750pkmkd2b86burm6hj" on table "mission_pilot"
+DETAIL:  Key (id_user)=(6) is still referenced from table "mission_pilot".
+ERROR  : 15:17:03: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(55) is still referenced from table "mission_planner".
+ERROR  : 15:17:09: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(54) is still referenced from table "mission_planner".
+ERROR  : 15:17:10: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(53) is still referenced from table "mission_planner".
+ERROR  : 15:17:12: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(52) is still referenced from table "mission_planner".
+ERROR  : 15:17:12: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(51) is still referenced from table "mission_planner".
+ERROR  : 15:17:13: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(50) is still referenced from table "mission_planner".
+ERROR  : 15:17:13: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(49) is still referenced from table "mission_planner".
+ERROR  : 15:17:13: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(48) is still referenced from table "mission_planner".
+ERROR  : 15:17:14: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkdyd594da4ioppbw1tcq65k92o" on table "mission_planner"
+DETAIL:  Key (id_mission)=(47) is still referenced from table "mission_planner".
+ERROR  : 14:31:20: Error: ERROR:  update or delete on table "mission" violates foreign key constraint "fkluo2p69604bjr7nrywijok5qa" on table "mission_passenger"
+DETAIL:  Key (id_mission)=(59) is still referenced from table "mission_passenger".

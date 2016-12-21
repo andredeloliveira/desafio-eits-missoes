@@ -37722,7 +37722,8 @@
 	    case 'REQUEST_UPLOAD_FILE_FULFILLED':
 	      return _extends({}, state, {
 	        uploaded: true,
-	        uploading: false
+	        uploading: false,
+	        file: action.payload
 	      });
 	    case 'REQUEST_UPLOAD_FILE_ERROR':
 	      return _extends({}, state, {
@@ -67711,6 +67712,10 @@
 	
 	var _reactRedux = __webpack_require__(388);
 	
+	var _reactCookie = __webpack_require__(539);
+	
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+	
 	var _DatePicker = __webpack_require__(665);
 	
 	var _DatePicker2 = _interopRequireDefault(_DatePicker);
@@ -68085,7 +68090,7 @@
 	          missionPilots = _props$missions2.missionPilots;
 	      var file = this.props.fileUpload.file;
 	
-	      var currentUser = this.props.auth.currentUser;
+	      var currentUser = this.props.auth.currentUser || _reactCookie2.default.load('currentUser');
 	      var updatingCondition = mission && params.id;
 	      var newMission = {
 	        mission: {
@@ -68094,7 +68099,7 @@
 	          missionFrom: this.state.selectedFrom || mission.missionTo,
 	          airplane: JSON.parse(event.target.airplane.value),
 	          reason: event.target.reason.value,
-	          attachedFile: null
+	          attachedFile: file
 	        },
 	        planner: currentUser,
 	        passengers: this.state.selectedPassengers,
@@ -68175,13 +68180,12 @@
 	    key: 'handleUpdateFiles',
 	    value: function handleUpdateFiles(files) {
 	      var dispatch = this.props.dispatch;
-	      //dispatch(uploadFile(files[0], dispatch))
 	
-	      console.log(files);
 	      if (files) {
 	        this.setState({
 	          file: files[0]
 	        });
+	        dispatch((0, _fileUploadActions.uploadFile)(files[0], dispatch));
 	      }
 	    }
 	  }, {
@@ -68262,6 +68266,9 @@
 	          updatedMission = _props$missions3.updatedMission,
 	          missionPassengers = _props$missions3.missionPassengers,
 	          missionPilots = _props$missions3.missionPilots;
+	      var _props$fileUpload = this.props.fileUpload,
+	          uploading = _props$fileUpload.uploading,
+	          uploaded = _props$fileUpload.uploaded;
 	
 	      var isLoading = params.id && !mission;
 	      var showCurrentPassengers = params.id && missionPassengers;
@@ -68400,6 +68407,7 @@
 	              this.state.file ? this.state.file.name : ''
 	            )
 	          ),
+	          uploading ? _react2.default.createElement(_MissoesLoading.MissoesLoading, null) : null,
 	          _react2.default.createElement(
 	            _button2.default,
 	            { variant: 'raised' },
@@ -68412,6 +68420,10 @@
 	        }) : null,
 	        newMission ? _react2.default.createElement(_Formfeedback.Formfeedback, {
 	          message: "Nova missão agendada com sucesso",
+	          duration: 3000
+	        }) : null,
+	        uploaded ? _react2.default.createElement(_Formfeedback.Formfeedback, {
+	          message: "Arquivo enviado com sucesso!",
 	          duration: 3000
 	        }) : null
 	      );
@@ -75412,7 +75424,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function uploadFile(file, dispatch) {
-	  _axios2.default.post('/missoes/missions/uploadFile', file).then(function (fileResponse) {
+	  var formData = new FormData();
+	  formData.append('file', file);
+	  _axios2.default.post('/missoes/uploadFile', formData).then(function (fileResponse) {
 	    dispatch(uploadFileDone(fileResponse.data));
 	  }).catch(function (error) {
 	    dispatch(uploadFileError(error));
@@ -78801,7 +78815,8 @@
 	          message = _props2.message,
 	          actionLabel = _props2.actionLabel,
 	          customButton = _props2.customButton,
-	          isAdmin = _props2.isAdmin;
+	          isAdmin = _props2.isAdmin,
+	          style = _props2.style;
 	
 	      var actions = [_react2.default.createElement(_FlatButton2.default, {
 	        label: 'Cancelar',
@@ -78817,7 +78832,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _button2.default,
-	          { variant: 'flat', color: 'danger', disabled: !isAdmin, onClick: this.handleOpen },
+	          { variant: 'flat', color: 'danger', style: style, disabled: !isAdmin, onClick: this.handleOpen },
 	          actionLabel
 	        ),
 	        _react2.default.createElement(_Dialog2.default, {
@@ -79484,6 +79499,11 @@
 	      return currentUser.perfilAcesso === 'ADMINISTRADOR';
 	    }
 	  }, {
+	    key: 'finishFlight',
+	    value: function finishFlight() {
+	      console.log('finish it');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props$missions = this.props.missions,
@@ -79592,6 +79612,22 @@
 	            missionPlanner ? missionPlanner.planner.name : 'Carregando..'
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { style: elementContainer },
+	          _react2.default.createElement(
+	            'label',
+	            { style: labelStyle },
+	            'Objetivo:'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { style: spanStyle },
+	            mission.reason
+	          )
+	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { style: elementContainer },
@@ -79636,16 +79672,37 @@
 	            this.pilotsRender()
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
-	          { style: buttonStyle },
+	          { style: elementContainer },
+	          _react2.default.createElement(
+	            'label',
+	            { style: labelStyle },
+	            'Anexo:'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { style: spanStyle, href: mission.attachedFile, target: '_blank' },
+	            'Arquivo'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
+	            { variant: 'flat', color: 'primary', style: buttonStyle, disabled: !this.isPilot(), onClick: this.finishFlight.bind(this) },
+	            ' Finalizar V\xF4o'
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { variant: 'flat', color: 'primary', style: buttonStyle, disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
 	            'Atualizar'
 	          ),
 	          _react2.default.createElement(_ConfirmActionDialog.ConfirmActionDialog, {
 	            actionLabel: 'Remover',
+	            style: buttonStyle,
 	            action: _missionActions.removeMission,
 	            message: 'Tem certeza que deseja remover a Miss\xE3o?',
 	            itemId: missionId,
@@ -79655,7 +79712,7 @@
 	          }),
 	          _react2.default.createElement(
 	            _button2.default,
-	            { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
+	            { variant: 'flat', color: 'accent', style: buttonStyle, disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
 	            'Cancelar'
 	          )
 	        )

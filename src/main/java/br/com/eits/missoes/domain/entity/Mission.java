@@ -40,7 +40,7 @@ public class Mission {
 	private Airplane airplane;
 	
 	@Column(name = "attached_file")
-	private Byte[]  attachedFile;
+	private String  attachedFile;
 	
 	@Column(name = "date_time")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
@@ -87,10 +87,10 @@ public class Mission {
 	public void setAirplane(Airplane airplane) {
 		this.airplane = airplane;
 	}
-	public Byte[] getAttachedFile() {
+	public String getAttachedFile() {
 		return attachedFile;
 	}
-	public void setAttachedFile(Byte[] attachedFile) {
+	public void setAttachedFile(String attachedFile) {
 		this.attachedFile = attachedFile;
 	}
 	public Calendar getDateTime() {

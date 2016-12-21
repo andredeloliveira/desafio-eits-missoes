@@ -41,7 +41,7 @@ export class ConfirmActionDialog extends React.Component {
   }
 
   render() {
-    const { itemName, message, actionLabel, customButton, isAdmin } = this.props;
+    const { itemName, message, actionLabel, customButton, isAdmin, style } = this.props;
     const actions = [
       <FlatButton
         label="Cancelar"
@@ -56,7 +56,7 @@ export class ConfirmActionDialog extends React.Component {
     ];
     return (
       <div>
-        <Button variant="flat" color="danger" disabled={!isAdmin} onClick={this.handleOpen}>{actionLabel}</Button>
+        <Button variant="flat" color="danger" style={style} disabled={!isAdmin} onClick={this.handleOpen}>{actionLabel}</Button>
         <Dialog
           title={message}
           actions={actions}
