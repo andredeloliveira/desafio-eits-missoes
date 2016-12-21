@@ -411,7 +411,7 @@ export class MissionForm extends React.Component {
   render() {
     const chipsWrapper = { display: 'flex', flexWrap: 'wrap'}
     const { params } = this.props;
-    const { mission, newMission, inserting, updating, updatedMission, missionPassengers, missionPilots } = this.props.missions;
+    const { mission, newMission, inserting, updating, updatedMission, missionPassengers, missionPilots, error } = this.props.missions;
     const { uploading, uploaded } = this.props.fileUpload;
     let isLoading = params.id && !mission;
     const showCurrentPassengers = params.id && missionPassengers;
@@ -529,6 +529,11 @@ export class MissionForm extends React.Component {
           message={"Arquivo enviado com sucesso!"}
           duration={3000}
         />: null}
+        {error ?
+          <Formfeedback
+            message={"O erro " + {error} + " aconteceu"}
+            duration={3000}
+          /> :  null }
       </Container>
     )
   }

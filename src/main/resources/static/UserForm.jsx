@@ -1,5 +1,5 @@
 /*
-  Form for insert actions performed on User 
+  Form for insert actions performed on User
 */
 import React from 'react';
 import Form from 'muicss/lib/react/form';
@@ -134,6 +134,11 @@ export class UserForm extends React.Component {
           {showFeedBackUpdate ?
             <Formfeedback
               message={"Usuário " + updatedUser.name + " atualizado"}
+              duration={3000}
+            /> :  null }
+          {error ?
+            <Formfeedback
+              message={"O erro " + {error} + " aconteceu"}
               duration={3000}
             /> :  null }
         </Container>

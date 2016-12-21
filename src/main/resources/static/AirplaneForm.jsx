@@ -109,7 +109,8 @@ export class AirplaneForm extends React.Component {
             updating,
             updated,
             updatedAirplane,
-            removedAirplane
+            removedAirplane,
+            error,
         } = this.props.airplanes;
         const {dispatch, params} = this.props;
         let isLoading = params.id && !airplane;
@@ -149,6 +150,11 @@ export class AirplaneForm extends React.Component {
                     {updatedAirplane
                         ? <Formfeedback message={"Aeronave " + updatedAirplane.subscriptionNumber + " atualizada com sucesso"} duration={3000}/>
                         : null}
+                    {error ?
+                      <Formfeedback
+                      message={"O erro " + {error} + " aconteceu"}
+                      duration={3000}
+                    /> :  null }
                 </Container>
             </div>
         )
