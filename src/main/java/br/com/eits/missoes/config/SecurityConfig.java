@@ -41,20 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.anyRequest()
-			.permitAll()
-			.and()
-			.formLogin()
-			.loginPage("/login").permitAll()
-			.loginProcessingUrl("/login")
-			.permitAll()
-			.defaultSuccessUrl("/currentUser")
-			.and().logout().logoutUrl("/logout")
-			.logoutSuccessUrl("/")
-			.and()
-			.logout()
-			.permitAll();
+		http.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/user/**").hasRole("ADMINISTRADOR")
+			.and().httpBasic().realmName("REALM_TESTE").authenticationEntryPoint(getBasicAuthEntryPoint())
+			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 	
 	@Bean
@@ -70,9 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-        	.antMatchers(HttpMethod.POST, "/**")
-        	.antMatchers(HttpMethod.DELETE, "/**")
-        	.antMatchers(HttpMethod.PUT, "/**")
+        	.antMatchers(HttpMethod.OPTIONS, "/**")
         	.antMatchers("/login");
     }
 	
