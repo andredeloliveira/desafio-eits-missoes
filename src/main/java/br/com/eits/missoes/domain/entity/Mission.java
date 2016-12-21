@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
@@ -36,6 +37,7 @@ public class Mission {
 	private Long id;
 	
 	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "id_airplane")
 	private Airplane airplane;
 	
@@ -43,18 +45,22 @@ public class Mission {
 	private String  attachedFile;
 	
 	@Column(name = "date_time")
+	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
 	private Calendar dateTime;
 	
 	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "id_mission_to")
 	private Airport missionTo;
 	
 	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "id_mission_from")
 	private Airport missionFrom;
 	
 	@Column(name = "reason")
+	@NotNull
 	private String reason;
 	
 	@Column(name = "finished")
