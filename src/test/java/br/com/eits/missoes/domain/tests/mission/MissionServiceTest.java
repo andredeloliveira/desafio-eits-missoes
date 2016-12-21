@@ -1,6 +1,7 @@
 package br.com.eits.missoes.domain.tests.mission;
 
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -53,56 +54,26 @@ public class MissionServiceTest extends AbstractIntegrationTest{
 	@Autowired(required = false)
 	private AirportService airportService;
 		
-	
+	/*It does not pass the test due to some bizarre error*/
 	@Test
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {MISSIONS_DATASET}, connection = "dataSource")
 	@DatabaseTearDown(CLEAN_DATASET)
 	public void testinsertMission() {
-		
 		Mission mission = new Mission();
-		Date now = new Date();
-		
-		//TODO: add on dataset;
-		
-		/*
-		 * check all services if they are all available
-		 * */
-		
-		User user = userService.findUserById(new Long(1));
-		List<MissionPassenger> missionPassengers = 
-				missionPassengerService.findAllMissionPassenger();
-		System.out.println("pass" + missionPassengers);
-		List<MissionPilot> missionPilots =
-				missionPilotService.findAllMissionPilot();
-
-		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
-		User plannedBy = userService.findUserById(new Long(1));
-		
-		
-		Airport missionTo = airportService.findAirportByAcronym("IGU");
-		Airport missionFrom = airportService.findAirportByAcronym("GRU");
-		
-		
-		System.out.println("pilot " + missionPilots);
-		System.out.println("airpl " + airplane.getId());
-		System.out.println("plan " + plannedBy);
-		System.out.println("time "+ now);
-		
-		/****/
-		mission.setDateTime(now);
-		mission.setReason("Viagem a negócios");
-		mission.setMissionTo(missionTo);
+		Airplane airplane = airplaneService.findAirplaneById(1L);
+		mission.setAirplane(airplane);
+		Calendar dateTime = Calendar.getInstance();
+		mission.setDateTime(dateTime);
+		Airport missionFrom = airportService.findAirportById(1L);
+		Airport missionTo = airportService.findAirportById(2L);
 		mission.setMissionFrom(missionFrom);
-		mission.setAirplane(new Airplane(1L));
-		
-		Mission insertedMission = missionService.insertMission(mission);
-		
-		System.out.println("this mission was just inserted! "+ insertedMission.getId());
-		
-		Assert.assertNotNull(mission);
-		Assert.assertEquals("Viagem a negócios", insertedMission.getReason());
-		
+		mission.setMissionTo(missionTo);
+		mission.setReason("Reason explained here");
+		Mission justInsertedMission = missionService.insertMission(mission);
+		Assert.assertEquals("Reason explained here", justInsertedMission.getReason());
 	}
+	
+	
 	
 }
 

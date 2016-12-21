@@ -6,7 +6,7 @@
 	  email="jj@ss.com"
 	  profile="0"
 	  password="487490nfkljd"
-	  status="ATIVO" 
+	  status="true"
 		
 	/>
 	<users 
@@ -15,7 +15,7 @@
 	  email="jj@ds.com"
 	  profile="1"
 	  password="48dfd90nfkljd"
-		status="ATIVO"
+	  status="true"
 	/>
 	<users 
 	  id_user="3"
@@ -23,6 +23,6 @@
 	  email="mi@ss.com"
 	  profile="2"
 	  password="487490nfddkljd"
-		status="ATIVO"
+	  status="true"
 	/>
 </dataset>

@@ -31,75 +31,32 @@ public class AirplaneServiceTest extends AbstractIntegrationTest{
 	@Test
 	public void testInsertAirplaneMustPass() {
 		Airplane airplane = new Airplane();
-		airplane.setSeatsNumber(200);
-		airplane.setTotalFlightTime(2.444);
-		airplane.setSubscriptionNumber(UUID.randomUUID().toString());
-		//We need two services here. One to get the existing airplane model from the db and the other to
-		//actually add an airplane
-		AirplaneModel airplaneModel = airplaneModelService.findAirplaneModelById(new Long(122));
+		AirplaneModel airplaneModel = airplaneModelService.findAirplaneModelById(122L);
 		airplane.setAirplaneModel(airplaneModel);
-		Airplane airplaneResult = airplaneService.insertAirplane(airplane);
-		Assert.assertNotNull(airplaneResult);
-		Assert.assertEquals(200,airplane.getSeatsNumber());
-	}
-	
-	@Test
-	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
-	@DatabaseTearDown(CLEAN_DATASET)
-	public void testRemoveAirplane() {
-		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
-		airplaneService.removeAirplane(airplane);
-		List<Airplane> airplanes = airplaneService.findAllAirplane();
-		Assert.assertEquals(2, airplanes.size());
-	}
-	
-	@Test
-	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
-	@DatabaseTearDown(CLEAN_DATASET)
-	public void testFindAllAirplane() {
-		List<Airplane> airplanes = airplaneService.findAllAirplane();
-		Assert.assertNotNull(airplanes);
-		Assert.assertEquals(3, airplanes.size());
-	}
-	
-	@Test
-	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
-	@DatabaseTearDown(CLEAN_DATASET)
-	public void testfindAirplaneById() {
-		//this is an existing id in the AirplanesDataset described above
-		Airplane airplane = airplaneService.findAirplaneById(new Long(1));
-		Assert.assertNotNull(airplane);
-		Assert.assertEquals("fkjdlk9393", airplane.getSubscriptionNumber());
-	}
-	
-	@Test
-	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
-	@DatabaseTearDown(CLEAN_DATASET)
-	public void testfindAirplaneByModel() {
-	
-		AirplaneModel airplaneModel = airplaneModelService.findAirplaneModelById(new Long(122));
-		List<Airplane> airplanes = airplaneService.findAirplaneByAirplaneModel(airplaneModel);
-		Assert.assertNotNull(airplanes);
-		Assert.assertEquals(3, airplanes.size());
+		airplane.setSubscriptionNumber("AABBCC");
+		airplane.setSeatsNumber(10);
+		Airplane insertedAirplane = airplaneService.insertAirplane(airplane);
+		Assert.assertEquals("AABBCC", insertedAirplane.getSubscriptionNumber());
 		
 	}
 	
 	@Test
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
 	@DatabaseTearDown(CLEAN_DATASET)
-	public void testfindAirplaneBySeatsNumber() {
-		Airplane airplane = airplaneService.findAirplaneBySeatsNumber(new Integer(200));
-		Assert.assertNotNull(airplane);
-		Assert.assertEquals("fkjdlk9393", airplane.getSubscriptionNumber());
+	public void testRemoveAirplane() {
+		Airplane airplaneToRemove = airplaneService.findAirplaneById(1L);
+		airplaneService.removeAirplaneById(airplaneToRemove.getId());
+		List<Airplane> totalAirplanes = airplaneService.findAllAirplane();
+		Assert.assertEquals(2, totalAirplanes.size());
 	}
 	
 	@Test
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {AIRPLANES_DATASET}, connection = "dataSource")
 	@DatabaseTearDown(CLEAN_DATASET)
-	public void testFindAirplaneBySubscriptionNumber() {
-		Airplane airplane = airplaneService.findAirplaneBySubscriptionNumber("fkjdlk9393");
-		Assert.assertNotNull(airplane);
-		Assert.assertEquals(new Double(500.44), airplane.getTotalFlightTime());
+	public void testSearchAirplane() {
+		String searchQuery = "757";
+		List<Airplane> searchResult = airplaneService.searchAirplane(searchQuery);
+		Assert.assertEquals(1, searchResult.size());
 	}
 	
 	

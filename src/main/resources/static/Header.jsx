@@ -56,11 +56,15 @@ export class Header extends React.Component {
       width: "100%"
     }
 
+    const headerStyle = {
+      color: "#FFFFFF"
+    }
+
     //const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     const currentUser = this.props.login.currentUser || cookie.load('currentUser');
     return (
       <div>
-        <AppBar title="gAviator"
+        <AppBar title={<Link to="/" style={headerStyle}>desafeits</Link>}
                 onLeftIconButtonTouchTap={this.showDrawer.bind(this, this.state.open)}
                 iconElementRight={currentUser ? <NavigationButtons /> : null}
         />

@@ -1,17 +1,33 @@
 <dataset>
+<airplane_manufacturer 
+	id_airplane_manufacturer="1"
+	name="Boeing"
+/>
 
+<airplane_model 
+	id_airplane_model="122"
+	name="777"
+	id_airplane_manufacturer="1"
+/>
+
+<airplane_model 
+	id_airplane_model="123"
+	name="757"
+	id_airplane_manufacturer="1"
+/>
+	
 <airplane 
     id_airplane="1"
     seats_number="200"
-    total_flight_time="500.44"
+    total_flight_time="500"
     subscription_number="fkjdlk9393"
-    id_airplane_model="122"
+    id_airplane_model="123"
 
 />
 <airplane 
     id_airplane="2"
     seats_number="343"
-    total_flight_time="343.33"
+    total_flight_time="343"
     subscription_number="3423kjlkdj"
     id_airplane_model="122"
 
@@ -19,7 +35,7 @@
 <airplane 
     id_airplane="3"
     seats_number="344"
-    total_flight_time="344.0"
+    total_flight_time="344"
     subscription_number="fjdklajf908d"
     id_airplane_model="122"
 

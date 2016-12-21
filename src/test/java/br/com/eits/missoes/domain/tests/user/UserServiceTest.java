@@ -26,34 +26,29 @@ public class UserServiceTest extends AbstractIntegrationTest{
 	private UserService userService;
 	
 	
-	@Autowired(required = false)
-	private IUserRepository userRepository;
-	
-	
 	@Test
 	public void testInsertMustPass() {
 		//create a new user object
 		User user = new User();
 		user.setName("Eu sou o máximo");
-		user.setEmail("eu@sou.com");
+		user.setEmail("andre.oliveira@eits.com.br");
 		user.setPassword("1235sou");
 		user.setStatus(true);
 		user.setPerfilAcesso(Profile.ADMINISTRADOR);
 		User newUser = userService.insertUser(user);
-		final User newUserX = userRepository.findUserById(user.getId());
+		System.out.println(newUser);
+		final User newUserX = userService.findUserById(newUser.getId());
 		Assert.assertNotNull(newUserX.getName());
-		
-		
 	}
 	
 	@Test
 	@DatabaseSetup(type = DatabaseOperation.CLEAN_INSERT, value = {USERS_DATASET}, connection = "dataSource")
 	@DatabaseTearDown(CLEAN_DATASET)
-	public void testRemoveUser() {
+	public void testDeactivateUser() {
 		User user = userService.findUserById(new Long(1));
-		userService.removeUser(user.getId());
-		List<User> users = userService.findAllUsers();
-		Assert.assertEquals(2, users.size());
+		user.setStatus(false);
+		User updatedUser = userService.insertUser(user);
+		Assert.assertEquals(false, updatedUser.getStatus());
 	}
 	
 	@Test
@@ -64,6 +59,8 @@ public class UserServiceTest extends AbstractIntegrationTest{
 		Assert.assertNotNull(users);
 		Assert.assertEquals(3, users.size());
 	}
+	
+	
 	
 	
 }

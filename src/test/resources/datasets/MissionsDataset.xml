@@ -5,8 +5,8 @@
 	name="João da Silva"
 	email="joao@joao.com"
 	password="jfasklçfd9089fd90s8afds"
-	profile="0"
-	status="ATIVO"
+	profile="1"
+	status="true"
 />
 
 <users 
@@ -14,8 +14,8 @@
 	name="Luiza Cavalcante"
 	email="lu@caval.com"
 	password="fjklçdsjalçfkjds0"
-	profile="0"
-	status="ATIVO"
+	profile="1"
+	status="true"
 />
 
 <users 
@@ -24,7 +24,7 @@
 	email="marcelo@ol.com"
 	password="jdasfkldj94389nc"
 	profile="2"
-	status="ATIVO"
+	status="true"
 />
 
 <users 
@@ -33,7 +33,7 @@
 	email="kill@bill.now"
 	password="IwantTOIwilld01234"
 	profile="2"
-	status="ATIVO"
+	status="true"
 />
 
 <airplane_manufacturer 
@@ -50,7 +50,7 @@
 <airplane 
 	id_airplane="1"
 	subscription_number="0kdjlfd943949494mkdkdkdkdki48848489dm"
-	total_flight_time="200.0"
+	total_flight_time="200"
 	seats_number="200"
 	id_airplane_model="1"
 />

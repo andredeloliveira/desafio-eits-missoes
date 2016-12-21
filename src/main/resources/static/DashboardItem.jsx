@@ -20,12 +20,12 @@ export class DashboardItem extends React.Component {
     const flatButtonStyle = {
       width: "100%"
     }
-    const { name, image, label, url } = this.props;
+    const { name, icon, label, url } = this.props;
     return (
       <div>
         <Card style={cardStyle}>
          <CardMedia>
-           <img src={image} />
+           {icon}
          </CardMedia>
          <CardActions>
             <Link to={url}><FlatButton label={label} style={flatButtonStyle} /></Link>

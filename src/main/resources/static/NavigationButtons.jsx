@@ -5,6 +5,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 import FlatButton from 'material-ui/FlatButton';
+import Button from 'muicss/lib/react/button';
 export class NavigationButtons extends React.Component {
 
   constructor(props) {
@@ -19,9 +20,9 @@ export class NavigationButtons extends React.Component {
     }
     return (
       <div>
-          <Link to="/aeronaves">Aeronaves</Link>
-          <Link to="/usuarios">Usuários</Link>
-          <Link to="/missoes">Missões</Link>
+          <Link to="/aeronaves"><Button color="primary">Aeronaves</Button></Link>
+          <Link to="/usuarios"><Button color="primary">Usuários</Button></Link>
+          <Link to="/missoes"><Button color="primary">Missões</Button></Link>
       </div>
     )
   }

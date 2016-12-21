@@ -31,7 +31,10 @@ public class UserService {
 	
 	@Transactional
 	public User insertUser(User user) {
-		User hasUser = userRepository.findOne(user.getId());
+		User hasUser = null;
+		if (user.getId() != null) {
+			hasUser = userRepository.findOne(user.getId());
+		}
 		if (hasUser != null) {
 			String encodedPassword = hasUser.getPassword();
 			//if the password is the same... we do not encode it again
