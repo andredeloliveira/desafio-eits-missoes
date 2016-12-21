@@ -78696,16 +78696,16 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { style: buttonStyle },
+	                    null,
 	                    _react2.default.createElement(
 	                        _button2.default,
-	                        { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
+	                        { variant: 'flat', color: 'primary', style: buttonStyle, disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
 	                        'Atualizar'
 	                    ),
-	                    _react2.default.createElement(_ConfirmActionDialog.ConfirmActionDialog, { actionLabel: 'Remover', action: _airplaneActions.removeAirplane, message: 'Tem certeza que deseja remover a aeronave ?', itemId: airplaneId, dispatch: dispatch, shouldGoBack: true, isAdmin: this.isAdmin() }),
+	                    _react2.default.createElement(_ConfirmActionDialog.ConfirmActionDialog, { actionLabel: 'Remover', style: buttonStyle, action: _airplaneActions.removeAirplane, message: 'Tem certeza que deseja remover a aeronave ?', itemId: airplaneId, dispatch: dispatch, shouldGoBack: true, isAdmin: this.isAdmin() }),
 	                    _react2.default.createElement(
 	                        _button2.default,
-	                        { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
+	                        { variant: 'flat', color: 'accent', style: buttonStyle, disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
 	                        'Cancelar'
 	                    )
 	                )
@@ -94805,7 +94805,7 @@
 	            { variant: 'flat', color: 'primary', disabled: !this.isAdmin(), onClick: this.goToUpdatePage.bind(this) },
 	            'Atualizar'
 	          ),
-	          _react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { user: user, isAdmin: this.isAdmin() }),
+	          _react2.default.createElement(_DeactivateUserButton.DeactivateUserButton, { user: user, label: 'Ativar/Desativar', isAdmin: this.isAdmin() }),
 	          _react2.default.createElement(
 	            _button2.default,
 	            { variant: 'flat', color: 'accent', disabled: !this.isAdmin(), onClick: this.goBack.bind(this) },
@@ -94922,9 +94922,13 @@
 	    value: function render() {
 	      var _props2 = this.props,
 	          user = _props2.user,
-	          isAdmin = _props2.isAdmin;
+	          isAdmin = _props2.isAdmin,
+	          style = _props2.style,
+	          label = _props2.label;
 	
 	      return _react2.default.createElement(_Toggle2.default, {
+	        label: label,
+	        style: style,
 	        defaultToggled: this.isUserActive(),
 	        onToggle: this.deactivateUser,
 	        disabled: !isAdmin

@@ -88,7 +88,7 @@ export class UserDetails extends React.Component {
         <Divider />
           <div style={buttonStyle}>
             <Button variant="flat" color="primary" disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
-            <DeactivateUserButton user={user} isAdmin={this.isAdmin()}/>
+            <DeactivateUserButton user={user} label="Ativar/Desativar" isAdmin={this.isAdmin()}/>
             <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
           </div>
       </Container>

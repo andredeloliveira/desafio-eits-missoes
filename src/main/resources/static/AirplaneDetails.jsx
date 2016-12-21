@@ -74,10 +74,10 @@ export class AirplaneDetails extends React.Component {
                 <Divider/>
                 <label style={labelStyle}>Horas de Vôo</label>
                 <span style={spanStyle}>{airplane.totalFlightTime || 0}</span>
-                <div style={buttonStyle}>
-                    <Button variant="flat" color="primary" disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
-                    <ConfirmActionDialog actionLabel="Remover" action={removeAirplane} message="Tem certeza que deseja remover a aeronave ?" itemId={airplaneId} dispatch={dispatch} shouldGoBack={true} isAdmin={this.isAdmin()}/>
-                    <Button variant="flat" color="accent" disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
+                <div>
+                    <Button variant="flat" color="primary" style={buttonStyle} disabled={!this.isAdmin()} onClick={this.goToUpdatePage.bind(this)}>Atualizar</Button>
+                    <ConfirmActionDialog actionLabel="Remover" style={buttonStyle} action={removeAirplane} message="Tem certeza que deseja remover a aeronave ?" itemId={airplaneId} dispatch={dispatch} shouldGoBack={true} isAdmin={this.isAdmin()}/>
+                    <Button variant="flat" color="accent" style={buttonStyle} disabled={!this.isAdmin()} onClick={this.goBack.bind(this)}>Cancelar</Button>
                 </div>
             </Container>
         )
