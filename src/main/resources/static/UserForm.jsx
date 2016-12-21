@@ -1,3 +1,6 @@
+/*
+  Form for insert actions performed on User 
+*/
 import React from 'react';
 import Form from 'muicss/lib/react/form';
 import Input from 'muicss/lib/react/input';

@@ -1,3 +1,6 @@
+/**
+  Component used when the user needs to confirm if the action that will be taken will actually happen
+**/
 import React from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';

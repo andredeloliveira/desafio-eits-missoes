@@ -1,3 +1,6 @@
+/*
+  An item that can be rendered inside the dashboard. It is defined by Cards
+*/
 import React from 'react';
 import { Link } from 'react-router';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';

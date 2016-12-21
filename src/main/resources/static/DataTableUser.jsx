@@ -1,3 +1,8 @@
+/*
+  Renders the Datatable and actions that are related to the User class
+  @see User (Java)
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import cookie from 'react-cookie';

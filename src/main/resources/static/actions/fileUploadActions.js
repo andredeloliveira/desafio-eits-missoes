@@ -1,3 +1,7 @@
+/**
+All the actions that are related to file uploading are being declared here.
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 
 export function uploadFile(file, dispatch) {

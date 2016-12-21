@@ -1,3 +1,6 @@
+/*
+  Base component for all the Missions functionalities
+*/
 import React from 'react';
 import { connect } from 'react-redux';
 import { findAllMissions } from './actions/missionActions';

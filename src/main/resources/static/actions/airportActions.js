@@ -1,3 +1,9 @@
+/**
+All the actions that are related to the Airport Entity are being declared here.
+@see Airport (Java)
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
+
 import axios from 'axios';
 
 export function findAllAirports(dispatch) {

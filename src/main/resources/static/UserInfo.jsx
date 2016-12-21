@@ -1,8 +1,10 @@
+/*
+  Renders the Logged in user's info
+*/
 import React from 'react';
 import { connect } from 'react-redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import MenuItem from 'material-ui/MenuItem';
-
 
 
 export class UserInfo extends React.Component {

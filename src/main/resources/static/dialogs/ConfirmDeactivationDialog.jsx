@@ -1,3 +1,7 @@
+/**
+  Component used exclusively for the User, since it is the only one that uses Toggle to represent
+  its status state
+**/
 import React from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';

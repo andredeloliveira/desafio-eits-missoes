@@ -1,3 +1,8 @@
+/**
+All the actions that are related to the Mission Entity and all the other strongly tied Entites are being declared here.
+@see Mission, User, Airplane(Java)
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 import { searchMissions } from './searchActions';
 

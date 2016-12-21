@@ -1,3 +1,7 @@
+/*
+  Renders the Datatable and actions that are related to the Airplane class
+  @see Airplane (Java)
+*/
 import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'muicss/lib/react/input';

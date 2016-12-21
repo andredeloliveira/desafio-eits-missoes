@@ -1,3 +1,6 @@
+/*
+  Component that renders all the Datatables and basic CRUD actions (including permission)
+*/
 import React from 'react';
 import { connect } from 'react-redux';
 import cookie from 'react-cookie';

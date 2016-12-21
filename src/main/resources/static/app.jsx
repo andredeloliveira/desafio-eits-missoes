@@ -1,3 +1,8 @@
+/**
+Main app Component, which has all the necessary components to make the App run using Redux and react-router
+@see <a href="https://github.com/ReactTraining/react-router">React Router</a>
+@see <a href="https://facebook.github.io/react/">React</a>
+**/
 import { Router, Route, hashHistory, Match } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';

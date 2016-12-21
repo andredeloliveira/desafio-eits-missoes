@@ -1,3 +1,8 @@
+/**
+All the actions that are related to the Airplane Entity are being declared here.
+@see Airplane (Java)
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 import { searchAirplanes } from './searchActions';
 

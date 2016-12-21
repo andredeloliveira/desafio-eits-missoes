@@ -1,3 +1,6 @@
+/**
+ Component that shows a custom Spinner
+**/
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 

@@ -1,3 +1,6 @@
+/*
+  Renders the layout footer part
+*/
 import React from 'react';
 
 export class Footer extends React.Component {

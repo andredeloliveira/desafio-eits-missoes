@@ -1,3 +1,8 @@
+/*
+  Container component where all the details of a Mission are rendered.
+  It also has Update, Remove and FinishFligth (Mission) actions
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'

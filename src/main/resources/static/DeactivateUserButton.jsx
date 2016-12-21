@@ -1,3 +1,6 @@
+/*
+  Button that has the functionality of Deactivate or Activate an User
+*/
 import React from 'react';
 import IconButton from 'material-ui/IconButton';
 import Toggle from 'material-ui/Toggle';

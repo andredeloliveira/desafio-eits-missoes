@@ -1,3 +1,7 @@
+/**
+All the actions that are related to the authentication services are being declared here.
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 import cookie from 'react-cookie';
 export function login(user,  dispatch) {

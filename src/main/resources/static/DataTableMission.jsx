@@ -1,3 +1,8 @@
+/*
+  Renders the Datatable and actions that are related to the Mission class
+  @see Mission (Java)
+*/
+
 import React from 'react';
 import moment from 'moment'
 import { connect } from 'react-redux';

@@ -1,3 +1,8 @@
+/**
+  Reflects all the functions declared in the userActions
+  @see /actions/userActions.js
+  @see <a href="http://redux.js.org/docs/basics/Reducers.html">Redux Reducers</a>
+**/
 const initialState = {
   fetching: false,
   fetched: false,

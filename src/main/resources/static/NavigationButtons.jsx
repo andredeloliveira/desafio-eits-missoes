@@ -1,3 +1,7 @@
+/**
+ Renders the app's navigation buttons
+**/
+
 import React from 'react';
 import { Link } from 'react-router'
 import FlatButton from 'material-ui/FlatButton';

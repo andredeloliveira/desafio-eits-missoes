@@ -1,3 +1,6 @@
+/*
+  Base Component for Login 
+*/
 import React from 'react';
 import { LoginForm } from './LoginForm.jsx';
 export class Login extends React.Component {

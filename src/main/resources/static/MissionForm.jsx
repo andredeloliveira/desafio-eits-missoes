@@ -1,3 +1,7 @@
+/*
+  Form for insert actions performed on Mission Entities
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';

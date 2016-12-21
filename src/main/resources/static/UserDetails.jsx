@@ -1,3 +1,8 @@
+/*
+  Container component where all the details of a User are rendered.
+  It also has Update, and Deactivate User actions
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import cookie from 'react-cookie';

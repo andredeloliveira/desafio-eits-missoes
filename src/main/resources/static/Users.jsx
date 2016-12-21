@@ -1,3 +1,6 @@
+/*
+  Base component for all the User functionalities
+*/
 import React from 'react';
 import { connect } from 'react-redux';
 import { CRUDBaseComponent } from './CRUDBaseComponent.jsx';

@@ -1,6 +1,10 @@
+/**
+All the actions that are related to the User Entity are being declared here.
+@see Users (Java)
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 
-//NOTE all async dispatched actions need a dispatch as param to fulfill the request
 export function findAllUsers(dispatch) {
 
   axios.get('/missoes/users/')

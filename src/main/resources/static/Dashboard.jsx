@@ -1,3 +1,6 @@
+/*
+  Renders the Dashboard component
+*/
 import React from 'react';
 import { DashboardItem } from './DashboardItem.jsx';
 

@@ -1,3 +1,6 @@
+/**
+  Basic CRUD menu that renders the basic CRUD Buttons and Custom buttons
+**/
 import React from 'react';
 import { connect } from 'react-redux';
 import cookie from 'react-cookie';

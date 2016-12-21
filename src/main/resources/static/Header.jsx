@@ -1,3 +1,8 @@
+/*
+  Renders the App's Header, where all the links and login functionalities are inclueded
+  @see User (Java)
+*/
+
 import React from 'react';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';

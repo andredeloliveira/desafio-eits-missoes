@@ -1,3 +1,9 @@
+/**
+  Reflects all the functions declared in the airplaneActions
+  @see /actions/airplaneActions.js
+  @see <a href="http://redux.js.org/docs/basics/Reducers.html">Redux Reducers</a>
+**/
+
 const initialState = {
   fetching: false,
   fetched: false,

@@ -1,3 +1,9 @@
+/**
+  Reflects all the functions declared in the loginActions
+  @see /actions/loginActions.js
+  @see <a href="http://redux.js.org/docs/basics/Reducers.html">Redux Reducers</a>
+**/
+
 const initialState = {
   loggedIn: false,
   logging: false,

@@ -1,3 +1,7 @@
+/*
+  Renders any feedback in a Toast
+*/
+
 import React from 'react';
 import Snackbar from 'material-ui/Snackbar';
 

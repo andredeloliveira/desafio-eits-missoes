@@ -1,3 +1,7 @@
+/*
+  App's Layout Main Component where any given Sub component will be rendered
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Header } from './Header.jsx';

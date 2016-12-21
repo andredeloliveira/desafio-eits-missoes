@@ -1,3 +1,9 @@
+/**
+  The RootReducer combine all the reducers in a single Store as the Redux architecture describes.
+  @see <a href="http://redux.js.org/docs/api/combineReducers.html">Redux</a>
+  @see <a href="http://redux.js.org/docs/basics/Reducers.html">Redux Reducers</a>
+**/
+
 import { combineReducers } from 'redux';
 import airplaneReducer from './airplaneReducer';
 import airplaneModelsReducer from './airplaneModelsReducer';

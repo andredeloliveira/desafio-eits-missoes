@@ -1,3 +1,7 @@
+/**
+All the actions that are related to the Search Services are being declared here.
+@see <a href="http://redux.js.org/docs/basics/Actions.html">Redux Actions</a>
+**/
 import axios from 'axios';
 
 export function searchUser(query, dispatch) {

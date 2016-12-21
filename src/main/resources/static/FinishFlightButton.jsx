@@ -1,3 +1,7 @@
+/*
+  It finish a flight that is represented by a Mission
+*/
+
 import React from 'react';
 import { connect } from 'react-redux';
 import IconButton from 'material-ui/IconButton';
